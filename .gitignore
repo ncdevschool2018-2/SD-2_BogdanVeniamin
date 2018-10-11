@@ -1,2 +1,4 @@
 #ignore all "iml" files
-*.iml
+sd4parent/*.iml
+sd4parent/be/*.iml
+sd4parent/fapu/*.iml
