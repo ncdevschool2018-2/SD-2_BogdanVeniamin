@@ -36,3 +36,36 @@ body {
 .active {
   border-bottom: 2px solid #FC6602;
 }
+
+.card {
+  background-image: linear-gradient(#00613C 51%, #008E57 49%);
+  height: 180px;
+  color: white;
+}
+
+.card h2 {
+  margin-top: 7px;
+  margin-left: 110px;
+}
+
+.card h5 {
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+a {
+  color: white;
+}
+
+a:hover {
+  color: white;
+}
+
+#history {
+  margin-top: 9px;
+  margin-left: 80px;
+}
+
+.bottom {
+  margin-left: 70px;
+}

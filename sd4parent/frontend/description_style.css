@@ -28,13 +28,13 @@ body {
   font-size: 25px;
 }
 
+.nav-item {
+  border-bottom: 2px solid white;
+}
+
 .nav-item:hover {
   border-bottom: 2px solid #FC6602;
   color: black;
-}
-
-.active {
-  border-bottom: 2px solid #FC6602;
 }
 
 @media (min-width: 768px) {

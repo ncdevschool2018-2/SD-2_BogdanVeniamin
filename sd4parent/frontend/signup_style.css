@@ -257,3 +257,30 @@ h1{
 #icon {
   width:30%;
 }
+
+.fa {
+  padding: 10px;
+  font-size: 30px;
+  width: 80px;
+  color: #CCC9CF;
+}
+
+.fa-facebook:hover {
+  color: #3B5998;
+}
+
+.fa-twitter:hover {
+  color: #1DA1F2;
+}
+
+.fa-google-plus:hover {
+  color: #DB4437;
+}
+
+.fa-linkedin:hover {
+  color: #0077B5;
+}
+
+.fa-github-alt:hover {
+  color: #333;
+}

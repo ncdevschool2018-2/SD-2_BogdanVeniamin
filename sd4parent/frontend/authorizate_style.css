@@ -36,6 +36,7 @@ body {
   font-size: 25px;
 }
 
+
 .nav-item:hover {
   border-bottom: 2px solid #FC6602;
   color: black;
@@ -43,11 +44,6 @@ body {
 
 .active {
   border-bottom: 2px solid #FC6602;
-}
-
-.footer-copyright {
-  border-top: 1px solid black;
-  font-size: 12px;
 }
 
 .mb-60 {
