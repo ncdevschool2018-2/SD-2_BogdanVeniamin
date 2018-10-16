@@ -38,9 +38,11 @@ body {
 }
 
 .card {
-  background-image: linear-gradient(#00613C 51%, #008E57 49%);
+  background-image: linear-gradient(#0D8C9B 51%, #0CB0C3 49%);
   height: 180px;
   color: white;
+  border-radius: 30px;
+
 }
 
 .card h2 {
