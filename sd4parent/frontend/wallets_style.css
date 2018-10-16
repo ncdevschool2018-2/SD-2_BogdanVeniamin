@@ -38,7 +38,7 @@ body {
 }
 
 .card {
-  background-image: linear-gradient(#0D8C9B 51%, #0CB0C3 49%);
+  background-image: linear-gradient(#A2A0A0 51%, #6A6666 49%);
   height: 180px;
   color: white;
   border-radius: 30px;
@@ -63,11 +63,15 @@ a:hover {
   color: white;
 }
 
-#history {
+#repeat {
   margin-top: 9px;
   margin-left: 80px;
 }
 
 .bottom {
   margin-left: 70px;
+}
+
+.fas:hover, .far:hover{
+  color: #FF5733;
 }
