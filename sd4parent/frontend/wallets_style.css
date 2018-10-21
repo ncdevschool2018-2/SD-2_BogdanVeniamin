@@ -1,3 +1,5 @@
+@import url("card.css");
+
 #nick {
   font-size: 20px;
   color: #4d4d4d;
@@ -38,40 +40,98 @@ body {
 }
 
 .card {
-  background-image: linear-gradient(#A2A0A0 51%, #6A6666 49%);
-  height: 180px;
-  color: white;
+  background-color: white;
+  color: black;
   border-radius: 30px;
 
 }
 
-.card h2 {
-  margin-top: 7px;
-  margin-left: 110px;
+.far:hover {
+  color: #FF5733;
 }
 
-.card h5 {
-  margin-bottom: 20px;
-  font-size: 15px;
+.far {
+  color: #2A9395;
+  margin-left: 120px;
+}
+.container-fluid {
+  margin-top: 40px;
+  width: 1300px;
 }
 
-a {
+.btn-custom {
+  background-color: #7F2C6C;
   color: white;
 }
 
-a:hover {
-  color: white;
+.btn-custom:hover {
+  background-color: #A73C8F;
 }
 
-#repeat {
-  margin-top: 9px;
-  margin-left: 80px;
+.col-10 {
+  background-color: #E7E5E7;
+  border-radius: 10px;
+}
+
+h2 {
+  margin-top: 5px;
+}
+
+.box {
+  float: left;
+  width: 40px;
+  height: 25px;
+  margin: 15px;
+  margin-left: 10px;
+  background-color: #7F2C6C;
+  color: white;
 }
 
 .bottom {
-  margin-left: 70px;
+  margin: 5px;
+  margin-left: 10px;
+  margin-right: 15px;
 }
 
-.fas:hover, .far:hover{
-  color: #FF5733;
+.transactions {
+  margin-top: 60px;
+}
+
+.table {
+  background-color: #E7E5E7;
+}
+
+.cash {
+  font-size: 18px;
+  color: red;
+}
+
+.plus {
+  color: green;
+}
+
+span {
+  font-size: 10px;
+  color: black;
+}
+
+a {
+  color: black;
+}
+
+a:hover {
+  color: #7F2C6C;
+  text-decoration: none;
+}
+
+.current {
+  color: #7F2C6C;
+}
+
+input[type=button] {
+  background-color: #7F2C6C;
+}
+
+input[type=button]:hover {
+  background-color: #A73C8F;
 }

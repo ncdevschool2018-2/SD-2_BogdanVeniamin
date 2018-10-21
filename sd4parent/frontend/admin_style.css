@@ -1,8 +1,14 @@
-@import url("card.css");
-
 #nick {
   font-size: 20px;
   color: #4d4d4d;
+}
+
+.card-btn {
+  margin-left: 150px;
+  position: relative;
+  bottom: 10px;
+  background-color: #76D7C4;
+  border-color: #76D7C4;
 }
 
 .navbar {
@@ -21,6 +27,11 @@
   border-color: #519B8C;
 }
 
+.post {
+  margin-top: 10px;
+  margin-left: 420px;
+}
+
 body {
   font-family: "Century Gothic";
 }
@@ -29,6 +40,7 @@ body {
   color: black;
   font-size: 25px;
 }
+
 
 .nav-item:hover {
   border-bottom: 2px solid #FC6602;
@@ -60,7 +72,7 @@ body {
     overflow: hidden;
     padding: 28px 0 25px;
 }
- h4 {
+.our-services-text h4 {
     color: #222222;
     font-size: 18px;
     font-weight: 700;
@@ -96,8 +108,4 @@ p {
 
 #price {
   margin-left: 70px;
-}
-
-.btn-footer {
-  margin-bottom: 10px;
 }

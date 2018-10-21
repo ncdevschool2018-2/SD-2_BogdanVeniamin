@@ -2,11 +2,9 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Main page</title>
+    <title>net-project</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="unauthorizate_style.css">
-    <script src="login.js"></script>
+    <link rel="stylesheet" href="admin_style.css">
   </head>
   <body>
     <nav class="navbar sticky-top navbar-expand-md navbar-light">
@@ -15,10 +13,19 @@
           <li class="nav-item active">
             <a class="nav-link" href="#">Net-Project</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="users.html">Users</a>
+          </li>
+          <li>
+            <a class="btn btn-info btn-nav post" href="new_post.html">New Post</a>
+          </li>
         </ul>
         <ul class="navbar-nav ml-auto">
           <li>
-            <button id="myBtn" class="btn btn-info btn-nav">Log In</button>
+            <a id="nick" class="nav-link">nick.name</a>
+          </li>
+          <li>
+            <a class="btn btn-info btn-nav" href="unauthorizate_main.html">Sign Out</a>
           </li>
         </ul>
       </div>
@@ -26,11 +33,11 @@
     <br>
     <div class="container-fluid">
 	    <div class="row">
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+		    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 				  <div class="our-services-wrapper mb-60">
 						<div class="services-inner">
 							<div class="our-services-img">
-								<a href="description_unauthorizate.html"><img src="open.png" width="68px" alt=""></a>
+								<a href="description.html"><img src="open.png" width="68px" alt=""></a>
 							</div>
 							<div class="our-services-text">
 								<div class="d-flex">
@@ -46,7 +53,7 @@
 				  <div class="our-services-wrapper mb-60">
 						<div class="services-inner">
 							<div class="our-services-img">
-								<a href="description_unauthorizate.html"><img src="open.png" width="68px" alt=""></a>
+								<a href="description.html"><img src="open.png" width="68px" alt=""></a>
 							</div>
 							<div class="our-services-text">
 								<div class="d-flex">
@@ -62,7 +69,7 @@
 				  <div class="our-services-wrapper mb-60">
 						<div class="services-inner">
 							<div class="our-services-img">
-								<a href="description_unauthorizate.html"><img src="open.png" width="68px" alt=""></a>
+								<a href="description.html"><img src="open.png" width="68px" alt=""></a>
 							</div>
 							<div class="our-services-text">
 								<div class="d-flex">
@@ -78,7 +85,7 @@
 				  <div class="our-services-wrapper mb-60">
 						<div class="services-inner">
 							<div class="our-services-img">
-								<a href="description_unauthorizate.html"><img src="open.png" width="68px" alt=""></a>
+								<a href="description.html"><img src="open.png" width="68px" alt=""></a>
 							</div>
 							<div class="our-services-text">
 								<div class="d-flex">
@@ -94,7 +101,7 @@
 				  <div class="our-services-wrapper mb-60">
 						<div class="services-inner">
 							<div class="our-services-img">
-								<a href="description_unauthorizate.html"><img src="open.png" width="68px" alt=""></a>
+								<a href="description.html"><img src="open.png" width="68px" alt=""></a>
 							</div>
 							<div class="our-services-text">
 								<div class="d-flex">
@@ -110,7 +117,7 @@
 				  <div class="our-services-wrapper mb-60">
 						<div class="services-inner">
 							<div class="our-services-img">
-								<a href="description_unauthorizate.html"><img src="open.png" width="68px" alt=""></a>
+								<a href="description.html"><img src="open.png" width="68px" alt=""></a>
 							</div>
 							<div class="our-services-text">
 								<div class="d-flex">
@@ -126,7 +133,7 @@
 				  <div class="our-services-wrapper mb-60">
 						<div class="services-inner">
 							<div class="our-services-img">
-								<a href="description_unauthorizate.html"><img src="open.png" width="68px" alt=""></a>
+								<a href="description.html"><img src="open.png" width="68px" alt=""></a>
 							</div>
 							<div class="our-services-text">
 								<div class="d-flex">
@@ -145,31 +152,5 @@
         <span><a class="text-muted" href="#">Русский</a>/<a class="text-muted" href="#">English</a></span>
       </div>
     </footer>
-    <div id="myModal" class="modal">
-      <div class="wrapper fadeInDown">
-        <div id="formContent">
-          <div class="fadeIn first">
-            <img src="https://cdn.dribbble.com/users/5591/screenshots/522951/mobius-nest-egg-logo-black.jpg" id="icon" alt="User Icon" />
-            <h1>Net-Project</h1>
-          </div>
-          <form>
-            <input type="text" id="login" class="fadeIn second" name="login" placeholder="username or email">
-            <input type="password" id="password" class="fadeIn third" name="login" placeholder="password">
-            <input type="button" class="fadeIn fourth" value="Log In" onclick="location.href='authorizate_main.html'">
-            <div class="social">
-  					  <a href="#"><span class="fa fa-facebook"></span></a>
-  						<a href="#"><span class="fa fa-twitter"></span></a>
-  						<a href="#"><span class="fa fa-github-alt"></span></a>
-  						<a href="#"><span class="fa fa-google-plus"></span></a>
-  						<a href="#"><span class="fa fa-linkedin"></span></a>
-  				  </div>
-          </form>
-          <div id="formFooter">
-            <a id="form-left" class="underlineHover" href="signup.html">Register</a>
-            <a id="form-right" class="underlineHover" href="forgot.html">Forgot password</a>
-          </div>
-        </div>
-      </div>
-    </div>
   </body>
 </html>
