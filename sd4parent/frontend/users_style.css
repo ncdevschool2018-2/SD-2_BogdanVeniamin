@@ -3,6 +3,14 @@
   color: #4d4d4d;
 }
 
+.card-btn {
+  margin-left: 150px;
+  position: relative;
+  bottom: 10px;
+  background-color: #76D7C4;
+  border-color: #76D7C4;
+}
+
 .navbar {
   background-color: white;
 }
@@ -33,9 +41,6 @@ body {
   font-size: 25px;
 }
 
-.nav-item {
-  border-bottom: 2px solid white;
-}
 
 .nav-item:hover {
   border-bottom: 2px solid #FC6602;
@@ -46,18 +51,15 @@ body {
   border-bottom: 2px solid #FC6602;
 }
 
-.container {
-  margin-top: 60px;
+.container-fluid {
+  margin-top: 40px;
+  width: 1300px;
 }
 
-.btn-upload {
-  background-color: #519B8C;
-  border-color: #519B8C;
-  margin-left: 80px;
+h5 {
+  margin-top: 10px;
 }
 
-.btn-post {
-  margin-top: 60px;
-  background-color: #F96D06;
-  border-color: #F96D06;
+.date {
+  margin-right: 80px;
 }
