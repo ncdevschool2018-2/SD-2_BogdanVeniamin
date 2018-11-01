@@ -1,0 +1,85 @@
+package com.netcracker.edu.fapi.models;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+
+public class UserViewModel {
+
+    private long id;
+    private String login;
+    private String password;
+    private String role;
+    private String email;
+    private boolean language;
+    private String lastDateLogin;
+
+    public UserViewModel(String login, String password, String role, String email, boolean language, String lastDateLogin) {
+        this.login = login;
+        this.password = password;
+        this.role = role;
+        this.email = email;
+        this.language = language;
+        this.lastDateLogin = lastDateLogin;
+    }
+
+    public UserViewModel() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isLanguage() {
+        return language;
+    }
+
+    public void setLanguage(boolean language) {
+        this.language = language;
+    }
+
+    public String getLastDateLogin() {
+        return lastDateLogin;
+    }
+
+    public void setLastDateLogin(String lastDateLogin) {
+        this.lastDateLogin = lastDateLogin;
+    }
+
+}
