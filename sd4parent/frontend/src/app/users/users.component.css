@@ -1,0 +1,17 @@
+.container-fluid {
+  margin-top: 40px;
+  width: 1300px;
+}
+
+h5 {
+  margin-top: 10px;
+}
+
+.del {
+  background-color: #B2042E;
+  border-color: #B2042E;
+}
+
+.table {
+  margin-top: 50px;
+}

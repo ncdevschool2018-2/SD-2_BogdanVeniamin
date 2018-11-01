@@ -1,0 +1,16 @@
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)"
+             size = "medium" color="fff"
+             type="ball-newton-cradle"></ngx-spinner>
+<table class="table">
+  <tr *ngFor="let user of users">
+    <td scope="row">{{ user.login }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.lastDateLogin }}</td>
+    <td>{{ user.role }}</td>
+    <td *ngIf="user.role === 'USER'"><button class="btn btn-info">Make admin</button></td>
+    <td *ngIf="user.role === 'ADMIN'"><button class="btn btn-info">Make user</button></td>
+    <td><button class="btn btn-info">Wallet</button></td>
+    <td><button class="btn btn-info">Subscriptions</button></td>
+    <td><button class="btn btn-info del" (click)="_deleteUser(user.id)">Delete</button></td>
+  </tr>
+</table>
