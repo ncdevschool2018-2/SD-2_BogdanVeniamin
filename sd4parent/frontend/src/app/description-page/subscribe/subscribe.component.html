@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="card-deck text-center">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">$350 <small class="text-muted">(8% discount)</small></h5>
+        <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
+          <h4 class="name">Months</h4>
+          <button type="button" class="btn btn-custom">1</button>
+          <button type="button" class="btn btn-custom">2</button>
+          <button type="button" class="btn btn-custom">3</button>
+          <button type="button" class="btn btn-custom">4</button>
+          <button type="button" class="btn btn-custom">5</button>
+          <button type="button" class="btn btn-custom current">6</button>
+          <button type="button" class="btn btn-custom">7</button>
+          <button type="button" class="btn btn-custom">8</button>
+          <button type="button" class="btn btn-custom">9</button>
+          <button type="button" class="btn btn-custom">10</button>
+          <button type="button" class="btn btn-custom">11</button>
+          <button type="button" class="btn btn-custom">12</button>
+        </div>
+        <button type="button" id="myBtn" class="btn btn-lg btn-primary" (click)="_openModal(template)">Subscribe</button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #template>
+  <div class="modal-header">
+    <h1 class="modal-title">Subscription details</h1>
+  </div>
+  <div class="modal-body">
+    <h4>Subscription term: <div style="color: gray">6 months</div></h4>
+    <h4>All price: <div style="color: gray">600$</div>></h4>
+    <h4>Discount: <div style="color: gray">"8%</div></h4>
+  </div>
+  <input type="button" class="end" value="Subscribe" (click)="_closeModal()">
+</ng-template>

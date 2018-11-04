@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../model/user';
-import { UserService } from '../service/user.service';
+import { User } from '../../model/user';
+import { UserService } from '../../service/user.service';
 import { Subscription } from 'rxjs/internal/Subscription'
 import { NgxSpinnerService } from 'ngx-spinner';
 import {BsModalService} from "ngx-bootstrap";
@@ -34,7 +34,6 @@ export class UsersComponent implements OnInit {
     this.loadingService.show();
     this.subscriptions.push(this.userService.deleteUser(userId).subscribe(() => {
       this._updateUsers();
-
     }))
   }
 

@@ -7,14 +7,14 @@ type="ball-newton-cradle"></ngx-spinner>
       <div class="our-services-wrapper mb-60">
         <div class="services-inner">
           <div class="our-services-img">
-            <a [routerLink]="['posts', post.id]"><img src="../../assets/images/open.png" width="68px" alt=""></a>
+            <a [routerLink]="['posts', post.id]"><img src="../../../assets/images/open.png" width="68px" alt=""></a>
           </div>
           <div class="our-services-text">
             <div class="row">
               <h4 class="col-8">{{ post.title }}</h4>
               <h4  class="col-4">{{ post.price }}/DAY</h4>
             </div>
-            <p>{{ post.description }}</p>
+            <p>{{ _shortDescription(post.description) }}</p>
           </div>
         </div>
       </div>

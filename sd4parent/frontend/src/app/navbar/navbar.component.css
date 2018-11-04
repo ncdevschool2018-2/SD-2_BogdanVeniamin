@@ -36,6 +36,9 @@ html {
   font-size: 25px;
 }
 
+.nav-item {
+  border-bottom: 2px solid white;
+}
 
 .nav-item:hover {
   border-bottom: 2px solid #FC6602;
@@ -44,28 +47,6 @@ html {
 
 .active {
   border-bottom: 2px solid #FC6602;
-}
-
-/* STRUCTURE */
-
-
-#formFooter {
-  background-color: #f6f6f6;
-  border-top: 1px solid #dce8f1;
-  padding: 20px;
-  -webkit-border-radius: 0 0 10px 10px;
-  border-radius: 0 0 10px 10px;
-}
-
-/* TABS */
-
-h2.inactive {
-  color: #cccccc;
-}
-
-h2.active {
-  color: #0d0d0d;
-  border-bottom: 2px solid #5fbae9;
 }
 
 /* FORM TYPOGRAPHY*/
@@ -85,11 +66,6 @@ input[type=button], input[type=submit], input[type=reset]  {
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
   margin: 5px 20px 40px 120px;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
 }
 
 input[type=button].forgot {
@@ -98,14 +74,6 @@ input[type=button].forgot {
 
 input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
   background-color: #DA5700;
-}
-
-input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
-  -moz-transform: scale(0.95);
-  -webkit-transform: scale(0.95);
-  -o-transform: scale(0.95);
-  -ms-transform: scale(0.95);
-  transform: scale(0.95);
 }
 
 input[type=text], input[type=password] {
@@ -120,11 +88,6 @@ input[type=text], input[type=password] {
   margin: 5px;
   width: 85%;
   border: 2px solid #f6f6f6;
-  -webkit-transition: all 0.5s ease-in-out;
-  -moz-transition: all 0.5s ease-in-out;
-  -ms-transition: all 0.5s ease-in-out;
-  -o-transition: all 0.5s ease-in-out;
-  transition: all 0.5s ease-in-out;
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
 }
@@ -138,32 +101,6 @@ input[type=text]::placeholder {
   color: #cccccc;
 }
 
-/* Simple CSS3 Fade-in Animation */
-@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-
-.fadeIn {
-  opacity:0;
-  -webkit-animation:fadeIn ease-in 1;
-  -moz-animation:fadeIn ease-in 1;
-  animation:fadeIn ease-in 1;
-
-  -webkit-animation-fill-mode:forwards;
-  -moz-animation-fill-mode:forwards;
-  animation-fill-mode:forwards;
-
-  -webkit-animation-duration:1s;
-  -moz-animation-duration:1s;
-  animation-duration:1s;
-}
-
-.fadeIn.first {
-  -webkit-animation-delay: 0.4s;
-  -moz-animation-delay: 0.4s;
-  animation-delay: 0.4s;
-}
-
 h1{
   color: #FC6602;
   margin-left: 130px;
@@ -175,9 +112,6 @@ h1{
 
 .modal-footer {
   color: silver;
-}
-
-.modal-footer:hover {
 }
 
 .left {

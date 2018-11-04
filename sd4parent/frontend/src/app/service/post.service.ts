@@ -19,6 +19,6 @@ export class PostService {
   }
 
   deletePost(postId: string): Observable<void> {
-    return this.http.delete<void>('/api/p' + postId)
+    return this.http.delete<void>('/api/p/' + postId)
   }
 }

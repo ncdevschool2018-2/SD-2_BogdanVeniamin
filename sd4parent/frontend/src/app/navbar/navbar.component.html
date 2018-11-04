@@ -4,20 +4,18 @@
       <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <a class="nav-link" routerLink="">Net-Project</a>
       </li>
-      <ng-template *ngIf="currentUser">
-        <li *ngIf="currentUser.role === 'USER'" class="nav-item" routerLinkActive="active">
+        <li *ngIf="currentUser && currentUser.role === 'USER'" class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="wallet">Wallet</a>
         </li>
-        <li *ngIf="currentUser.role === 'USER'" class="nav-item" routerLinkActive="active">
+        <li *ngIf="currentUser && currentUser.role === 'USER'" class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="subscriptions">Subscriptions</a>
         </li>
-        <li *ngIf="currentUser.role === 'ADMIN'" class="nav-item">
+        <li *ngIf="currentUser && currentUser.role === 'ADMIN'" class="nav-item">
           <a class="nav-link" routerLink="users">Users</a>
         </li>
-        <li *ngIf="currentUser.role === 'ADMIN'">
-          <a class="btn btn-info btn-nav post" href="new_post.html">New Post</a>
+        <li *ngIf="currentUser && currentUser.role === 'ADMIN'">
+          <a class="btn btn-info btn-nav post" routerLink="new-post">New Post</a>
         </li>
-      </ng-template>
     </ul>
     <ul class="navbar-nav ml-auto">
       <li *ngIf="currentUser">
