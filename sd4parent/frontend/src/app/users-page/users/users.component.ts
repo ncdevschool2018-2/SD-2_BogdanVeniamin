@@ -25,7 +25,7 @@ export class UsersComponent implements OnInit {
     this.loadingService.show();
     this.subscriptions.push(this.userService.getUsers().subscribe(newUsers => {
       this.users = newUsers as User[];
-      console.log(this.users)
+      console.log(this.users);
       this.loadingService.hide();
     }))
   }
@@ -33,7 +33,13 @@ export class UsersComponent implements OnInit {
   public _deleteUser(userId: string): void {
     this.loadingService.show();
     this.subscriptions.push(this.userService.deleteUser(userId).subscribe(() => {
+      this.updateUsers();
+      this.loadingService.hide();
     }))
+  }
+
+  private updateUsers(): void {
+    this.loadUsers();
   }
 
 }

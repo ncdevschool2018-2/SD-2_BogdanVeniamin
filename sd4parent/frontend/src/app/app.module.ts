@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 import {HttpClientModule} from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 import { RouterModule } from "@angular/router";
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule }   from '@angular/forms';
@@ -11,7 +12,8 @@ import { MainPageModule } from "./main-page/main-page.module";
 import { NewPostPageModule } from "./new-post-page/new-post-page.module";
 import { SubscriptionsPageModule } from "./subscriptions-page/subscriptions-page.module";
 import { UsersPageModule } from "./users-page/users-page.module";
-import { WalletPageModule } from "./wallet-page/wallet-page.module";
+import { WalletPageModule } from "./wallet-page/wallet-page.module"
+import {Ng2Webstorage} from 'ngx-webstorage';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -24,6 +26,7 @@ import { NavbarComponent } from './navbar/navbar.component';
   imports: [
     BrowserModule,
     HttpClientModule,
+    HttpModule,
     FormsModule,
     NgxSpinnerModule,
     DescriptionPageModule,
@@ -34,7 +37,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     SubscriptionsPageModule,
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
-    RouterModule
+    RouterModule,
+    Ng2Webstorage
   ],
   providers: [],
   bootstrap: [AppComponent]

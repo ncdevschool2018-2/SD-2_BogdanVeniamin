@@ -25,7 +25,10 @@ public class WalletDataServiceImpl implements WalletDataService {
     }
 
     @Override
-    public WalletViewModel getWalletById(Long id) { return null; }
+    public WalletViewModel getWalletById(Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(backendServerUrl + "/api/wallets/" + id, WalletViewModel.class);
+    }
 
     @Override
     public WalletViewModel saveWallet(WalletViewModel purse) {

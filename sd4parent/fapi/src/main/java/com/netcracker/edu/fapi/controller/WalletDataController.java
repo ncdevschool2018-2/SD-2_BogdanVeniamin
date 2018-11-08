@@ -20,6 +20,11 @@ public class WalletDataController {
         return ResponseEntity.ok(walletDataService.getAll());
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<WalletViewModel> getWalletById(@PathVariable String id) {
+        return ResponseEntity.ok(walletDataService.getWalletById(Long.valueOf(id)));
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<WalletViewModel> saveWallet(@RequestBody WalletViewModel purse) {
         if(purse != null)
