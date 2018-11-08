@@ -1,6 +1,9 @@
 package com.netcracker.edu.backend.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
@@ -9,14 +12,27 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Size(max = 45)
     private String login;
+
+    @NotNull
+    @Size(max = 45)
     private String password;
+
+    @NotNull
+    @Size(max = 45)
     private String role;
+
+    @NotNull
+    @Email
+    @Size(max = 45)
     private String email;
-    private boolean language;
+
+    private String language;
     private String lastDateLogin;
 
-    public User(String login, String password, String role, String email, boolean language, String lastLogin) {
+    public User(String login, String password, String role, String email, String language, String lastDateLogin) {
         this.login = login;
         this.password = password;
         this.role = role;
@@ -68,11 +84,11 @@ public class User {
         this.email = email;
     }
 
-    public boolean isLanguage() {
+    public String getLanguage() {
         return language;
     }
 
-    public void setLanguage(boolean language) {
+    public void setLanguage(String language) {
         this.language = language;
     }
 

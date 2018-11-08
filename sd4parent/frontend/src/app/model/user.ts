@@ -4,7 +4,7 @@ export class User {
   password: string;
   role: string;
   email: string;
-  language: boolean;
+  language: string;
   lastDateLogin: string;
 
   static cloneBase(user: User): User {

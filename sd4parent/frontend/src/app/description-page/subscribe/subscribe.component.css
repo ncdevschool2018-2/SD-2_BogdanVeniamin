@@ -7,9 +7,18 @@
   color: white;
 }
 
+.btn-custom {
+  margin-left: 7px;
+  margin-right: 7px;
+}
+
 .btn-custom:hover {
   background-color: #5813AB;
   color: white;
+}
+
+.button-group {
+  margin-top: 7px;
 }
 
 .name {

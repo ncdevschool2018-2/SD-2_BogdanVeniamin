@@ -33,12 +33,7 @@ export class UsersComponent implements OnInit {
   public _deleteUser(userId: string): void {
     this.loadingService.show();
     this.subscriptions.push(this.userService.deleteUser(userId).subscribe(() => {
-      this._updateUsers();
     }))
-  }
-
-  public _updateUsers(): void {
-    this.loadUsers();
   }
 
 }

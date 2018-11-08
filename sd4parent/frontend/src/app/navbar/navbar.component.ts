@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit, TemplateRef} from '@angular/core';
 import { User } from '../model/user';
 import { UserService } from '../service/user.service';
-import { Subscription } from 'rxjs/internal/Subscription'
+import { Subscription } from 'rxjs/internal/Subscription';
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -58,16 +58,29 @@ export class NavbarComponent implements OnInit {
   }
 
   public _findAccount(): void {
-    console.log("Log: " + this.logUser.login);
-    console.log("Password: " + this.logUser.password);
     for (let i: number = 0; i < this.users.length; i++)
       if (this.logUser.login == this.users[i].login && this.logUser.password == this.users[i].password) {
         this.currentUser = this.users[i];
         break;
       }
-      else
-        console.log("Not found");
-    console.log("Current user login, password and role: " + this.currentUser.login + " " + this.currentUser.password + " " + this.currentUser.role);
     this._closeModal();
   }
+
+  public _changeLanguage(): void {
+    if(this.currentUser.language === 'ENG')
+      this.currentUser.language = 'RUS';
+    else
+      this.currentUser.language = 'ENG';
+  }
+
+  public _otherLanguage(): string {
+    if(this.currentUser === undefined)
+      return 'RUS';
+    if(this.currentUser.language === 'ENG')
+      return 'RUS';
+    else
+      return 'ENG';
+  }
+
+
 }

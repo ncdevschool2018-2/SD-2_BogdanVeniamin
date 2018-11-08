@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public Iterable<User> getAllusers() { return userService.getAllUsers(); }
+    public Iterable<User> getAllUsers() { return userService.getAllUsers(); }
 
     @RequestMapping(method = RequestMethod.POST)
     public User saveUser(@RequestBody User account) { return userService.saveUser(account); }

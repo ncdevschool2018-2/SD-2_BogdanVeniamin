@@ -2,3 +2,7 @@
   text-transform: uppercase;
   margin-left: 250px;
 }
+
+.container-fluid {
+  width: 1300px;
+}

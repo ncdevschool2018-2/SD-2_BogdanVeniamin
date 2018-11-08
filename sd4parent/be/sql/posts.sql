@@ -4,16 +4,15 @@ create table `post` (
   `description` varchar(255) default null,
   `price` float default null,
   `discount` int default null,
-  `additions_id` enum default null,
   primary key (`id`),
-  unique key `title_unique` (`title`)
+  unique key `title_unique` (`title`),
 ) ENGINE=InnoDB auto_increment=1
 
 create table `user` (
   `id` bigint(20) not null auto_increment,
   `login` varchar(45) default null,
   `password` varchar(45) not null,
-  `role` varchar(45) default null,
+  `role` varchar(45) not null,
   `email` varchar(45) not null,
   `language` boolean default true, /* language=0 - english, language=1 - russian */
   `last_date_login` timestamp,
@@ -24,11 +23,9 @@ create table `user` (
 create table `wallet` (
   `id` bigint(20) not null auto_increment,
   `owner_id` bigint(20) not null,
-  `transactions_id` enum default null,
   `money` float default null,
   primary key (`id`),
-  foreign key (`owner_id`) references `user`(`id`),
-  foreign key (`transactions_id`) references `transactions`(`id`)
+  foreign key (`owner_id`) references `user`(`id`)
 ) ENGINE=InnoDB auto_increment=1
 
 create table `usersposts` (
@@ -37,13 +34,11 @@ create table `usersposts` (
   `duration` int,
   foreign key (`user_id`) references `user`(`id`),
   foreign key (`post_id`) references `post`(`id`)
-)
+) ENGINE=InnoDB
 
-create table `packages` (
+create table `package` (
   `id` bigint(20) not null auto_increment,
-  `posts_id` enum default null,
-  primary key (`id`),
-  foreign key (`posts_id`) references `post`(`id`)
+  primary key (`id`)
 ) ENGINE=InnoDB auto_increment=1
 
 create table `addition` (
@@ -59,11 +54,29 @@ create table `additionsposts` (
   `addition_id` bigint(20)  not null,
   foreign key (`post_id`) references `post`(`id`),
   foreign key (`addition_id`) references `addition`(`id`)
-)
+) ENGINE=InnoDB
 
 create table `transactions` (
   `id` bigint(20) not null auto_increment,
-  `action` enum default null,
+  `wallet_id` bigint(20) not null,
+  `action` varchar(45) default null,
   `amount` float default null,
-  primary key (`id`)
+  primary key (`id`),
+  foreign key (`wallet_id`) references `wallet`(`id`)
 ) ENGINE=InnoDB auto_increment=1
+
+create table `packagesposts` (
+  `package_id` bigint(20) not null,
+  `post_id` bigint(20) not null,
+  foreign key (`package_id`) references `package`(`id`),
+  foreign key (`post_id`) references `post`(`id`)
+) ENGINE=InnoDB
+
+create table `cards` (
+ `id` bigint(20) not null,
+ `user_id` bigint(20) not null,
+ `number` bigint(20) not null,
+ `amount` float default null,
+ primary key (`id`),
+ foreign key (`user_id`) references `user`(`id`)
+) ENGINE=InnoDB

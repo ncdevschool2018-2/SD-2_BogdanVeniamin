@@ -14,13 +14,11 @@ import { UsersPageModule } from "./users-page/users-page.module";
 import { WalletPageModule } from "./wallet-page/wallet-page.module";
 
 import { AppComponent } from './app.component';
-import { FooterComponent } from './footer/footer.component'
 import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FooterComponent,
     NavbarComponent
   ],
   imports: [

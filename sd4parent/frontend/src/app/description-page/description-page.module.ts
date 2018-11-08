@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from "../shared/shared.module";
 import { ModalModule } from 'ngx-bootstrap/modal';
 import {RouterModule} from "@angular/router";
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { DescriptionPageComponent } from './description-page.component';
 import { DescriptionComponent } from "./description/description.component";
@@ -14,6 +15,7 @@ import { SubscribeComponent } from "./subscribe/subscribe.component";
     CommonModule,
     SharedModule,
     ModalModule,
+    NgxSpinnerModule,
     RouterModule.forRoot([
       {
         path: 'posts/:id',

@@ -11,10 +11,10 @@ public class UserViewModel {
     private String password;
     private String role;
     private String email;
-    private boolean language;
+    private String language;
     private String lastDateLogin;
 
-    public UserViewModel(String login, String password, String role, String email, boolean language, String lastDateLogin) {
+    public UserViewModel(String login, String password, String role, String email, String language, String lastDateLogin) {
         this.login = login;
         this.password = password;
         this.role = role;
@@ -66,11 +66,11 @@ public class UserViewModel {
         this.email = email;
     }
 
-    public boolean isLanguage() {
+    public String getLanguage() {
         return language;
     }
 
-    public void setLanguage(boolean language) {
+    public void setLanguage(String language) {
         this.language = language;
     }
 
