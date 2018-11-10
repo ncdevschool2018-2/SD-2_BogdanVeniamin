@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+import static com.netcracker.edu.backend.repository.specification.WalletSpecification.walletFindByLogin;
+
 @Component
 public class WalletServiceImpl implements WalletService {
 
@@ -41,6 +43,11 @@ public class WalletServiceImpl implements WalletService {
     public void deleteWallet(Long id)
     {
         repository.deleteById(id);
+    }
+
+    @Override
+    public Optional<Wallet> getWalletByOwnerLogin (String login) {
+        return repository.findOne(walletFindByLogin(login));
     }
 
 }

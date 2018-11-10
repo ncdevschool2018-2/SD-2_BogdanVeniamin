@@ -6,9 +6,9 @@
     <td scope="row">{{ user.login }}</td>
     <td>{{ user.email }}</td>
     <td>{{ user.lastDateLogin }}</td>
-    <td>{{ user.role }}</td>
     <td><button class="btn btn-info">Wallet</button></td>
-    <td><button class="btn btn-info">Subscriptions</button  ></td>
+    <td><button class="btn btn-info">Subscriptions</button></td>
+    <td><button class="btn btn-info del">Ban</button></td>
     <td><button class="btn btn-info del" (click)="_deleteUser(user.id)">Delete</button></td>
   </tr>
 </table>

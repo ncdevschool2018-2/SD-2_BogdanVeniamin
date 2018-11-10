@@ -33,6 +33,11 @@ public class WalletDataController {
             return null;
     }
 
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ResponseEntity<WalletViewModel> getWalletByOwnerLogin(@RequestParam("login") String login) {
+        return ResponseEntity.ok(walletDataService.getWalletByOwnerLogin(login));
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteWallet(@PathVariable String id) {
         walletDataService.deleteWallet(Long.valueOf(id));

@@ -12,35 +12,26 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class DescriptionComponent implements OnInit {
 
-  public posts: Post[];
+  public post: Post;
   private subscriptions: Subscription[] = [];
-  private post_id: number;
-  public index: number;
+  public post_id: number;
 
   constructor(private postService: PostService, private route: ActivatedRoute, private loadingService: NgxSpinnerService) { }
 
   ngOnInit() {
-    this.loadPosts();
     this.route.paramMap.subscribe(params => {
       this.post_id = +params.get('id');
     });
-    console.log("Index: " + this.index);
+    this.loadPost(this.post_id.toString());
   }
 
-  private loadPosts(): void {
+  private loadPost(postId: string): void {
     this.loadingService.show();
-    this.subscriptions.push(this.postService.getPosts().subscribe(products => {
-      this.posts = products as Post[];
-      console.log(this.posts);
-      this.findPost();
+    this.subscriptions.push(this.postService.getPost(postId).subscribe(product => {
+      this.post = product as Post;
+      console.log("Post: " + this.post);
       this.loadingService.hide();
     }))
-  }
-
-  private findPost(): void {
-    for(let i: number = 0; i<this.posts.length; i++)
-      if(+this.posts[i].id === this.post_id)
-        this.index = i;
   }
 
   public _deletePost(userId: string): void {

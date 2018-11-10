@@ -26,7 +26,8 @@ public class PostDataServiceImpl implements PostDataService {
 
     @Override
     public PostViewModel getPostById(Long id) {
-        return null;
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(backendServerUrl + "/api/posts/" + id, PostViewModel.class);
     }
 
     @Override

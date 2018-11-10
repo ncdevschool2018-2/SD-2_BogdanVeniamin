@@ -10,5 +10,6 @@ public interface WalletDataService {
     WalletViewModel getWalletById(Long id);
     WalletViewModel saveWallet(WalletViewModel purse);
     void deleteWallet(Long id);
+    WalletViewModel getWalletByOwnerLogin(String login);
 
 }

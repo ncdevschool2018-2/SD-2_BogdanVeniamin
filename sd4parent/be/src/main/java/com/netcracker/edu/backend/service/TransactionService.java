@@ -10,4 +10,5 @@ public interface TransactionService {
     Optional<Transaction> getTransactionById(Long id);
     Iterable<Transaction> getAllTransactions();
     void deleteTransaction(Long id);
+    Iterable<Transaction> getTransactionsByLogin(String login);
 }

@@ -3,9 +3,9 @@
              type="ball-newton-cradle"></ngx-spinner>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-10 text-center"><h2 class="title"><strong>{{ posts[index].title }}</strong></h2></div>
+    <div class="col-10 text-center"><h2 class="title"><strong>{{ post.title }}</strong></h2></div>
     <div class="col-1 text-center *ngIf=''"><button class="btn btn-info" routerLink="/new-post">Edit</button></div>
-    <div class="col-1 text-center"><button class="btn btn-info" (click)="_deletePost(posts[index].id)" routerLink="">Delete<div>                                                                      </div></button></div>
+    <div class="col-1 text-center"><button class="btn btn-info" (click)="_deletePost(post_id)" routerLink="">Delete<div>                                                                      </div></button></div>
   </div>
-  <h5>{{ posts[index].description }}</h5>
+  <h5>{{ post.description }}</h5>
 </div>

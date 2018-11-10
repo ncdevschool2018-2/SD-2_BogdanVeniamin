@@ -7,6 +7,7 @@ import { HttpModule } from '@angular/http';
 import { WalletPageComponent } from './wallet-page.component';
 import { WalletComponent } from "./wallet/wallet.component";
 import { ExchangeService } from "../service/exchange.service";
+import { TransactionsComponent } from './transactions/transactions.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { ExchangeService } from "../service/exchange.service";
   ],
   declarations: [
     WalletPageComponent,
-    WalletComponent
+    WalletComponent,
+    TransactionsComponent
   ],
   providers: [ExchangeService]
 })

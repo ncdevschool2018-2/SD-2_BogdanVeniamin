@@ -21,6 +21,11 @@ public class PostDataController {
         return ResponseEntity.ok(postDataService.getAll());
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<PostViewModel> getPostById(@PathVariable String id) {
+        return ResponseEntity.ok(postDataService.getPostById(Long.valueOf(id)));
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<PostViewModel> savePost(@RequestBody PostViewModel post /*todo server validation*/) {
         if (post != null) {

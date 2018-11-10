@@ -10,5 +10,4 @@ export class ExchangeService {
 
   constructor(private http: Http) { }
 
-  
 }

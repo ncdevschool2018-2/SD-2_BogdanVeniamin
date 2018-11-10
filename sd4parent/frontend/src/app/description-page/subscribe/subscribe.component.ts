@@ -21,10 +21,9 @@ interface Condition {
 export class SubscribeComponent implements OnInit {
 
   public modalRef: BsModalRef;
-  public posts: Post[];
+  public post: Post;
   private subscriptions: Subscription[] = [];
   private post_id: number;
-  public index: number;
   public numbers: number[] = [1,2,3,4,5,6,7,8,9,10,11,12];
   public condition: Condition = new class implements Condition {
     discount: number;
@@ -37,29 +36,21 @@ export class SubscribeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadPosts();
     this.route.paramMap.subscribe(params => {
       this.post_id = +params.get('id');
     });
+    this.loadPost(this.post_id.toString());
     this._setDuration(6);
   }
 
-  private loadPosts(): void {
+  private loadPost(postId: string): void {
     this.loadingService.show();
-    this.subscriptions.push(this.postService.getPosts().subscribe(products => {
-      this.posts = products as Post[];
-      console.log(this.posts);
-      this.findPost();
-      this._setPrice(this.posts[this.index].price, this.posts[this.index].discount);
-      this._setDiscount(this.posts[this.index].discount);
+    this.subscriptions.push(this.postService.getPost(postId).subscribe(product => {
+      this.post = product as Post;
+      this._setPrice(this.post.price, this.post.discount);
+      this._setDiscount(this.post.discount);
       this.loadingService.hide();
     }))
-  }
-
-  private findPost(): void {
-    for (let i: number = 0; i < this.posts.length; i++)
-      if (+this.posts[i].id === this.post_id)
-        this.index = i;
   }
 
   public _closeModal(): void {
@@ -106,10 +97,6 @@ export class SubscribeComponent implements OnInit {
       return (2*discount/3).toFixed(2);
     if(this.condition.duration > 9 && this.condition.duration < 13)
       return discount.toFixed(2);
-  }
-
-  public _changeClass(): void {
-
   }
 
 }

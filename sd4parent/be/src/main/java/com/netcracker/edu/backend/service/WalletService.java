@@ -10,5 +10,6 @@ public interface WalletService {
     Optional<Wallet>  getWalletById(Long id);
     Iterable<Wallet> getAllWallets();
     void deleteWallet(Long id);
+    Optional<Wallet> getWalletByOwnerLogin(String login);
 
 }

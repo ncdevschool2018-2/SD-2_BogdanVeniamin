@@ -4,7 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "post")
@@ -17,11 +19,21 @@ public class Post {
     private float price;
     private int discount;
 
-    public Post(String title, String description, float price, int discount) {
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "usersposts", joinColumns = { @JoinColumn(name = "post_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
+    private Set<User> users = new HashSet<>();
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "packagesposts", joinColumns = { @JoinColumn(name = "post_id") }, inverseJoinColumns = { @JoinColumn(name = "package_id") })
+    private Set<Package> packages = new HashSet<>();
+
+    public Post(String title, String description, float price, int discount, Set<User> users, Set<Package> packages) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.discount = discount;
+        this.users = users;
+        this.packages = packages;
     }
 
     public Post() {
@@ -66,6 +78,22 @@ public class Post {
 
     public void setDiscount(int discount) {
         this.discount = discount;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    public Set<Package> getPackages() {
+        return packages;
+    }
+
+    public void setPackages(Set<Package> packages) {
+        this.packages = packages;
     }
 
     @Override

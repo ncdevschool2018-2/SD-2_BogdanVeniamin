@@ -43,4 +43,9 @@ public class TransactionController {
         return ResponseEntity.noContent().build();
     }
 
+    @RequestMapping(value="/", method = RequestMethod.GET)
+    public Iterable<Transaction> getTransactionsByLogin(@RequestParam("login") String login) {
+        return transactionService.getTransactionsByLogin(login);
+    }
+
 }

@@ -39,5 +39,12 @@ public class WalletController {
         return ResponseEntity.noContent().build();
     }
 
-
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ResponseEntity<Wallet> getWalletByOwnerLogin(@RequestParam("login") String login) {
+        Optional<Wallet> wallet = walletService.getWalletByOwnerLogin(login);
+        if (wallet.isPresent())
+            return ResponseEntity.ok(wallet.get());
+        else
+            return ResponseEntity.notFound().build();
+    }
 }

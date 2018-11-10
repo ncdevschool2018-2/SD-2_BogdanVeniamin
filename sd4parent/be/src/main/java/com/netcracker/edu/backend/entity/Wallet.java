@@ -1,6 +1,7 @@
 package com.netcracker.edu.backend.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "wallet")
@@ -11,8 +12,8 @@ public class Wallet {
 
     private float money;
 
-    @OneToOne
-    @JoinColumn(name = "owner_id")
+    @OneToOne(optional = false)
+    @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
     public Wallet() {
@@ -46,5 +47,15 @@ public class Wallet {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) return true;
+        if(obj == null || getClass() != obj.getClass()) return false;
+        Wallet that = (Wallet) obj;
+        return id == that.id &&
+                Objects.equals(money, that.money) &&
+                Objects.equals(owner, that.owner);
     }
 }

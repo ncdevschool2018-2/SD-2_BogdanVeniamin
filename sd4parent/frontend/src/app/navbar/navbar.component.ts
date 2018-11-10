@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs/internal/Subscription';
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import { NgxSpinnerService } from 'ngx-spinner';
 import {SessionStorageService} from 'ngx-webstorage';
+import { Wallet } from '../model/wallet'
+import { WalletService } from '../service/wallet.service'
 
 @Component({
   selector: 'navbar',
@@ -14,6 +16,7 @@ import {SessionStorageService} from 'ngx-webstorage';
 export class NavbarComponent implements OnInit {
 
   public users: User[];
+  public wallet: Wallet;
   private subscriptions: Subscription[] = [];
   public modalRef: BsModalRef;
   public newUser: User = new User();
@@ -21,7 +24,7 @@ export class NavbarComponent implements OnInit {
   public logUser: User = new User();
   private lastId: string;
 
-  constructor(private userService: UserService, private modalService: BsModalService, private loadingService: NgxSpinnerService, private sessionSt: SessionStorageService) { }
+  constructor(private userService: UserService, private modalService: BsModalService, private loadingService: NgxSpinnerService, private sessionSt: SessionStorageService, private walletService: WalletService) { }
 
   ngOnInit() {
     this.loadUsers();
@@ -49,6 +52,10 @@ export class NavbarComponent implements OnInit {
     if(this.newUser.login == null)
       this.newUser.login = this.newUser.email;
     this.newUser.id = this.lastId + 1;
+    this.createWallet();
+    this.subscriptions.push(this.walletService.saveWallet(this.wallet).subscribe(() => {
+
+    }));
     this.subscriptions.push(this.userService.saveUser(this.newUser).subscribe(() => {
       console.log("New User: " + this.newUser.login);
       this.currentUser = this.newUser;
@@ -116,5 +123,11 @@ export class NavbarComponent implements OnInit {
     this.sessionSt.clear("logged-in");
   }
 
+  private createWallet(): void {
+    this.wallet = new Wallet();
 
+    this.wallet.id = this.newUser.id;
+    this.wallet.money = 0;
+    this.wallet.owner = this.newUser;
+  }
 }

@@ -4,7 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -12,6 +14,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL)
+    private Wallet wallet;
 
     @Size(max = 45)
     private String login;
@@ -32,13 +37,17 @@ public class User {
     private String language;
     private String lastDateLogin;
 
-    public User(String login, String password, String role, String email, String language, String lastDateLogin) {
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "users")
+    private Set<Post> posts = new HashSet<>();
+
+    public User(String login, String password, String role, String email, String language, String lastDateLogin, Set<Post> posts) {
         this.login = login;
         this.password = password;
         this.role = role;
         this.email = email;
         this.language = language;
         this.lastDateLogin = lastDateLogin;
+        this.posts = posts;
     }
 
     public User() {
@@ -98,6 +107,14 @@ public class User {
 
     public void setLastDateLogin(String lastDateLogin) {
         this.lastDateLogin = lastDateLogin;
+    }
+
+    public Set<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Set<Post> posts) {
+        this.posts = posts;
     }
 
     @Override

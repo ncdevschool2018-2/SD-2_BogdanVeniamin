@@ -21,12 +21,12 @@ export class WalletComponent implements OnInit {
   constructor(private walletService: WalletService, private loadingService: NgxSpinnerService, private sessionSt: SessionStorageService, private modalService: BsModalService) { }
 
   ngOnInit() {
-    this.loadWallet(this.getSessionStorage().id);
+    this.loadWallet(this.getSessionStorage().login);
   }
 
-  private loadWallet(walletId: string) {
+  private loadWallet(login: string) {
     this.loadingService.show();
-    this.subscriptions.push(this.walletService.getWallet(walletId).subscribe(newWallet => {
+    this.subscriptions.push(this.walletService.getWalletByLogin(login).subscribe(newWallet => {
       this.wallet = newWallet as Wallet;
       console.log("Wallet: " + this.wallet.money);
       this.loadingService.hide();

@@ -71,12 +71,3 @@ create table `packagesposts` (
   foreign key (`package_id`) references `package`(`id`),
   foreign key (`post_id`) references `post`(`id`)
 ) ENGINE=InnoDB
-
-create table `cards` (
- `id` bigint(20) not null,
- `user_id` bigint(20) not null,
- `number` bigint(20) not null,
- `amount` float default null,
- primary key (`id`),
- foreign key (`user_id`) references `user`(`id`)
-) ENGINE=InnoDB

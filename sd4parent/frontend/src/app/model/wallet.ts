@@ -12,4 +12,5 @@ export class Wallet {
     clonedWallet.owner = wallet.owner;
     return clonedWallet;
   }
+
 }

@@ -2,7 +2,6 @@ package com.netcracker.edu.fapi.service.impl;
 
 import com.netcracker.edu.fapi.models.WalletViewModel;
 import com.netcracker.edu.fapi.service.WalletDataService;
-import com.netcracker.edu.fapi.service.WalletDataService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -40,6 +39,12 @@ public class WalletDataServiceImpl implements WalletDataService {
     public void deleteWallet(Long id) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(backendServerUrl + "/api/wallets/" + id);
+    }
+
+    @Override
+    public WalletViewModel getWalletByOwnerLogin(String login) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(backendServerUrl + "/api/wallets/?login=" + login, WalletViewModel.class);
     }
 
 }

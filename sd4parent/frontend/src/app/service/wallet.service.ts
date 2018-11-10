@@ -25,4 +25,8 @@ export class WalletService {
   deleteWallet(walletId: string): Observable<void> {
    return this.http.delete<void>("api/w/" + walletId);
   }
+
+  getWalletByLogin(login: string): Observable<Wallet> {
+    return this.http.get<Wallet>("api/w/?login=" + login);
+  }
 }
