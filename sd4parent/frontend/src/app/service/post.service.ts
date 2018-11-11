@@ -25,4 +25,8 @@ export class PostService {
   deletePost(postId: string): Observable<void> {
     return this.http.delete<void>('/api/p/' + postId)
   }
+
+  getPostsByLogin(login: string): Observable<Post[]> {
+    return this.http.get<Post[]>('/api/p/?login=' + login);
+  }
 }

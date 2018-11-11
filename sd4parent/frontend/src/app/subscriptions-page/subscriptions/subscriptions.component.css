@@ -53,10 +53,21 @@ p {
   margin-bottom: 15px;
 }
 
-#price {
-  margin-left: 70px;
-}
-
 .btn-footer {
   margin-bottom: 10px;
+  width: 300px;
+}
+
+.description {
+  padding-right: 10px;
+}
+
+.del {
+  background-color: #B10B33;
+  border-color: #B10B33;
+}
+
+.del:hover {
+  background-color: darkred;
+  border-color: darkred;
 }

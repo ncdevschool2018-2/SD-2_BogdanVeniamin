@@ -3,7 +3,6 @@ package com.netcracker.edu.fapi.service.impl;
 import com.netcracker.edu.fapi.models.PostViewModel;
 import com.netcracker.edu.fapi.service.PostDataService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,7 +19,7 @@ public class PostDataServiceImpl implements PostDataService {
     @Override
     public List<PostViewModel> getAll() {
         RestTemplate restTemplate = new RestTemplate();
-        PostViewModel[] postViewModelResponse = restTemplate.getForObject(backendServerUrl + "/api/posts/", PostViewModel[].class);
+        PostViewModel[] postViewModelResponse = restTemplate.getForObject(backendServerUrl + "/api/posts", PostViewModel[].class);
         return postViewModelResponse == null ? Collections.emptyList() : Arrays.asList(postViewModelResponse);
     }
 
@@ -40,5 +39,12 @@ public class PostDataServiceImpl implements PostDataService {
     public void deletePost(Long id) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(backendServerUrl + "/api/posts/" + id);
+    }
+
+    @Override
+    public List<PostViewModel> getPostsByLogin(String login) {
+        RestTemplate restTemplate = new RestTemplate();
+        PostViewModel[] postViewModelResponse = restTemplate.getForObject(backendServerUrl + "/api/posts/?login=" + login, PostViewModel[].class);
+        return postViewModelResponse == null ? Collections.emptyList() : Arrays.asList(postViewModelResponse);
     }
 }

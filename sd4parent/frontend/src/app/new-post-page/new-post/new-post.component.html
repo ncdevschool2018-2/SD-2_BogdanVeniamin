@@ -27,7 +27,10 @@
         <input type="text" class="form-control" name="discount" id="inputTitle" placeholder="Min discount" [(ngModel)]="newPost.discount">
       </div>
     </div>
-    <button class="btn btn-info btn-upload">Upload images</button>
+    <div class="form-group">
+      <label for="imageUpload">Upload your image</label>
+      <input type="file" class="form-control-file" id="imageUpload">
+    </div>
     <div class="text-center">
       <button class="btn btn-info btn-post" (click)="_addPost()" routerLink="">Post</button>
     </div>

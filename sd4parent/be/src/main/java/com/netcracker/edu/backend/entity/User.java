@@ -40,14 +40,13 @@ public class User {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "users")
     private Set<Post> posts = new HashSet<>();
 
-    public User(String login, String password, String role, String email, String language, String lastDateLogin, Set<Post> posts) {
+    public User(String login, String password, String role, String email, String language, String lastDateLogin) {
         this.login = login;
         this.password = password;
         this.role = role;
         this.email = email;
         this.language = language;
         this.lastDateLogin = lastDateLogin;
-        this.posts = posts;
     }
 
     public User() {
@@ -107,14 +106,6 @@ public class User {
 
     public void setLastDateLogin(String lastDateLogin) {
         this.lastDateLogin = lastDateLogin;
-    }
-
-    public Set<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(Set<Post> posts) {
-        this.posts = posts;
     }
 
     @Override

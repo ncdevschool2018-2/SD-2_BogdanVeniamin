@@ -10,4 +10,5 @@ public interface PostService {
     Optional<Post>  getPostById(Long id);
     Iterable<Post> getAllPosts();
     void deletePost(Long id);
+    Iterable<Post> getPostsByLogin(String login);
 }

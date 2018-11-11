@@ -159,9 +159,14 @@ h1{
   text-align: center;
 }
 
+.addition {
+  margin-top: 10px;
+  margin-left: 275px;
+}
+
 .post {
   margin-top: 10px;
-  margin-left: 420px;
+  margin-left: 10px;
 }
 
 .box {

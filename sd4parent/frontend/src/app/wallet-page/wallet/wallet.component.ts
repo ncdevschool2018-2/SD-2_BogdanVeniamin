@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import {SessionStorageService} from 'ngx-webstorage';
 import { Subscription } from 'rxjs/internal/Subscription'
 import { NgxSpinnerService } from 'ngx-spinner';
-import {BsModalService} from "ngx-bootstrap";
+import {BsModalRef, BsModalService} from "ngx-bootstrap";
 
 import { Wallet } from '../../model/wallet'
 import { WalletService } from "../../service/wallet.service";
@@ -17,6 +17,7 @@ export class WalletComponent implements OnInit {
 
   public wallet: Wallet;
   private subscriptions: Subscription[] = [];
+  public modalRef: BsModalRef;
 
   constructor(private walletService: WalletService, private loadingService: NgxSpinnerService, private sessionSt: SessionStorageService, private modalService: BsModalService) { }
 
@@ -36,4 +37,15 @@ export class WalletComponent implements OnInit {
   private getSessionStorage(): User {
     return this.sessionSt.retrieve("logged-in");
   }
+
+  public _openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
+
+  public _closeModal(): void {
+    this.modalRef.hide();
+  }
+
+
+
 }

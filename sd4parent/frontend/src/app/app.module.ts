@@ -14,6 +14,8 @@ import { SubscriptionsPageModule } from "./subscriptions-page/subscriptions-page
 import { UsersPageModule } from "./users-page/users-page.module";
 import { WalletPageModule } from "./wallet-page/wallet-page.module"
 import {Ng2Webstorage} from 'ngx-webstorage';
+import { NewPackagePageModule } from "./new-package-page/new-package-page.module";
+import { NewAdditionPageModule } from "./new-addition-page/new-addition-page.module";
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -34,6 +36,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     NewPostPageModule,
     UsersPageModule,
     WalletPageModule,
+    NewPackagePageModule,
+    NewAdditionPageModule,
     SubscriptionsPageModule,
     TooltipModule.forRoot(),
     ModalModule.forRoot(),

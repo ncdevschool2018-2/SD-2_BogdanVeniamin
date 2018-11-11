@@ -1,9 +1,6 @@
 package com.netcracker.edu.backend.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -27,13 +24,18 @@ public class Post {
     @JoinTable(name = "packagesposts", joinColumns = { @JoinColumn(name = "post_id") }, inverseJoinColumns = { @JoinColumn(name = "package_id") })
     private Set<Package> packages = new HashSet<>();
 
-    public Post(String title, String description, float price, int discount, Set<User> users, Set<Package> packages) {
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "additionsposts", joinColumns = { @JoinColumn(name = "post_id") }, inverseJoinColumns = { @JoinColumn(name = "addition_id") })
+    private Set<Addition> additions = new HashSet<>();
+
+    public Post(String title, String description, float price, int discount, Set<User> users, Set<Package> packages, Set<Addition> additions) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.discount = discount;
         this.users = users;
         this.packages = packages;
+        this.additions = additions;
     }
 
     public Post() {
@@ -94,6 +96,14 @@ public class Post {
 
     public void setPackages(Set<Package> packages) {
         this.packages = packages;
+    }
+
+    public Set<Addition> getAdditions() {
+        return additions;
+    }
+
+    public void setAdditions(Set<Addition> additions) {
+        this.additions = additions;
     }
 
     @Override

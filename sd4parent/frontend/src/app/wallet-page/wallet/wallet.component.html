@@ -12,7 +12,22 @@
       <h3>{{ wallet.money * 2.13 }}</h3>
     </div>
     <div class="col-2">
-      <button id="myBtn" class="btn btn-custom btn-block btn-lg">Fill Up</button>
+      <button id="myBtn" class="btn btn-custom btn-block btn-lg" (click)="_openModal(template)">Fill Up</button>
       <button class="btn btn-custom btn-block btn-lg">Statistics</button>
     </div>
   </div>
+</div>
+<ng-template #template>
+  <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)"
+               size = "medium" color="fff"
+               type="ball-newton-cradle"></ngx-spinner>
+  <div class="modal-header">
+    <h1 class="modal-title">Wallet Refill</h1>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <input type="text" class="form-control" name="amount" placeholder="Enter amount">
+    </div>
+    <input type="button" value="Fill Up" (click)="_closeModal()">
+  </div>
+</ng-template>

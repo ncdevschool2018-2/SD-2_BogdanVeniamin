@@ -2,9 +2,9 @@ package com.netcracker.edu.fapi.controller;
 
 import com.netcracker.edu.fapi.models.PostViewModel;
 import com.netcracker.edu.fapi.service.PostDataService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,6 +37,11 @@ public class PostDataController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deletePost(@PathVariable String id) {
         postDataService.deletePost(Long.valueOf(id));
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ResponseEntity<List<PostViewModel>> getPostsByLogin(@RequestParam("login") String login) {
+        return ResponseEntity.ok(postDataService.getPostsByLogin(login));
     }
 
 }

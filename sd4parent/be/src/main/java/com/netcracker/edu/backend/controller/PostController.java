@@ -42,4 +42,9 @@ public class PostController {
         postService.deletePost(id);
         return ResponseEntity.noContent().build();
     }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public Iterable<Post> getPostsByLogin(@RequestParam("login") String login) {
+        return postService.getPostsByLogin(login);
+    }
 }

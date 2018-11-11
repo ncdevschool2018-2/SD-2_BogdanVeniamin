@@ -1,41 +1,25 @@
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)"
+             size = "medium" color="fff"
+             type="ball-newton-cradle"></ngx-spinner>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12" *ngFor="let post of posts">
       <div class="our-services-wrapper mb-60">
         <div class="services-inner">
           <div class="our-services-img">
-            <a [routerLink]="['']"><img src="../../../assets/images/open.png" width="68px" alt=""></a>
+            <a [routerLink]="['posts', post.id]"><img src="../../../assets/images/open.png" width="68px" alt=""></a>
           </div>
           <div class="our-services-text">
-            <div class="d-flex">
-              <h4>Product title</h4>
-              <h4 id="price">1.5$/day</h4>
+            <div class="row">
+              <h4 class="col-7">{{ post.title }}</h4>
+              <h4 class="col-5">{{ post.price }}/MONTH</h4>
             </div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam et accumsan dui. Nulla eget tempus elit. Morbi libero orci, faucibus non eleifend quis, aliquam sit amet sapien. Quisque sed imperdiet leo. Suspendisse ornare venenatis eros, non condimentum lorem porttitor at. Nunc pretium, mauris nec cursus accumsan, lectus erat hendrerit libero, vel mattis sem elit et libero. Proin dapibus, tortor et egestas finibus, purus est placerat enim, in mattis dui elit id quam. Cras lacinia consectetur massa ut scelerisque. Nulla ut accumsan tellus. Nullam et diam facilisis, laoreet velit non, volutpat erat. Fusce eget tortor elit. Praesent dapibus ipsum nec tempor tempus. Mauris facilisis egestas odio, quis ullamcorper eros ultrices at. Proin euismod ipsum non neque venenatis scelerisque.</p>
+            <p class="description">{{ _shortDescription(post.description) }}</p>
           </div>
           <div class="container text-center">
             <h4>Left: 4 days</h4>
             <button id="myBtn-1" class="btn btn-info btn-footer">Continue subscription now</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-      <div class="our-services-wrapper mb-60">
-        <div class="services-inner">
-          <div class="our-services-img">
-            <a [routerLink]="['']"><img src="../../../assets/images/open.png" width="68px" alt=""></a>
-          </div>
-          <div class="our-services-text">
-            <div class="d-flex">
-              <h4>Product title</h4>
-              <h4 id="price">1.5$/day</h4>
-            </div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam et accumsan dui. Nulla eget tempus elit. Morbi libero orci, faucibus non eleifend quis, aliquam sit amet sapien. Quisque sed imperdiet leo. Suspendisse ornare venenatis eros, non condimentum lorem porttitor at. Nunc pretium, mauris nec cursus accumsan, lectus erat hendrerit libero, vel mattis sem elit et libero. Proin dapibus, tortor et egestas finibus, purus est placerat enim, in mattis dui elit id quam. Cras lacinia consectetur massa ut scelerisque. Nulla ut accumsan tellus. Nullam et diam facilisis, laoreet velit non, volutpat erat. Fusce eget tortor elit. Praesent dapibus ipsum nec tempor tempus. Mauris facilisis egestas odio, quis ullamcorper eros ultrices at. Proin euismod ipsum non neque venenatis scelerisque.</p>
-          </div>
-          <div class="container text-center">
-            <h4>Left: 4 days</h4>
-            <button id="myBtn-2" class="btn btn-info btn-footer">Continue subscription now</button>
+            <button id="myBtn-1" class="btn btn-info btn-footer del">Cancel subscription now</button>
           </div>
         </div>
       </div>
