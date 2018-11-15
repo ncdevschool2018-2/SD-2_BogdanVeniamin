@@ -1,12 +1,13 @@
 package com.netcracker.edu.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
+
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -15,7 +16,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Wallet wallet;
 
     @Size(max = 45)
@@ -37,16 +39,14 @@ public class User {
     private String language;
     private String lastDateLogin;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "users")
-    private Set<Post> posts = new HashSet<>();
-
-    public User(String login, String password, String role, String email, String language, String lastDateLogin) {
+    public User(String login, String password, String role, String email, String language, String lastDateLogin, Wallet wallet) {
         this.login = login;
         this.password = password;
         this.role = role;
         this.email = email;
         this.language = language;
         this.lastDateLogin = lastDateLogin;
+        this.wallet = wallet;
     }
 
     public User() {
@@ -108,6 +108,14 @@ public class User {
         this.lastDateLogin = lastDateLogin;
     }
 
+    public Wallet getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(Wallet wallet) {
+        this.wallet = wallet;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if(this == obj) return true;
@@ -124,13 +132,14 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, role, email, language, lastDateLogin);
+        return Objects.hash(id, login, wallet, password, role, email, language, lastDateLogin);
     }
 
     @Override
     public String toString() {
         return "User { id: " + id +
                 ", login: " + login +
+                ", wallet: " + wallet +
                 ", password: " + password +
                 ", role: " + role +
                 ", email: " + email +

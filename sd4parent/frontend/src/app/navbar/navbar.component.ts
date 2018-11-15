@@ -95,20 +95,13 @@ export class NavbarComponent implements OnInit {
       }
   }
 
-  public _changeLanguage(): void {
-    if(this.currentUser.language === 'ENG')
-      this.currentUser.language = 'RUS';
+  public _otherLanguage(user: User): string {
+    if(user == null)
+      return "RUS";
+    else if(user.language == "ENG")
+      return "RUS";
     else
-      this.currentUser.language = 'ENG';
-  }
-
-  public _otherLanguage(): string {
-    if(this.currentUser === undefined)
-      return 'RUS';
-    if(this.currentUser.language === 'ENG')
-      return 'RUS';
-    else
-      return 'ENG';
+      return "ENG";
   }
 
   public _setSessionStorage(value: any) {

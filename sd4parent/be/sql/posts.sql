@@ -14,7 +14,7 @@ create table `user` (
   `password` varchar(45) not null,
   `role` varchar(45) not null,
   `email` varchar(45) not null,
-  `language` boolean default true, /* language=0 - english, language=1 - russian */
+  `language` varchar(45) default true, /* language=0 - english, language=1 - russian */
   `last_date_login` timestamp,
   primary key (`id`),
   unique key `login_unique` (`login`)

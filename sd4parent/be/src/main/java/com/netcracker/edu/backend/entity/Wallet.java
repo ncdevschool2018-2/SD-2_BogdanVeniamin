@@ -1,5 +1,7 @@
 package com.netcracker.edu.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -12,7 +14,8 @@ public class Wallet {
 
     private float money;
 
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JsonBackReference
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 

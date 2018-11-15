@@ -4,6 +4,7 @@ import { SharedModule } from "../shared/shared.module";
 import { ModalModule } from 'ngx-bootstrap/modal';
 import {RouterModule} from "@angular/router";
 import { NgxSpinnerModule } from 'ngx-spinner';
+import {Ng2Webstorage} from 'ngx-webstorage';
 
 import { DescriptionPageComponent } from './description-page.component';
 import { DescriptionComponent } from "./description/description.component";
@@ -15,6 +16,7 @@ import { SubscribeComponent } from "./subscribe/subscribe.component";
     CommonModule,
     SharedModule,
     ModalModule,
+    Ng2Webstorage,
     NgxSpinnerModule,
     RouterModule.forRoot([
       {

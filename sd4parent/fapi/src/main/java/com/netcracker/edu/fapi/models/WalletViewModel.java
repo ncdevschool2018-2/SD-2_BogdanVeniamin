@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 public class WalletViewModel {
 
-    private long id;
-    private float money;
+    private Long id;
+    private float money = 100;
     private UserViewModel owner;
 
     public WalletViewModel() {

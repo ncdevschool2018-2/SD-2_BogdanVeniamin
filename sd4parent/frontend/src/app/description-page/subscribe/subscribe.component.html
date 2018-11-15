@@ -6,7 +6,7 @@
         <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
           <h4 class="name">Months</h4>
           <div *ngFor="let num of numbers" class="button-group">
-            <button type="button" class="btn btn-custom" [ngClass]="{'current': !condition.duration}" (click)="_setDuration(num); _setPrice(posts[index].price, posts[index].discount); _setDiscount(posts[index].discount); isClassVisible = !isClassVisible">{{ num }}</button>
+            <button type="button" class="btn btn-custom" (click)="_setDuration(num); _setPrice(post.price, post.discount); _setDiscount(post.discount)">{{ num }}</button>
           </div>
         </div>
         <button type="button" id="myBtn" class="btn btn-lg btn-primary" (click)="_openModal(template)">Subscribe</button>

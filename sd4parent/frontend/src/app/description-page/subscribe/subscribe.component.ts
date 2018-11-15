@@ -5,12 +5,7 @@ import {Subscription} from "rxjs";
 import {PostService} from "../../service/post.service";
 import {ActivatedRoute} from "@angular/router"
 import {NgxSpinnerService} from "ngx-spinner";
-
-interface Condition {
-  price: number;
-  discount: number;
-  duration: number;
-}
+import { subscribeCondition } from "../../model/subscribeCondition";
 
 @Component({
   selector: 'app-subscribe',
@@ -25,12 +20,7 @@ export class SubscribeComponent implements OnInit {
   private subscriptions: Subscription[] = [];
   private post_id: number;
   public numbers: number[] = [1,2,3,4,5,6,7,8,9,10,11,12];
-  public condition: Condition = new class implements Condition {
-    discount: number;
-    duration: number;
-    price: number;
-  };
-  isClassVisible = false;
+  public condition: subscribeCondition = new subscribeCondition();
 
   constructor(private modalService: BsModalService, private route: ActivatedRoute, private postService: PostService, private loadingService: NgxSpinnerService) {
   }

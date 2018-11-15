@@ -7,12 +7,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class PackageViewModel {
 
     private long id;
+    private String title;
+    private String description;
+    private float price;
+    private int discount;
 
     public PackageViewModel() {
     }
 
-    public PackageViewModel(long id) {
+    public PackageViewModel(long id, String title, String description, float price, int discount) {
         this.id = id;
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.discount = discount;
     }
 
     public long getId() {
@@ -21,5 +29,37 @@ public class PackageViewModel {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
     }
 }

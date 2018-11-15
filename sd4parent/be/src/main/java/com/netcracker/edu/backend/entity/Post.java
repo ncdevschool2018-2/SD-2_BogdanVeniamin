@@ -17,10 +17,6 @@ public class Post {
     private int discount;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "usersposts", joinColumns = { @JoinColumn(name = "post_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
-    private Set<User> users = new HashSet<>();
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "packagesposts", joinColumns = { @JoinColumn(name = "post_id") }, inverseJoinColumns = { @JoinColumn(name = "package_id") })
     private Set<Package> packages = new HashSet<>();
 
@@ -28,12 +24,11 @@ public class Post {
     @JoinTable(name = "additionsposts", joinColumns = { @JoinColumn(name = "post_id") }, inverseJoinColumns = { @JoinColumn(name = "addition_id") })
     private Set<Addition> additions = new HashSet<>();
 
-    public Post(String title, String description, float price, int discount, Set<User> users, Set<Package> packages, Set<Addition> additions) {
+    public Post(String title, String description, float price, int discount, Set<Package> packages, Set<Addition> additions) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.discount = discount;
-        this.users = users;
         this.packages = packages;
         this.additions = additions;
     }
@@ -80,14 +75,6 @@ public class Post {
 
     public void setDiscount(int discount) {
         this.discount = discount;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 
     public Set<Package> getPackages() {

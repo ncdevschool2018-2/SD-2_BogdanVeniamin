@@ -179,6 +179,16 @@ h1{
   border-radius: 10px;
 }
 
-.box:hover {
+#lang {
+  margin-top: 5px;
+  margin-right: 30px;
+  background-color: white;
+  color: black;
+  border-color: #FC6602;
+}
 
+#lang:hover {
+  color: white;
+  background-color: #FC6602;
+  border-color: #FC6602;
 }

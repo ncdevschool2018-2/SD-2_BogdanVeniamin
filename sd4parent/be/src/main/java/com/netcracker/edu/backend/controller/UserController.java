@@ -5,6 +5,7 @@ import com.netcracker.edu.backend.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -33,7 +34,9 @@ public class UserController {
     public Iterable<User> getAllUsers() { return userService.getAllUsers(); }
 
     @RequestMapping(method = RequestMethod.POST)
-    public User saveUser(@RequestBody User account) { return userService.saveUser(account); }
+    public User saveUser(@RequestBody User account) {
+        return userService.saveUser(account);
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<User> deleteUser(@PathVariable(name = "id") Long id) {

@@ -13,17 +13,20 @@ public class UserViewModel {
     private String email;
     private String language;
     private String lastDateLogin;
+    private WalletViewModel wallet;
 
-    public UserViewModel(String login, String password, String role, String email, String language, String lastDateLogin) {
+    public UserViewModel(String login, WalletViewModel wallet, String password, String role, String email, String language, String lastDateLogin) {
         this.login = login;
         this.password = password;
         this.role = role;
         this.email = email;
         this.language = language;
         this.lastDateLogin = lastDateLogin;
+        this.wallet = wallet;
     }
 
     public UserViewModel() {
+        this.wallet = new WalletViewModel();
     }
 
     public long getId() {
@@ -40,6 +43,14 @@ public class UserViewModel {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public WalletViewModel getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(WalletViewModel wallet) {
+        this.wallet = wallet;
     }
 
     public String getPassword() {
@@ -81,5 +92,4 @@ public class UserViewModel {
     public void setLastDateLogin(String lastDateLogin) {
         this.lastDateLogin = lastDateLogin;
     }
-
 }

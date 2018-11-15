@@ -1,3 +1,5 @@
+import {Wallet} from "./wallet";
+
 export class User {
   id: string;
   login: string;
@@ -6,6 +8,7 @@ export class User {
   email: string;
   language: string;
   lastDateLogin: string;
+  wallet: Wallet;
 
   static cloneBase(user: User): User {
     let clonedUser: User = new User();
