@@ -11,16 +11,18 @@ public class TransactionViewModel {
     private WalletViewModel wallet;
     private float amount;
     private String date;
+    private String title;
 
     public TransactionViewModel() {
     }
 
-    public TransactionViewModel(long id, String action, WalletViewModel wallet, float amount, String date) {
+    public TransactionViewModel(long id, String action, WalletViewModel wallet, float amount, String date, String title) {
         this.id = id;
         this.action = action;
         this.wallet = wallet;
         this.amount = amount;
         this.date = date;
+        this.title = title;
     }
 
     public long getId() {
@@ -61,5 +63,13 @@ public class TransactionViewModel {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

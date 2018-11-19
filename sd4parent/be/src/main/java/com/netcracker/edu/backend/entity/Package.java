@@ -16,7 +16,7 @@ public class Package {
     private float price;
     private int discount;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "packages")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "packages")
     private Set<Post> posts = new HashSet<>();
 
     public Package() {

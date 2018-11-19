@@ -10,5 +10,6 @@ public interface SubscriptionDataService {
     SubscriptionViewModel getSubscriptionById(Long id);
     SubscriptionViewModel saveSubscription(SubscriptionViewModel sub);
     void deleteSubscription(Long id);
+    List<SubscriptionViewModel> getSubscriptionsByLogin(String login);
 
 }

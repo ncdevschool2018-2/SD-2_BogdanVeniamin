@@ -1,11 +1,21 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
-import {Post} from "../../model/post";
 import {Subscription} from "rxjs";
 import {PostService} from "../../service/post.service";
 import {ActivatedRoute} from "@angular/router"
 import {NgxSpinnerService} from "ngx-spinner";
+import {SessionStorageService} from 'ngx-webstorage';
+
 import { subscribeCondition } from "../../model/subscribeCondition";
+import {Post} from "../../model/post";
+import { Transaction } from "../../model/transaction";
+import { SubscriptionPost } from "../../model/subscription";
+import { TransactionService } from "../../service/transaction.service";
+import { SubscriptionService } from "../../service/subscription.service";
+import { WalletService } from "../../service/wallet.service";
+import {User} from "../../model/user";
+import { Wallet } from "../../model/wallet";
+
 
 @Component({
   selector: 'app-subscribe',
@@ -17,12 +27,15 @@ export class SubscribeComponent implements OnInit {
 
   public modalRef: BsModalRef;
   public post: Post;
+  private wallet: Wallet;
+  private transaction: Transaction = new Transaction();
+  private subscriptionPost: SubscriptionPost = new SubscriptionPost();
   private subscriptions: Subscription[] = [];
   private post_id: number;
   public numbers: number[] = [1,2,3,4,5,6,7,8,9,10,11,12];
   public condition: subscribeCondition = new subscribeCondition();
 
-  constructor(private modalService: BsModalService, private route: ActivatedRoute, private postService: PostService, private loadingService: NgxSpinnerService) {
+  constructor(private modalService: BsModalService, private route: ActivatedRoute, private postService: PostService, private loadingService: NgxSpinnerService, private sessionSt: SessionStorageService, private transactionService: TransactionService, private subscriptionService: SubscriptionService, private walletService: WalletService) {
   }
 
   ngOnInit() {
@@ -87,6 +100,38 @@ export class SubscribeComponent implements OnInit {
       return (2*discount/3).toFixed(2);
     if(this.condition.duration > 9 && this.condition.duration < 13)
       return discount.toFixed(2);
+  }
+
+  private getSessionStorage(): User {
+    return this.sessionSt.retrieve("logged-in");
+  }
+
+  private createTransaction(): Transaction {
+
+    this.transaction.wallet = this.getSessionStorage().wallet;
+    this.transaction.action = "MINUS";
+    this.transaction.amount = this.condition.price;
+    this.transaction.title = this.post.title;
+    return this.transaction;
+  }
+
+  private createSubscription(): SubscriptionPost {
+    this.subscriptionPost.user = this.getSessionStorage();
+    this.subscriptionPost.post = this.post;
+    this.subscriptionPost.duration = this.condition.duration;
+    console.log("Sub:" + this.subscriptionPost);
+    return this.subscriptionPost;
+  }
+
+  public _subscribe(): void {
+
+    this.subscriptions.push(this.transactionService.saveTransaction(this.createTransaction()).subscribe(() => {
+      console.log("Transaction: " + this.transaction);
+    }));
+
+    this.subscriptions.push(this.subscriptionService.saveSubscription(this.createSubscription()).subscribe(() => {
+      console.log("Subscription: " + this.subscriptionPost);
+    }));
   }
 
 }

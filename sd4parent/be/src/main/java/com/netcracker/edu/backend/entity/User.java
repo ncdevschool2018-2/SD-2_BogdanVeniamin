@@ -1,6 +1,6 @@
 package com.netcracker.edu.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,7 +17,7 @@ public class User {
     private long id;
 
     @JsonManagedReference
-    @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Wallet wallet;
 
     @Size(max = 45)

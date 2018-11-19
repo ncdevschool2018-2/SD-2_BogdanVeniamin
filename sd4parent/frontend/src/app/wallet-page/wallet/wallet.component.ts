@@ -16,6 +16,7 @@ import {User} from "../../model/user";
 export class WalletComponent implements OnInit {
 
   public wallet: Wallet;
+  public  amount: number;
   private subscriptions: Subscription[] = [];
   public modalRef: BsModalRef;
 
@@ -46,6 +47,9 @@ export class WalletComponent implements OnInit {
     this.modalRef.hide();
   }
 
+  public _fillUp(): void {
+    this.wallet.money += this.amount;
 
+  }
 
 }

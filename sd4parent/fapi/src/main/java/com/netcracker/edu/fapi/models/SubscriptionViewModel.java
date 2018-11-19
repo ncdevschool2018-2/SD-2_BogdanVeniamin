@@ -10,15 +10,17 @@ public class SubscriptionViewModel {
     private UserViewModel user;
     private PostViewModel post;
     private int duration;
+    private String date;
 
     public SubscriptionViewModel() {
     }
 
-    public SubscriptionViewModel(long id, UserViewModel user, PostViewModel post, int duration) {
+    public SubscriptionViewModel(long id, UserViewModel user, PostViewModel post, int duration, String date) {
         this.id = id;
         this.user = user;
         this.post = post;
         this.duration = duration;
+        this.date = date;
     }
 
     public long getId() {
@@ -51,5 +53,13 @@ public class SubscriptionViewModel {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

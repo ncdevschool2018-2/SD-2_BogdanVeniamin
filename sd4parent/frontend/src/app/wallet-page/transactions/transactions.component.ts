@@ -33,4 +33,8 @@ export class TransactionsComponent implements OnInit {
     return this.sessionSt.retrieve("logged-in");
   }
 
+  public _subDate(date: string): string {
+    return date.substring(0, 10);
+  }
+
 }

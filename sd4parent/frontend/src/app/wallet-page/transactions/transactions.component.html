@@ -16,8 +16,8 @@
   <table class="table">
     <tbody>
     <tr  *ngFor="let transaction of transactions">
-      <td>{{ transaction.date }}</td>
-      <td><strong>Product Title</strong></td>
+      <td>{{ _subDate(transaction.date) }}</td>
+      <td><strong>{{ transaction.title }}</strong></td>
       <td class="text-center cash {{ transaction.action.toLowerCase() }}">{{ transaction.amount }}<span> USD</span></td>
     </tr>
     </tbody>

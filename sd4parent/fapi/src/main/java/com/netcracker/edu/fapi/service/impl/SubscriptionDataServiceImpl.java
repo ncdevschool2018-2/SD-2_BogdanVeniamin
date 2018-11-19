@@ -41,4 +41,11 @@ public class SubscriptionDataServiceImpl implements SubscriptionDataService {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(backendServerUrl + "api/subscriptions/" + id);
     }
+
+    @Override
+    public List<SubscriptionViewModel> getSubscriptionsByLogin(String login) {
+        RestTemplate restTemplate = new RestTemplate();
+        SubscriptionViewModel[] subscriptionViewModelResponse = restTemplate.getForObject(backendServerUrl + "api/subscriptions/?login=" + login, SubscriptionViewModel[].class);
+        return subscriptionViewModelResponse == null ? Collections.emptyList() : Arrays.asList(subscriptionViewModelResponse);
+    }
 }

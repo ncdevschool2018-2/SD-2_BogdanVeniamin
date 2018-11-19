@@ -33,3 +33,7 @@ a:hover {
 .current {
   color: #7F2C6C;
 }
+
+strong {
+  text-transform: uppercase;
+}

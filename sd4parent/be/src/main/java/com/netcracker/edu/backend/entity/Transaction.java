@@ -16,15 +16,17 @@ public class Transaction {
     private String action;
     private float amount;
     private String date;
+    private String title;
 
     public Transaction() {
     }
 
-    public Transaction(Wallet wallet, String action, float amount, String date) {
+    public Transaction(Wallet wallet, String action, float amount, String date, String title) {
         this.wallet = wallet;
         this.action = action;
         this.amount = amount;
         this.date = date;
+        this.title = title;
     }
 
     public Long getId() {
@@ -65,5 +67,13 @@ public class Transaction {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

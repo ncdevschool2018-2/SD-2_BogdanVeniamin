@@ -15,7 +15,7 @@ public class Wallet {
     private float money;
 
     @JsonBackReference
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 

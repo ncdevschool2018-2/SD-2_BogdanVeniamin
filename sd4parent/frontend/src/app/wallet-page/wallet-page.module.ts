@@ -4,6 +4,7 @@ import { RouterModule } from "@angular/router";
 import {Ng2Webstorage} from 'ngx-webstorage';
 import { HttpModule } from '@angular/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { FormsModule }   from '@angular/forms';
 
 import { WalletPageComponent } from './wallet-page.component';
 import { WalletComponent } from "./wallet/wallet.component";
@@ -16,6 +17,7 @@ import { TransactionsComponent } from './transactions/transactions.component';
     Ng2Webstorage,
     NgxSpinnerModule,
     HttpModule,
+    FormsModule,
     RouterModule.forRoot([
       {
         path: 'wallet',

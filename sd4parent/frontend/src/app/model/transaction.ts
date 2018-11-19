@@ -7,5 +7,6 @@ export class Transaction {
   action: string;
   amount: number;
   date: string;
+  title: string;
 
 }

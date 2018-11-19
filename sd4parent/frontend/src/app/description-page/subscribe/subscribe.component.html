@@ -23,5 +23,5 @@
     <h4>All price: {{ condition.price }}$</h4>
     <h4>Discount: {{ condition.discount }}%</h4>
   </div>
-  <input type="button" class="end" value="Subscribe" (click)="_closeModal()">
+  <input type="button" class="end" value="Subscribe" (click)="_closeModal(); _subscribe()">
 </ng-template>

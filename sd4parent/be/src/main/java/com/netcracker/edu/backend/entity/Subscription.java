@@ -1,5 +1,8 @@
 package com.netcracker.edu.backend.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -20,14 +23,16 @@ public class Subscription {
     private Post post;
 
     private int duration;
+    private String date;
 
     public Subscription() {
     }
 
-    public Subscription(User user, Post post, int duration) {
+    public Subscription(User user, Post post, int duration, String date) {
         this.user = user;
         this.post = post;
         this.duration = duration;
+        this.date = date;
     }
 
     public Long getId() {
@@ -60,5 +65,13 @@ public class Subscription {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

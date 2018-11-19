@@ -38,4 +38,9 @@ public class SubscriptionDataController {
         subscriptionDataService.deleteSubscription(Long.valueOf(id));
     }
 
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ResponseEntity<List<SubscriptionViewModel>> getSubscriptionsByLogin(@RequestParam("login") String login) {
+        return ResponseEntity.ok(subscriptionDataService.getSubscriptionsByLogin(login));
+    }
+
 }

@@ -42,4 +42,9 @@ public class SubscriptionController {
         subscriptionService.deleteSubscription(id);
         return ResponseEntity.noContent().build();
     }
+
+    @RequestMapping(value="/", method = RequestMethod.GET)
+    public Iterable<Subscription> getSubscriptionsByLogin(@RequestParam("login") String login) {
+        return subscriptionService.getSubscriptionsByLogin(login);
+    }
 }

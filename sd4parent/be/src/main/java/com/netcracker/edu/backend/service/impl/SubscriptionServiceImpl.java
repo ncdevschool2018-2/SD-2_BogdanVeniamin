@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+import static com.netcracker.edu.backend.repository.specification.SubscriptionSpecification.subscriptionsFindByLogin;
+
 @Component
 public class SubscriptionServiceImpl implements SubscriptionService {
 
@@ -39,6 +41,9 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         this.repository.deleteById(id);
     }
 
-
+    @Override
+    public Iterable<Subscription> getSubscriptionsByLogin(String login) {
+        return this.repository.findAll(subscriptionsFindByLogin(login));
+    }
 
 }

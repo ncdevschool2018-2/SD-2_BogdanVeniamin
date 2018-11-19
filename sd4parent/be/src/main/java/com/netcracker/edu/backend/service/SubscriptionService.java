@@ -10,5 +10,6 @@ public interface SubscriptionService {
     Optional<Subscription> getSubscriptionById(Long id);
     Iterable<Subscription> getAllSubscriptions();
     void deleteSubscription(Long id);
+    Iterable<Subscription> getSubscriptionsByLogin(String login);
 
 }

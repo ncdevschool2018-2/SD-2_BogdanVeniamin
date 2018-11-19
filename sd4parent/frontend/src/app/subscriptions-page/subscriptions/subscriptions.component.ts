@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Post } from "../../model/post"
-import { PostService } from "../../service/post.service"
+import { SubscriptionPost } from "../../model/subscription";
+import { SubscriptionService } from "../../service/subscription.service";
 import { Subscription } from "rxjs/internal/Subscription"
 import { NgxSpinnerService } from 'ngx-spinner';
 import {SessionStorageService} from 'ngx-webstorage';
@@ -13,10 +13,10 @@ import {User} from "../../model/user";
 })
 export class SubscriptionsComponent implements OnInit {
 
-  public posts: Post[];
+  public subscriptionPosts: SubscriptionPost[];
   private subscriptions: Subscription[] = [];
 
-  constructor(private postService: PostService, private loadingService: NgxSpinnerService, private sessionSt: SessionStorageService) { }
+  constructor(private subscriptionService: SubscriptionService, private loadingService: NgxSpinnerService, private sessionSt: SessionStorageService) { }
 
   ngOnInit() {
     this.loadPosts(this.getSessionStorage().login);
@@ -24,9 +24,9 @@ export class SubscriptionsComponent implements OnInit {
 
   private loadPosts(login: string): void {
     this.loadingService.show();
-    this.subscriptions.push(this.postService.getPostsByLogin(login).subscribe(products => {
-      this.posts = products as Post[];
-      console.log(this.posts);
+    this.subscriptions.push(this.subscriptionService.getSubscriptionsByLogin(login).subscribe(subs => {
+      this.subscriptionPosts = subs as SubscriptionPost[];
+      console.log(this.subscriptionPosts);
       this.loadingService.hide();
     }))
   }
@@ -45,6 +45,52 @@ export class SubscriptionsComponent implements OnInit {
 
   private getSessionStorage(): User {
     return this.sessionSt.retrieve("logged-in");
+  }
+
+  private finishDate(date: string, duration: number): string {
+    let day: number = +date.substring(5, 2);
+    let month: number = +date.substring(8, 2);
+    let year: number = +date.substring(0, 4);
+
+    month += duration;
+    if(month >= 12) {
+      month -= 12;
+      year +=1;
+    }
+
+    return ("" + year + "-" + day + "-" + month);
+  }
+
+  public _leftDays(startDate: string, duration: number): number {
+    let date: string = this.finishDate(startDate, duration);
+
+    let current = new Date();
+
+    let currentDay: number = current.getDate();
+    let currentMonth: number = current.getMonth() + 1;
+    let currentYear: number = current.getFullYear();
+
+    let finishDay: number = +date.substring(5,2);
+    let finishMonth: number = +date.substring(8,2);
+    let finishYear: number = +date.substring(0,4)
+
+    let leftMonths: number = finishMonth;
+
+    if(finishYear != currentYear) {
+      leftMonths += 12 * (finishYear - currentYear);
+    }
+
+    leftMonths = leftMonths - currentMonth;
+
+    let leftDays: number = finishDay;
+
+    if(leftMonths != 0){
+      leftDays += 30 * leftMonths;
+    }
+
+    return (leftDays - currentDay);
+
+
   }
 
 }

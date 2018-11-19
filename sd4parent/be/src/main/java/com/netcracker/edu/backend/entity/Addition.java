@@ -17,7 +17,7 @@ public class Addition {
     private String description;
     private float price;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "additions")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "additions")
     private Set<Post> posts = new HashSet<>();
 
     public Addition() {
