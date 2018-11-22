@@ -14,6 +14,10 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
+  getUser(userId: string): Observable<User> {
+    return this.http.get<User>("api/u/" + userId);
+  }
+
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>("/api/u");
   }
@@ -24,5 +28,9 @@ export class UserService {
 
   deleteUser(userId: string): Observable<void> {
     return this.http.delete<void>('api/u/' + userId)
+  }
+
+  getUserByLogin(login: string): Observable<User> {
+    return this.http.get<User>("api/u/?login=" + login);
   }
 }

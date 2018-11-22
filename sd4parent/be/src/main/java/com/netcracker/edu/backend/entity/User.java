@@ -9,12 +9,18 @@ import javax.validation.constraints.Size;
 
 import java.util.Objects;
 
+
 @Entity
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+//    @PrimaryKeyJoinColumn(name = "id", referencedColumnName = "owner_id")
+//    @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+//    private Wallet wallet;
 
     @JsonManagedReference
     @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
@@ -38,8 +44,9 @@ public class User {
 
     private String language;
     private String lastDateLogin;
+    private boolean ban;
 
-    public User(String login, String password, String role, String email, String language, String lastDateLogin, Wallet wallet) {
+    public User(String login, String password, String role, String email, String language, String lastDateLogin, Wallet wallet, boolean ban) {
         this.login = login;
         this.password = password;
         this.role = role;
@@ -47,6 +54,7 @@ public class User {
         this.language = language;
         this.lastDateLogin = lastDateLogin;
         this.wallet = wallet;
+        this.ban = ban;
     }
 
     public User() {
@@ -114,6 +122,14 @@ public class User {
 
     public void setWallet(Wallet wallet) {
         this.wallet = wallet;
+    }
+
+    public boolean isBan() {
+        return ban;
+    }
+
+    public void setBan(boolean ban) {
+        this.ban = ban;
     }
 
     @Override

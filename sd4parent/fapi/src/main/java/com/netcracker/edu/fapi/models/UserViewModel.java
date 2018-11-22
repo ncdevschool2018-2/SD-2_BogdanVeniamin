@@ -14,8 +14,9 @@ public class UserViewModel {
     private String language;
     private String lastDateLogin;
     private WalletViewModel wallet;
+    private boolean ban;
 
-    public UserViewModel(String login, WalletViewModel wallet, String password, String role, String email, String language, String lastDateLogin) {
+    public UserViewModel(String login, WalletViewModel wallet, String password, String role, String email, String language, String lastDateLogin, boolean ban) {
         this.login = login;
         this.password = password;
         this.role = role;
@@ -23,6 +24,7 @@ public class UserViewModel {
         this.language = language;
         this.lastDateLogin = lastDateLogin;
         this.wallet = wallet;
+        this.ban = ban;
     }
 
     public UserViewModel() {
@@ -91,5 +93,13 @@ public class UserViewModel {
 
     public void setLastDateLogin(String lastDateLogin) {
         this.lastDateLogin = lastDateLogin;
+    }
+
+    public boolean isBan() {
+        return ban;
+    }
+
+    public void setBan(boolean ban) {
+        this.ban = ban;
     }
 }

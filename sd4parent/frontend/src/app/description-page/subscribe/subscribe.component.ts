@@ -15,6 +15,7 @@ import { SubscriptionService } from "../../service/subscription.service";
 import { WalletService } from "../../service/wallet.service";
 import {User} from "../../model/user";
 import { Wallet } from "../../model/wallet";
+import { UserService } from "../../service/user.service";
 
 
 @Component({
@@ -34,8 +35,9 @@ export class SubscribeComponent implements OnInit {
   private post_id: number;
   public numbers: number[] = [1,2,3,4,5,6,7,8,9,10,11,12];
   public condition: subscribeCondition = new subscribeCondition();
+  private user: User = this.getSessionStorage();
 
-  constructor(private modalService: BsModalService, private route: ActivatedRoute, private postService: PostService, private loadingService: NgxSpinnerService, private sessionSt: SessionStorageService, private transactionService: TransactionService, private subscriptionService: SubscriptionService, private walletService: WalletService) {
+  constructor(private userService: UserService,private modalService: BsModalService, private route: ActivatedRoute, private postService: PostService, private loadingService: NgxSpinnerService, private sessionSt: SessionStorageService, private transactionService: TransactionService, private subscriptionService: SubscriptionService, private walletService: WalletService) {
   }
 
   ngOnInit() {
@@ -56,7 +58,7 @@ export class SubscribeComponent implements OnInit {
     }))
   }
 
-  public _closeModal(): void {
+  private closeModal(): void {
     this.modalRef.hide();
   }
 
@@ -132,6 +134,13 @@ export class SubscribeComponent implements OnInit {
     this.subscriptions.push(this.subscriptionService.saveSubscription(this.createSubscription()).subscribe(() => {
       console.log("Subscription: " + this.subscriptionPost);
     }));
+
+    this.user.wallet.money -= +this.condition.price;
+
+    this.subscriptions.push(this.userService.saveUser(this.user).subscribe(() => {
+      this.closeModal();
+    }))
+
   }
 
 }

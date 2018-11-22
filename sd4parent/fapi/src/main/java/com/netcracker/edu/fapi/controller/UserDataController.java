@@ -17,8 +17,18 @@ public class UserDataController {
     @Autowired
     UserDataService userDataService;
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<UserViewModel> getUserById(@PathVariable String id) {
+        return ResponseEntity.ok(userDataService.getUserById(Long.valueOf(id)));
+    }
+
     @RequestMapping
     public ResponseEntity<List<UserViewModel>> getAllUsers() { return ResponseEntity.ok(userDataService.getAll()); }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ResponseEntity<UserViewModel> getUserByLogin(@RequestParam("login") String login) {
+        return ResponseEntity.ok(userDataService.getUserByLogin(login));
+    }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<UserViewModel> saveUser(@RequestBody UserViewModel account) {
@@ -33,5 +43,7 @@ public class UserDataController {
     public void deleteUser(@PathVariable String id) {
         userDataService.deleteUser(Long.valueOf(id));
     }
+
+
 
 }

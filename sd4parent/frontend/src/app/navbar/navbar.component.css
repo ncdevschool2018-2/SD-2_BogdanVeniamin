@@ -192,3 +192,9 @@ h1{
   background-color: #FC6602;
   border-color: #FC6602;
 }
+
+.alert-danger {
+  width: 398px;
+  margin-left: 34px;
+  height: 40px;
+}

@@ -22,19 +22,20 @@ create table `user` (
 
 create table `wallet` (
   `id` bigint(20) not null auto_increment,
-  `owner_id` bigint(20) not null,
   `money` float default null,
   primary key (`id`),
-  foreign key (`owner_id`) references `user`(`id`)
+  foreign key (`id`) references `user`(`id`)
 ) ENGINE=InnoDB auto_increment=1
 
 create table `usersposts` (
+  `id` bigint(20) not null auto_increment,
   `user_id` bigint(20) not null,
   `post_id` bigint(20) not null,
   `duration` int,
+  `date` timestamp,
   foreign key (`user_id`) references `user`(`id`),
   foreign key (`post_id`) references `post`(`id`)
-) ENGINE=InnoDB
+) ENGINE=InnoDB auto_increment=1
 
 create table `package` (
   `id` bigint(20) not null auto_increment,

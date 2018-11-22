@@ -4,9 +4,11 @@ import { Subscription } from 'rxjs/internal/Subscription'
 import { NgxSpinnerService } from 'ngx-spinner';
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 
-import { Wallet } from '../../model/wallet'
-import { WalletService } from "../../service/wallet.service";
-import {User} from "../../model/user";
+import { User } from "../../model/user";
+import { UserService } from "../../service/user.service";
+import { Transaction } from "../../model/transaction";
+import { TransactionService } from "../../service/transaction.service";
+import {Wallet} from "../../model/wallet";
 
 @Component({
   selector: 'app-wallet',
@@ -19,8 +21,10 @@ export class WalletComponent implements OnInit {
   public  amount: number;
   private subscriptions: Subscription[] = [];
   public modalRef: BsModalRef;
+  private user: User = this.getSessionStorage();
+  private transaction: Transaction = new Transaction();
 
-  constructor(private walletService: WalletService, private loadingService: NgxSpinnerService, private sessionSt: SessionStorageService, private modalService: BsModalService) { }
+  constructor(private transactionService: TransactionService, private userService: UserService, private loadingService: NgxSpinnerService, private sessionSt: SessionStorageService, private modalService: BsModalService) { }
 
   ngOnInit() {
     this.loadWallet(this.getSessionStorage().login);
@@ -28,8 +32,8 @@ export class WalletComponent implements OnInit {
 
   private loadWallet(login: string) {
     this.loadingService.show();
-    this.subscriptions.push(this.walletService.getWalletByLogin(login).subscribe(newWallet => {
-      this.wallet = newWallet as Wallet;
+    this.subscriptions.push(this.userService.getUserByLogin(login).subscribe(account => {
+      this.wallet = account.wallet as Wallet;
       console.log("Wallet: " + this.wallet.money);
       this.loadingService.hide();
     }))
@@ -43,13 +47,30 @@ export class WalletComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }
 
-  public _closeModal(): void {
+  private closeModal(): void {
     this.modalRef.hide();
   }
 
-  public _fillUp(): void {
-    this.wallet.money += this.amount;
-
+  private createTransaction(): Transaction {
+    this.transaction.title = "Fill Up";
+    this.transaction.amount = this.amount;
+    this.transaction.action = "PLUS";
+    this.transaction.wallet = this.wallet;
+    return this.transaction;
   }
+
+  public _fillUp(): void {
+    this.wallet.money += +this.amount;
+    this.user.wallet = this.wallet;
+    this.subscriptions.push(this.userService.saveUser(this.user).subscribe(() => {
+      console.log("Wallet: " + this.user.wallet.money);
+    }));
+
+    this.subscriptions.push(this.transactionService.saveTransaction(this.createTransaction()).subscribe(() => {
+      this.closeModal();
+    }));
+  }
+
+
 
 }

@@ -1,11 +1,14 @@
 package com.netcracker.edu.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
 @Table(name = "wallet")
 public class Wallet {
     @Id
@@ -13,6 +16,10 @@ public class Wallet {
     private Long id;
 
     private float money;
+
+//    @OneToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "id", referencedColumnName = "id", nullable = false)
+//    private User owner;
 
     @JsonBackReference
     @OneToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)

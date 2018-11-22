@@ -11,5 +11,6 @@ public interface UserDataService {
     UserViewModel getUserById(Long id);
     UserViewModel saveUser(UserViewModel account);
     void deleteUser(Long id);
+    UserViewModel getUserByLogin(String login);
 
 }

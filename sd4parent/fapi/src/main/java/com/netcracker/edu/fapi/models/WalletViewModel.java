@@ -1,45 +1,45 @@
 package com.netcracker.edu.fapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonWriteNullProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-
+@JsonWriteNullProperties(false)
 public class WalletViewModel {
 
     private Long id;
-    private float money = 100;
-    private UserViewModel owner;
+    private float money = 0;
+    private Object owner;
 
     public WalletViewModel() {
     }
 
-    public WalletViewModel(long id, float money, UserViewModel owner) {
-        this.id = id;
+    public WalletViewModel(float money, Object owner) {
         this.money = money;
         this.owner = owner;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public float getMoney() {
         return money;
     }
 
-    public UserViewModel getOwner() {
-        return owner;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public void setMoney(float money) {
         this.money = money;
     }
 
-    public void setOwner(UserViewModel owner) {
+    public Object getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Object owner) {
         this.owner = owner;
     }
 }

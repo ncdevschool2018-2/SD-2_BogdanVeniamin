@@ -44,4 +44,13 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ResponseEntity<User> getUserByLogin(@RequestParam("login") String login) {
+        Optional<User> user = userService.getUserByLogin(login);
+        if(user.isPresent())
+            return ResponseEntity.ok(user.get());
+        else
+            return ResponseEntity.notFound().build();
+    }
+
 }
