@@ -27,6 +27,12 @@ public class UserViewModel {
         this.ban = ban;
     }
 
+    public UserViewModel(String login, String password, String role) {
+        this.login = login;
+        this.password = password;
+        this.role = role;
+    }
+
     public UserViewModel() {
         this.wallet = new WalletViewModel();
     }

@@ -4,36 +4,36 @@
       <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <a class="nav-link" routerLink="">Net-Project</a>
       </li>
-      <li *ngIf="currentUser && currentUser.role === 'USER'" class="nav-item" routerLinkActive="active">
+      <li *ngIf="user && role === 'USER'" class="nav-item" routerLinkActive="active">
          <a class="nav-link" routerLink="wallet">Wallet</a>
        </li>
-       <li *ngIf="currentUser && currentUser.role === 'USER'" class="nav-item" routerLinkActive="active">
+       <li *ngIf="user && role === 'USER'" class="nav-item" routerLinkActive="active">
          <a class="nav-link" routerLink="subscriptions">Subscriptions</a>
        </li>
-       <li *ngIf="currentUser && currentUser.role === 'ADMIN'" class="nav-item">
+       <li *ngIf="user && role === 'ADMIN'" class="nav-item">
          <a class="nav-link" routerLink="users">Users</a>
        </li>
-      <li *ngIf="currentUser && currentUser.role === 'ADMIN'">
+      <li *ngIf="user && role === 'ADMIN'">
         <a class="btn btn-info btn-nav addition" routerLink="new-addition">New Addition</a>
       </li>
-       <li *ngIf="currentUser && currentUser.role === 'ADMIN'">
+       <li *ngIf="user && role === 'ADMIN'">
          <a class="btn btn-info btn-nav post" routerLink="new-post">New Post</a>
        </li>
-      <li *ngIf="currentUser && currentUser.role === 'ADMIN'">
+      <li *ngIf="user && role === 'ADMIN'">
         <a class="btn btn-info btn-nav post" routerLink="new-package">New Package</a>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
-      <li>
-        <a id="lang" class="btn btn-info btn-lang">{{ _otherLanguage(currentUser) }}</a>
+      <!--<li>-->
+        <!--<a id="lang" class="btn btn-info btn-lang">{{ _otherLanguage(currentUser) }}</a>-->
+      <!--</li>-->
+      <li *ngIf="user">
+        <a id="nick" class="nav-link">{{ user.sub }}</a>
       </li>
-      <li *ngIf="currentUser">
-        <a id="nick" class="nav-link">{{ currentUser.login }}</a>
+      <li *ngIf="user">
+        <a id="btn-nav" class="btn btn-info" (click)="signOut()">Sign Out</a>
       </li>
-      <li *ngIf="currentUser">
-        <a id="btn-nav" class="btn btn-info" (click)="currentUser = null; _delSessionStorage()">Sign Out</a>
-      </li>
-      <li *ngIf="!currentUser">
+      <li *ngIf="!user">
         <a id="btn-nav" class="btn btn-info" (click)="_openModal(template)">Log In</a>
       </li>
     </ul>
@@ -45,20 +45,20 @@
       </div>
         <div class="modal-body">
         <div class="form-group">
-          <input type="text" class="form-control ng-pristine ng-invalid ng-touched" name="login" placeholder="username or email" [(ngModel)]="logUser.login" #login="ngModel" required
+          <input type="text" class="form-control ng-pristine ng-invalid ng-touched" name="login" placeholder="username or email" [(ngModel)]="loginUser.login" #login="ngModel" required
                  pattern="^[\w.-]{0,19}[0-9a-zA-Z]$">
         </div>
           <div [hidden]="login.valid || login.untouched" class="alert alert-danger text-center">
             Incorrect Login
           </div>
             <div class="form-group">
-          <input type="password" class="form-control ng-pristine ng-invalid ng-touched" name="password" placeholder="password" [(ngModel)]="logUser.password" #password="ngModel" required
+          <input type="password" class="form-control ng-pristine ng-invalid ng-touched" name="password" placeholder="password" [(ngModel)]="loginUser.password" #password="ngModel" required
                   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$">
         </div>
           <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
             Incorrect Password
           </div>
-          <input type="button" value="Log In" (click)="_findAccount(); _setSessionStorage(currentUser)">
+          <input type="button" value="Log In" (click)="authorizate()">
           <div class="social">
             <a href="#"><span class="fa fa-facebook"></span></a>
             <a href="#"><span class="fa fa-twitter"></span></a>

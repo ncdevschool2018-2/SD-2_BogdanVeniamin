@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {SessionStorageService} from 'ngx-webstorage';
 import { Subscription } from 'rxjs/internal/Subscription'
 
 import { Transaction } from '../../model/transaction'
 import { TransactionService } from "../../service/transaction.service";
-import {User} from "../../model/user";
+import { AuthService } from "../../service/auth.service";
 
 @Component({
   selector: 'app-transactions',
@@ -16,10 +15,10 @@ export class TransactionsComponent implements OnInit {
   public transactions: Transaction[];
   private subscriptions: Subscription[] = [];
 
-  constructor(private transactionService: TransactionService, private sessionSt: SessionStorageService) { }
+  constructor(private transactionService: TransactionService, private authService: AuthService) { }
 
   ngOnInit() {
-    this.loadTransactions(this.getSessionStorage().login);
+     this.loadTransactions(this.authService.getUsername());
   }
 
   loadTransactions(login: string) {
@@ -29,12 +28,10 @@ export class TransactionsComponent implements OnInit {
     }))
   }
 
-  private getSessionStorage(): User {
-    return this.sessionSt.retrieve("logged-in");
-  }
-
   public _subDate(date: string): string {
     return date.substring(0, 10);
   }
+
+
 
 }

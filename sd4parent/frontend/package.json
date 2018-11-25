@@ -27,6 +27,7 @@
     "angular2-cookie": "^1.2.6",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
+    "jwt-decode": "^2.2.0",
     "ngx-spinner": "^6.1.2",
     "ngx-webstorage": "^2.0.1",
     "rxjs": "^6.0.0",

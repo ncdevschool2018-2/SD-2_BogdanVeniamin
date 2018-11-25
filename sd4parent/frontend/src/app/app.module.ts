@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from "@angular/router";
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -19,6 +19,8 @@ import { NewAdditionPageModule } from "./new-addition-page/new-addition-page.mod
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { Interceptor } from "./service/interceptor.service";
+import { TokenStorage } from "./storage/token.storage";
 
 @NgModule({
   declarations: [
@@ -44,7 +46,15 @@ import { NavbarComponent } from './navbar/navbar.component';
     RouterModule,
     Ng2Webstorage
   ],
-  providers: [],
+  providers: [
+    Interceptor,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: Interceptor,
+      multi: true
+    },
+    TokenStorage
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

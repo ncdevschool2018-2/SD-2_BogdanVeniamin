@@ -1,6 +1,6 @@
 package com.netcracker.edu.fapi.config;
 
-import com.netcracker.edu.fapi.models.Constants;
+import com.netcracker.edu.fapi.Constants;
 import io.jsonwebtoken.*;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

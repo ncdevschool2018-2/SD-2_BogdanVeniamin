@@ -20,9 +20,11 @@ export class Interceptor implements HttpInterceptor {
     let authReq = req;
     if (this.token.getToken() != null) {
       authReq = req.clone({headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + this.token.getToken())});
-      return next.handle(authReq);
     }
-    return next.handle(authReq).pipe(
+     else if(this.token.getToken() == undefined) {
+       this.router.navigateByUrl('/');
+     }
+    return next.handle(authReq)/*.pipe(
       catchError(err => {
 
            if (err.status === 401) {
@@ -33,7 +35,7 @@ export class Interceptor implements HttpInterceptor {
           const error = err.error.message || err.statusText;
           return throwError(error);
         }
-      ));
+      ));*/
   }
 
 }

@@ -23,7 +23,7 @@ export class UserService {
   }
 
   saveUser(user: User): Observable<User> {
-    return this.http.post<User>('/api/u', user)
+    return this.http.post<User>('/api/u/login', user)
   }
 
   deleteUser(userId: string): Observable<void> {

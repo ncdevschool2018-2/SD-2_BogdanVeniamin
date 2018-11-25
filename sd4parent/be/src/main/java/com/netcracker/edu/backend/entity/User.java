@@ -7,7 +7,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 
 @Entity
@@ -30,7 +32,7 @@ public class User {
     private String login;
 
     @NotNull
-    @Size(max = 45)
+    @Size(max = 255)
     private String password;
 
     @NotNull
@@ -45,6 +47,9 @@ public class User {
     private String language;
     private String lastDateLogin;
     private boolean ban;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private Set<Subscription> subscriptions = new HashSet<>();
 
     public User(String login, String password, String role, String email, String language, String lastDateLogin, Wallet wallet, boolean ban) {
         this.login = login;

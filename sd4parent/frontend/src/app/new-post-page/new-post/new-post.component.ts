@@ -3,7 +3,6 @@ import { Post } from "../../model/post"
 import { PostService } from "../../service/post.service"
 import { Subscription } from "rxjs/internal/Subscription"
 import { NgxSpinnerService } from 'ngx-spinner';
-import {User} from "../../model/user";
 
 @Component({
   selector: 'app-new-post',

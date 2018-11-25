@@ -1,18 +1,15 @@
 package com.netcracker.edu.backend.service.impl;
 
 import com.netcracker.edu.backend.entity.User;
-import com.netcracker.edu.backend.entity.Wallet;
 import com.netcracker.edu.backend.repository.WalletRepository;
 import com.netcracker.edu.backend.service.UserService;
 import com.netcracker.edu.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 import static com.netcracker.edu.backend.repository.specification.UserSpecification.userFindByLogin;
-import static com.netcracker.edu.backend.repository.specification.UserSpecification.usersFindByRole;
 
 @Component
 public class UserServiceImpl implements UserService {
@@ -52,11 +49,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> getUserByLogin(String login) {
         return repository.findOne(userFindByLogin(login));
-    }
-
-    @Override
-    public Iterable<User> getUsersByRole(String role) {
-        return repository.findAll(usersFindByRole(role));
     }
 
 }

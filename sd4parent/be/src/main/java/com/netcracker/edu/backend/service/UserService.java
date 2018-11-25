@@ -11,5 +11,4 @@ public interface UserService {
     Iterable<User> getAllUsers();
     void deleteUser(Long id);
     Optional<User> getUserByLogin(String login);
-    Iterable<User> getUsersByRole(String role);
 }

@@ -1,11 +1,12 @@
-  import { Component, OnInit } from '@angular/core';
-import {Post} from "../../model/post";
+import { Component, OnInit } from '@angular/core';
 import {Subscription} from "rxjs";
-import {PostService} from "../../service/post.service";
 import {ActivatedRoute} from "@angular/router";
 import { NgxSpinnerService } from 'ngx-spinner';
-import {SessionStorageService} from 'ngx-webstorage';
-import {User} from "../../model/user";
+
+import {PostService} from "../../service/post.service";
+import {Post} from "../../model/post";
+import { AuthService } from "../../service/auth.service";
+import { TokenStorage } from "../../storage/token.storage";
 
 @Component({
   selector: 'description',
@@ -18,7 +19,8 @@ export class DescriptionComponent implements OnInit {
   private subscriptions: Subscription[] = [];
   public post_id: number;
 
-  constructor(private postService: PostService, private route: ActivatedRoute, private loadingService: NgxSpinnerService, private sessionSt: SessionStorageService) { }
+  constructor(private postService: PostService, private route: ActivatedRoute, private tokeStorage: TokenStorage,
+              private loadingService: NgxSpinnerService, private authService: AuthService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -42,7 +44,9 @@ export class DescriptionComponent implements OnInit {
     }))
   }
 
-  public _getSessionStorage(): User {
-    return this.sessionSt.retrieve("logged-in");
+  public _getRole(): string {
+    if(this.tokeStorage.getToken())
+      return this.authService.getRole();
   }
+
 }

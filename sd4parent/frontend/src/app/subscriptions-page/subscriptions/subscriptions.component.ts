@@ -3,8 +3,7 @@ import { SubscriptionPost } from "../../model/subscription";
 import { SubscriptionService } from "../../service/subscription.service";
 import { Subscription } from "rxjs/internal/Subscription"
 import { NgxSpinnerService } from 'ngx-spinner';
-import {SessionStorageService} from 'ngx-webstorage';
-import {User} from "../../model/user";
+import { AuthService } from "../../service/auth.service";
 
 @Component({
   selector: 'app-subscriptions',
@@ -16,10 +15,11 @@ export class SubscriptionsComponent implements OnInit {
   public subscriptionPosts: SubscriptionPost[];
   private subscriptions: Subscription[] = [];
 
-  constructor(private subscriptionService: SubscriptionService, private loadingService: NgxSpinnerService, private sessionSt: SessionStorageService) { }
+  constructor(private subscriptionService: SubscriptionService, private loadingService: NgxSpinnerService,
+              private authService: AuthService) { }
 
   ngOnInit() {
-    this.loadPosts(this.getSessionStorage().login);
+    this.loadPosts(this.authService.getUsername());
   }
 
   private loadPosts(login: string): void {
@@ -41,10 +41,6 @@ export class SubscriptionsComponent implements OnInit {
       }
     }
     return description.slice(0,point);
-  }
-
-  private getSessionStorage(): User {
-    return this.sessionSt.retrieve("logged-in");
   }
 
   private finishDate(date: string, duration: number): string {

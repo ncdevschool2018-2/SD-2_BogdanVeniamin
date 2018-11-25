@@ -1,6 +1,7 @@
 package com.netcracker.edu.backend.service.impl;
 
 import com.netcracker.edu.backend.entity.Wallet;
+import com.netcracker.edu.backend.repository.TransactionRepository;
 import com.netcracker.edu.backend.service.WalletService;
 import com.netcracker.edu.backend.repository.WalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;

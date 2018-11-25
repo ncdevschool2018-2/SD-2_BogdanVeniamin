@@ -19,13 +19,4 @@ public class UserSpecification {
         };
     }
 
-    public static Specification<User> usersFindByRole(String role) {
-        return new Specification<User>() {
-            @Override
-            public Predicate toPredicate(Root<User> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.equal(root.get("role"), role);
-            }
-        };
-    }
-
 }

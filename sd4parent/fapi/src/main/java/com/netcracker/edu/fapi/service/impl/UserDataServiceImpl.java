@@ -35,7 +35,7 @@ public class UserDataServiceImpl implements UserDataService, UserDetailsService 
     @Override
     public UserViewModel saveUser(UserViewModel product) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForEntity(backendServerUrl + "/api/users", product, UserViewModel.class).getBody();
+        return restTemplate.postForEntity(backendServerUrl + "/api/users/login", product, UserViewModel.class).getBody();
     }
 
     @Override

@@ -10,8 +10,4 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long>, JpaSpecificationExecutor<User> {
 
-    Optional<User> getAccountByLoginAndPassword(String login, String password);
-
-    Optional<User> getAccountByRole(String role);
-
 }

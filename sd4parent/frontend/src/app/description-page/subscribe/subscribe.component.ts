@@ -4,7 +4,6 @@ import {Subscription} from "rxjs";
 import {PostService} from "../../service/post.service";
 import {ActivatedRoute} from "@angular/router"
 import {NgxSpinnerService} from "ngx-spinner";
-import {SessionStorageService} from 'ngx-webstorage';
 
 import { subscribeCondition } from "../../model/subscribeCondition";
 import {Post} from "../../model/post";
@@ -12,10 +11,10 @@ import { Transaction } from "../../model/transaction";
 import { SubscriptionPost } from "../../model/subscription";
 import { TransactionService } from "../../service/transaction.service";
 import { SubscriptionService } from "../../service/subscription.service";
-import { WalletService } from "../../service/wallet.service";
-import {User} from "../../model/user";
 import { Wallet } from "../../model/wallet";
 import { UserService } from "../../service/user.service";
+import { User } from "../../model/user";
+import { AuthService } from "../../service/auth.service";
 
 
 @Component({
@@ -28,6 +27,7 @@ export class SubscribeComponent implements OnInit {
 
   public modalRef: BsModalRef;
   public post: Post;
+  private user: User;
   private wallet: Wallet;
   private transaction: Transaction = new Transaction();
   private subscriptionPost: SubscriptionPost = new SubscriptionPost();
@@ -35,9 +35,11 @@ export class SubscribeComponent implements OnInit {
   private post_id: number;
   public numbers: number[] = [1,2,3,4,5,6,7,8,9,10,11,12];
   public condition: subscribeCondition = new subscribeCondition();
-  private user: User = this.getSessionStorage();
 
-  constructor(private userService: UserService,private modalService: BsModalService, private route: ActivatedRoute, private postService: PostService, private loadingService: NgxSpinnerService, private sessionSt: SessionStorageService, private transactionService: TransactionService, private subscriptionService: SubscriptionService, private walletService: WalletService) {
+  constructor(private userService: UserService,private modalService: BsModalService,
+              private route: ActivatedRoute, private postService: PostService,
+              private loadingService: NgxSpinnerService, private transactionService: TransactionService,
+              private subscriptionService: SubscriptionService, private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -46,6 +48,7 @@ export class SubscribeComponent implements OnInit {
     });
     this.loadPost(this.post_id.toString());
     this._setDuration(6);
+    this.getUser();
   }
 
   private loadPost(postId: string): void {
@@ -104,13 +107,15 @@ export class SubscribeComponent implements OnInit {
       return discount.toFixed(2);
   }
 
-  private getSessionStorage(): User {
-    return this.sessionSt.retrieve("logged-in");
+  private getUser(): void {
+    this.subscriptions.push(this.userService.getUserByLogin(this.authService.getUsername()).subscribe(account => {
+      this.user = account as User;
+    }))
   }
 
   private createTransaction(): Transaction {
 
-    this.transaction.wallet = this.getSessionStorage().wallet;
+    this.transaction.wallet = this.user.wallet;
     this.transaction.action = "MINUS";
     this.transaction.amount = this.condition.price;
     this.transaction.title = this.post.title;
@@ -118,7 +123,7 @@ export class SubscribeComponent implements OnInit {
   }
 
   private createSubscription(): SubscriptionPost {
-    this.subscriptionPost.user = this.getSessionStorage();
+    this.subscriptionPost.user = this.user;
     this.subscriptionPost.post = this.post;
     this.subscriptionPost.duration = this.condition.duration;
     console.log("Sub:" + this.subscriptionPost);
@@ -133,13 +138,8 @@ export class SubscribeComponent implements OnInit {
 
     this.subscriptions.push(this.subscriptionService.saveSubscription(this.createSubscription()).subscribe(() => {
       console.log("Subscription: " + this.subscriptionPost);
-    }));
-
-    this.user.wallet.money -= +this.condition.price;
-
-    this.subscriptions.push(this.userService.saveUser(this.user).subscribe(() => {
       this.closeModal();
-    }))
+    }));
 
   }
 

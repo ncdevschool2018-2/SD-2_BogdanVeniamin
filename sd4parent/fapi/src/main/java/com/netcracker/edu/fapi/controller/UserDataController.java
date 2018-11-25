@@ -30,7 +30,7 @@ public class UserDataController {
         return ResponseEntity.ok(userDataService.getUserByLogin(login));
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<UserViewModel> saveUser(@RequestBody UserViewModel account) {
         if(account != null) {
             return ResponseEntity.ok(userDataService.saveUser(account));
