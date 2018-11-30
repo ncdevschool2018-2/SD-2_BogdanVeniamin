@@ -1,4 +1,4 @@
-export class subscribeCondition {
+export class SubscribeCondition {
 
   price: number;
   discount: number;

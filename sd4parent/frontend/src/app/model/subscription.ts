@@ -7,6 +7,7 @@ export class SubscriptionPost {
   user: User;
   post: Post;
   duration: number;
-  date: string;
+  cost: number;
+  status: boolean;
 
 }

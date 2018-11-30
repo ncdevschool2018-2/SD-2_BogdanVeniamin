@@ -1,7 +1,9 @@
 package com.netcracker.edu.backend.controller;
 
+import com.netcracker.edu.backend.entity.MoneyOperation;
 import com.netcracker.edu.backend.entity.Wallet;
 import com.netcracker.edu.backend.service.WalletService;
+import com.netcracker.edu.backend.service.impl.ChargeServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +15,11 @@ import java.util.Optional;
 @RequestMapping("/api/wallets")
 public class WalletController {
 
+    @Autowired
     private WalletService walletService;
 
     @Autowired
-    public WalletController(WalletService walletService) { this.walletService = walletService; }
+    private ChargeServiceImpl chargeService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Wallet> getWalletById(@PathVariable(name = "id") Long id) {
@@ -47,4 +50,10 @@ public class WalletController {
         else
             return ResponseEntity.notFound().build();
     }
+
+    @RequestMapping(value = "/fill", method = RequestMethod.POST)
+    public void fillUp(@RequestBody MoneyOperation purse) {
+        walletService.fillUp(purse);
+    }
+
 }

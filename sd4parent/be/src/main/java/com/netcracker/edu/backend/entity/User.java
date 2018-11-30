@@ -51,6 +51,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Subscription> subscriptions = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private Set<Comment> comments = new HashSet<>();
+
     public User(String login, String password, String role, String email, String language, String lastDateLogin, Wallet wallet, boolean ban) {
         this.login = login;
         this.password = password;
@@ -160,7 +163,7 @@ public class User {
     public String toString() {
         return "User { id: " + id +
                 ", login: " + login +
-                ", wallet: " + wallet +
+                ", wallet: " + wallet.toString() +
                 ", password: " + password +
                 ", role: " + role +
                 ", email: " + email +

@@ -73,4 +73,12 @@ public class Wallet {
                 Objects.equals(money, that.money) &&
                 Objects.equals(owner, that.owner);
     }
+
+    @Override
+    public String toString() {
+        return "Wallet{" +
+                "id=" + id +
+                ", money=" + money +
+                '}';
+    }
 }

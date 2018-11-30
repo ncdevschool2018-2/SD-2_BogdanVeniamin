@@ -1,0 +1,20 @@
+.card {
+  border: none;
+}
+
+span {
+  font-size: 15px
+}
+
+h5 {
+  font-size: 18px;
+}
+
+textarea {
+  margin-bottom: 10px;
+}
+
+.field {
+  margin-top: 10px;
+  margin-bottom: 20px
+}

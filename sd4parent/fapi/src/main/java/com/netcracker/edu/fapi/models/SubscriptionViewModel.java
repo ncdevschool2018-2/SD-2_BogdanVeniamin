@@ -9,18 +9,20 @@ public class SubscriptionViewModel {
     private long id;
     private UserViewModel user;
     private PostViewModel post;
+    private float cost;
     private int duration;
-    private String date;
+    private boolean status;
 
     public SubscriptionViewModel() {
     }
 
-    public SubscriptionViewModel(long id, UserViewModel user, PostViewModel post, int duration, String date) {
+    public SubscriptionViewModel(long id, UserViewModel user, PostViewModel post, float cost, int duration, boolean status) {
         this.id = id;
         this.user = user;
         this.post = post;
+        this.cost = cost;
         this.duration = duration;
-        this.date = date;
+        this.status = status;
     }
 
     public long getId() {
@@ -47,6 +49,14 @@ public class SubscriptionViewModel {
         this.post = post;
     }
 
+    public float getCost() {
+        return cost;
+    }
+
+    public void setCost(float cost) {
+        this.cost = cost;
+    }
+
     public int getDuration() {
         return duration;
     }
@@ -55,11 +65,11 @@ public class SubscriptionViewModel {
         this.duration = duration;
     }
 
-    public String getDate() {
-        return date;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

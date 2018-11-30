@@ -1,10 +1,12 @@
 package com.netcracker.edu.backend.service.impl;
 
+import com.netcracker.edu.backend.entity.MoneyOperation;
 import com.netcracker.edu.backend.entity.Wallet;
 import com.netcracker.edu.backend.repository.TransactionRepository;
 import com.netcracker.edu.backend.service.WalletService;
 import com.netcracker.edu.backend.repository.WalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -49,6 +51,11 @@ public class WalletServiceImpl implements WalletService {
     @Override
     public Optional<Wallet> getWalletByOwnerLogin (String login) {
         return repository.findOne(walletFindByLogin(login));
+    }
+
+    @Override
+    public void fillUp(MoneyOperation purse) {
+        repository.fillUp(purse.getAmount(), purse.getId());
     }
 
 }

@@ -1,5 +1,6 @@
 package com.netcracker.edu.backend.service.impl;
 
+import com.netcracker.edu.backend.entity.MoneyOperation;
 import com.netcracker.edu.backend.entity.User;
 import com.netcracker.edu.backend.repository.WalletRepository;
 import com.netcracker.edu.backend.service.UserService;

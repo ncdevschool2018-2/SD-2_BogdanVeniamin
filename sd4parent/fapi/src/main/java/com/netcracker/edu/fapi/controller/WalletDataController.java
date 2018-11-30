@@ -1,5 +1,6 @@
 package com.netcracker.edu.fapi.controller;
 
+import com.netcracker.edu.fapi.models.MoneyOperationViewModel;
 import com.netcracker.edu.fapi.models.WalletViewModel;
 import com.netcracker.edu.fapi.service.WalletDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,11 @@ public class WalletDataController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteWallet(@PathVariable String id) {
         walletDataService.deleteWallet(Long.valueOf(id));
+    }
+
+    @RequestMapping(value = "/fill", method = RequestMethod.POST)
+    public void setMoneyForWallet(@RequestBody MoneyOperationViewModel purse) {
+        walletDataService.setMoneyForWallet(purse);
     }
 
 }

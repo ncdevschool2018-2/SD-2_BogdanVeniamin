@@ -1,5 +1,6 @@
 package com.netcracker.edu.fapi.service.impl;
 
+import com.netcracker.edu.fapi.models.SubscribeConditionViewModel;
 import com.netcracker.edu.fapi.models.SubscriptionViewModel;
 import com.netcracker.edu.fapi.service.SubscriptionDataService;
 
@@ -47,5 +48,11 @@ public class SubscriptionDataServiceImpl implements SubscriptionDataService {
         RestTemplate restTemplate = new RestTemplate();
         SubscriptionViewModel[] subscriptionViewModelResponse = restTemplate.getForObject(backendServerUrl + "api/subscriptions/?login=" + login, SubscriptionViewModel[].class);
         return subscriptionViewModelResponse == null ? Collections.emptyList() : Arrays.asList(subscriptionViewModelResponse);
+    }
+
+    @Override
+    public SubscribeConditionViewModel computePrice(SubscribeConditionViewModel condition) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.postForEntity(backendServerUrl + "api/subscriptions/compute", condition, SubscribeConditionViewModel.class).getBody();
     }
 }

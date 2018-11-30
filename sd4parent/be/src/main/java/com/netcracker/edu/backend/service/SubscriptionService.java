@@ -1,6 +1,7 @@
 package com.netcracker.edu.backend.service;
 
 import com.netcracker.edu.backend.entity.Subscription;
+import com.netcracker.edu.backend.entity.SubscribeCondition;
 
 import java.util.Optional;
 
@@ -11,5 +12,5 @@ public interface SubscriptionService {
     Iterable<Subscription> getAllSubscriptions();
     void deleteSubscription(Long id);
     Iterable<Subscription> getSubscriptionsByLogin(String login);
-
+    SubscribeCondition computePrice(SubscribeCondition condition);
 }

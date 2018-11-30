@@ -27,6 +27,9 @@ public class Post {
     @JoinTable(name = "additionsposts", joinColumns = { @JoinColumn(name = "post_id") }, inverseJoinColumns = { @JoinColumn(name = "addition_id") })
     private Set<Addition> additions = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = CascadeType.REMOVE)
+    private Set<Comment> comments = new HashSet<>();
+
     public Post(String title, String description, float price, int discount, Set<Package> packages, Set<Addition> additions) {
         this.title = title;
         this.description = description;
@@ -95,6 +98,7 @@ public class Post {
     public void setAdditions(Set<Addition> additions) {
         this.additions = additions;
     }
+
 
     @Override
     public boolean equals(Object obj) {

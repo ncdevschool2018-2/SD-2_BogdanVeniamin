@@ -21,11 +21,10 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(Wallet wallet, String action, float amount, String date, String title) {
+    public Transaction(Wallet wallet, String action, float amount, String title) {
         this.wallet = wallet;
         this.action = action;
         this.amount = amount;
-        this.date = date;
         this.title = title;
     }
 
@@ -75,5 +74,17 @@ public class Transaction {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", wallet=" + wallet.toString() +
+                ", action='" + action + '\'' +
+                ", amount=" + amount +
+                ", date='" + date + '\'' +
+                ", title='" + title + '\'' +
+                '}';
     }
 }

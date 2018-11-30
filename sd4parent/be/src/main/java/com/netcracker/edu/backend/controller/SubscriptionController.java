@@ -1,5 +1,6 @@
 package com.netcracker.edu.backend.controller;
 
+import com.netcracker.edu.backend.entity.SubscribeCondition;
 import com.netcracker.edu.backend.entity.Subscription;
 import com.netcracker.edu.backend.service.SubscriptionService;
 
@@ -46,5 +47,10 @@ public class SubscriptionController {
     @RequestMapping(value="/", method = RequestMethod.GET)
     public Iterable<Subscription> getSubscriptionsByLogin(@RequestParam("login") String login) {
         return subscriptionService.getSubscriptionsByLogin(login);
+    }
+
+    @RequestMapping(value = "/compute", method = RequestMethod.POST)
+    public SubscribeCondition computePrice(@RequestBody SubscribeCondition condition) {
+        return subscriptionService.computePrice(condition);
     }
 }

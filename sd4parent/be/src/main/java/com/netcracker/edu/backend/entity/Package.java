@@ -68,4 +68,15 @@ public class Package {
     public void setDiscount(int discount) {
         this.discount = discount;
     }
+
+    @Override
+    public String toString() {
+        return "Package{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", discount=" + discount +
+                '}';
+    }
 }

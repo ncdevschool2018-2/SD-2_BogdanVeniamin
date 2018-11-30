@@ -60,4 +60,14 @@ public class Addition {
     public void setPrice(float price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Addition{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

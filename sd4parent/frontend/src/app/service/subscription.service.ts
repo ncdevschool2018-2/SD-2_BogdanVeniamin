@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http"
 import { Observable } from "rxjs"
 import { SubscriptionPost } from "../model/subscription"
+import { SubscribeCondition } from "../model/subscribeCondition"
+import {SubscriptionDate} from "../model/subscriptionDate";
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +30,9 @@ export class SubscriptionService {
 
   getSubscriptionsByLogin(login: string): Observable<SubscriptionPost[]> {
     return this.http.get<SubscriptionPost[]>("api/s/?login=" + login);
+  }
+
+  computePrice(condition: SubscribeCondition): Observable<SubscribeCondition> {
+    return this.http.post<SubscribeCondition>("api/s/compute", condition);
   }
 }

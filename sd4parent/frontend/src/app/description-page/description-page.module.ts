@@ -5,10 +5,13 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import {RouterModule} from "@angular/router";
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {Ng2Webstorage} from 'ngx-webstorage';
+import { FormsModule }   from '@angular/forms';
+
 
 import { DescriptionPageComponent } from './description-page.component';
 import { DescriptionComponent } from "./description/description.component";
 import { SubscribeComponent } from "./subscribe/subscribe.component";
+import { CommentsComponent } from './comments/comments.component';
 
 
 @NgModule({
@@ -16,6 +19,7 @@ import { SubscribeComponent } from "./subscribe/subscribe.component";
     CommonModule,
     SharedModule,
     ModalModule,
+    FormsModule,
     Ng2Webstorage,
     NgxSpinnerModule,
     RouterModule.forRoot([
@@ -28,7 +32,8 @@ import { SubscribeComponent } from "./subscribe/subscribe.component";
   declarations: [
     DescriptionPageComponent,
     DescriptionComponent,
-    SubscribeComponent
+    SubscribeComponent,
+    CommentsComponent
   ]
 })
 export class DescriptionPageModule { }

@@ -72,3 +72,14 @@ create table `packagesposts` (
   foreign key (`package_id`) references `package`(`id`),
   foreign key (`post_id`) references `post`(`id`)
 ) ENGINE=InnoDB
+
+create table `comment` (
+  `id` bigint(20) not null auto_increment,
+  `user_id` bigint(20) not null,
+  `post_id` bigint(20) not null,
+  `text` text not null,
+  `date` timestamp,
+  primary key (`id`),
+  foreign key (`user_id`) references `user`(`id`),
+  foreign key(`post_id`) references `post`(id)
+) ENGINE=InnoDB

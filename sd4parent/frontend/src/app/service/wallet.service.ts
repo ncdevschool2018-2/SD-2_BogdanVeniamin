@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http"
 import { Observable } from "rxjs"
 import { Wallet } from "../model/wallet"
+import { MoneyOperation } from "../model/moneyOperation";
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +29,9 @@ export class WalletService {
 
   getWalletByLogin(login: string): Observable<Wallet> {
     return this.http.get<Wallet>("api/w/?login=" + login);
+  }
+
+  setMoney(wallet: MoneyOperation): Observable<void> {
+    return this.http.post<void>("api/w/fill", wallet);
   }
 }

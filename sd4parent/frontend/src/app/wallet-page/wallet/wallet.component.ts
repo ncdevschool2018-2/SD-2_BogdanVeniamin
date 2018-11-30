@@ -4,11 +4,12 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 
 import { UserService } from "../../service/user.service";
-import { User } from "../../model/user";
 import { Transaction } from "../../model/transaction";
 import { TransactionService } from "../../service/transaction.service";
-import {Wallet} from "../../model/wallet";
+import { WalletService } from "../../service/wallet.service";
+import { MoneyOperation } from "../../model/moneyOperation";
 import { AuthService } from "../../service/auth.service";
+import {Wallet} from "../../model/wallet";
 
 @Component({
   selector: 'app-wallet',
@@ -17,7 +18,7 @@ import { AuthService } from "../../service/auth.service";
 })
 export class WalletComponent implements OnInit {
 
-  public user: User;
+  public wallet: Wallet;
   public  amount: number;
   private subscriptions: Subscription[] = [];
   public modalRef: BsModalRef;
@@ -25,7 +26,7 @@ export class WalletComponent implements OnInit {
 
   constructor(private transactionService: TransactionService, private userService: UserService,
               private loadingService: NgxSpinnerService, private modalService: BsModalService,
-              private authService: AuthService) { }
+              private authService: AuthService, private walletService: WalletService) { }
 
   ngOnInit() {
     this.loadWallet(this.authService.getUsername());
@@ -34,8 +35,8 @@ export class WalletComponent implements OnInit {
   private loadWallet(login: string) {
     this.loadingService.show();
     this.subscriptions.push(this.userService.getUserByLogin(login).subscribe(account => {
-      this.user = account as User;
-      console.log("Wallet: " + this.user.wallet.money);
+      this.wallet = account.wallet as Wallet;
+      console.log("Wallet: " + this.wallet.money);
       this.loadingService.hide();
     }))
   }
@@ -48,25 +49,34 @@ export class WalletComponent implements OnInit {
     this.modalRef.hide();
   }
 
+  private updateWallet(): void {
+    this.loadWallet(this.authService.getUsername());
+  }
+
   private createTransaction(): Transaction {
     this.transaction.title = "Fill Up";
     this.transaction.amount = this.amount;
     this.transaction.action = "PLUS";
-    this.transaction.wallet = this.user.wallet;
+    this.transaction.wallet = this.wallet;
     return this.transaction;
   }
 
-  public _fillUp(): void {
-    this.user.wallet.money += +this.amount;
-    console.log("Wal " + this.user.wallet.money);
-    this.subscriptions.push(this.userService.saveUser(this.user).subscribe(() => {
-      console.log("Wallet: " + this.user.wallet.money);
+  public _fillUp(idWallet: string): void {
+
+    let operation: MoneyOperation = new MoneyOperation();
+
+    operation.amount = +this.amount;
+    operation.id = idWallet;
+
+    this.subscriptions.push(this.walletService.setMoney(operation).subscribe(result => {
+      console.log(result);
     }));
 
     this.subscriptions.push(this.transactionService.saveTransaction(this.createTransaction()).subscribe(() => {
 
     }));
 
+    this.updateWallet();
     this.closeModal();
   }
 

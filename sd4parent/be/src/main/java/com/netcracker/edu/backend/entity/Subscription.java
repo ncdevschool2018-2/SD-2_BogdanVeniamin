@@ -1,11 +1,6 @@
 package com.netcracker.edu.backend.entity;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "usersposts")
@@ -24,16 +19,18 @@ public class Subscription {
     private Post post;
 
     private int duration;
-    private String date;
+    private float cost;
+    private boolean status;
 
     public Subscription() {
     }
 
-    public Subscription(User user, Post post, int duration, String date) {
+    public Subscription(User user, Post post, int duration, float cost, boolean status) {
         this.user = user;
         this.post = post;
         this.duration = duration;
-        this.date = date;
+        this.cost = cost;
+        this.status = status;
     }
 
     public Long getId() {
@@ -68,11 +65,30 @@ public class Subscription {
         this.duration = duration;
     }
 
-    public String getDate() {
-        return date;
+    public float getCost() {
+        return cost;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setCost(float cost) {
+        this.cost = cost;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Subscription{" +
+                "id=" + id +
+                ", user=" + user.getId() +
+                ", post=" + post.getId() +
+                ", duration=" + duration +
+                ", cost=" + cost +
+                '}';
     }
 }

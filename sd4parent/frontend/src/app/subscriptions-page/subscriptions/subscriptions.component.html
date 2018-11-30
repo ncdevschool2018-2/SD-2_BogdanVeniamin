@@ -3,7 +3,7 @@
              type="ball-newton-cradle"></ngx-spinner>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12" *ngFor="let sub of subscriptionPosts">
+    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12" *ngFor="let sub of subscriptionPosts; let i = index">
       <div class="our-services-wrapper mb-60">
         <div class="services-inner">
           <div class="our-services-img">
@@ -17,9 +17,9 @@
             <p class="description">{{ _shortDescription(sub.post.description) }}</p>
           </div>
           <div class="container text-center">
-            <h4>Left: {{ _leftDays(sub.date, sub.duration) }} days</h4>
+            <h4>Left: {{ sub.duration }} days</h4>
             <button id="myBtn-1" class="btn btn-info btn-footer">Continue subscription now</button>
-            <button id="myBtn-1" class="btn btn-info btn-footer del">Cancel subscription now</button>
+            <button id="myBtn-1" class="btn btn-info btn-footer del" (click)="cancelSubscription(sub.id)">Cancel subscription now</button>
           </div>
         </div>
       </div>

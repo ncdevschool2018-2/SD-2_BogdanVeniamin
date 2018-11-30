@@ -1,5 +1,6 @@
 package com.netcracker.edu.fapi.controller;
 
+import com.netcracker.edu.fapi.models.SubscribeConditionViewModel;
 import com.netcracker.edu.fapi.models.SubscriptionViewModel;
 import com.netcracker.edu.fapi.service.SubscriptionDataService;
 
@@ -41,6 +42,14 @@ public class SubscriptionDataController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<List<SubscriptionViewModel>> getSubscriptionsByLogin(@RequestParam("login") String login) {
         return ResponseEntity.ok(subscriptionDataService.getSubscriptionsByLogin(login));
+    }
+
+    @RequestMapping(value = "/compute", method = RequestMethod.POST)
+    public ResponseEntity<SubscribeConditionViewModel> computePrice(@RequestBody SubscribeConditionViewModel condition) {
+        if(condition != null) {
+            return ResponseEntity.ok(subscriptionDataService.computePrice(condition));
+        }
+        return null;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.netcracker.edu.fapi.service.impl;
 
+import com.netcracker.edu.fapi.models.MoneyOperationViewModel;
 import com.netcracker.edu.fapi.models.WalletViewModel;
 import com.netcracker.edu.fapi.service.WalletDataService;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,6 +46,12 @@ public class WalletDataServiceImpl implements WalletDataService {
     public WalletViewModel getWalletByOwnerLogin(String login) {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(backendServerUrl + "/api/wallets/?login=" + login, WalletViewModel.class);
+    }
+
+    @Override
+    public void setMoneyForWallet(MoneyOperationViewModel purse) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForEntity(backendServerUrl + "/api/wallets/fill", purse, MoneyOperationViewModel.class);
     }
 
 }

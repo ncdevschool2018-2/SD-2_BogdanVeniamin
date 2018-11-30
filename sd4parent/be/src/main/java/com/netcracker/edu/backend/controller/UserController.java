@@ -1,5 +1,6 @@
 package com.netcracker.edu.backend.controller;
 
+import com.netcracker.edu.backend.entity.MoneyOperation;
 import com.netcracker.edu.backend.entity.User;
 import com.netcracker.edu.backend.service.UserService;
 
