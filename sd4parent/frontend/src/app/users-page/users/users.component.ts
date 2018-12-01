@@ -36,6 +36,19 @@ export class UsersComponent implements OnInit {
     }))
   }
 
+  public banUser(userId: string): void {
+    this.subscriptions.push(this.userService.banUser(userId).subscribe(() => {
+      this.updateUsers();
+    }))
+  }
+
+  public checkStatus(role: string): string {
+    if(role == "BAN")
+      return "Unban";
+    else
+      return "Ban";
+  }
+
   private updateUsers(): void {
     this.loadUsers();
   }

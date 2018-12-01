@@ -19,11 +19,11 @@ import {User} from "../model/user";
 export class NavbarComponent implements OnInit {
 
   public user: Decode;
-  public newUser: User;
   public role: string;
   public loginUser: LoginUser = new LoginUser();
   private subscriptions: Subscription[] = [];
   public modalRef: BsModalRef;
+  public newUser: User = new User();
 
   constructor(private userService: UserService, private modalService: BsModalService,
               private router: Router, private loadingService: NgxSpinnerService,
@@ -61,10 +61,36 @@ export class NavbarComponent implements OnInit {
 
       console.log(this.user);
       this.role = this.user.scopes;
-      this.loadingService.hide();
-      this._closeModal();
     }));
 
+    this.userService.getUserByLogin(this.loginUser.login).subscribe(account => {
+      this.userService.checkUser(account.id).subscribe(() => {
+
+      })
+    });
+
+    this.loadingService.hide();
+    this._closeModal();
+
+  }
+
+  public signUp(): void {
+    this.loadingService.show();
+    this.subscriptions.push(this.userService.saveUser(this.newUser).subscribe(authToken => {
+      let token: Token = authToken as Token;
+      this.tokenStorage.saveToken(token.token);
+
+      this.user = this.authService.decodeJwt(token.token);
+
+      console.log(this.user);
+      this.role = this.user.scopes;
+      this.loadingService.hide();
+      this._closeModal();
+      console.log(this.newUser);
+    }));
+
+
+    this.loadingService.hide();
   }
 
   public signOut(): void {

@@ -8,6 +8,8 @@ import com.netcracker.edu.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 import static com.netcracker.edu.backend.repository.specification.UserSpecification.userFindByLogin;
@@ -26,6 +28,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUser(User account)
     {
+        if(account.getRole() == null)
+            account.setRole("USER");
+
+        if(account.getLanguage() == null)
+            account.setLanguage("ENG");
+
+        if(account.getLogin() == null)
+            account.setLogin(account.getEmail());
+
         return repository.save(account);
     }
 
@@ -50,6 +61,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> getUserByLogin(String login) {
         return repository.findOne(userFindByLogin(login));
+    }
+
+    @Override
+    public void banUser(Long id) {
+        repository.banUser(id);
+    }
+
+    @Override
+    public void checkUser(Long id) {
+        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        repository.checkUser(id, date);
     }
 
 }

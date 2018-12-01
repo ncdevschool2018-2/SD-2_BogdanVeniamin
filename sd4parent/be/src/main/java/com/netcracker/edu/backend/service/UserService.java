@@ -14,4 +14,6 @@ public interface UserService {
     Iterable<User> getAllUsers();
     void deleteUser(Long id);
     Optional<User> getUserByLogin(String login);
+    void banUser(Long id);
+    void checkUser(Long id);
 }

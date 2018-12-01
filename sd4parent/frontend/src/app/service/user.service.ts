@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http"
 import { Observable } from "rxjs"
 import { User } from "../model/user"
+import {Token} from "../model/token";
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -22,8 +23,8 @@ export class UserService {
     return this.http.get<User[]>("/api/u");
   }
 
-  saveUser(user: User): Observable<User> {
-    return this.http.post<User>('/api/u/login', user)
+  saveUser(user: User): Observable<Token> {
+    return this.http.post<Token>('/api/u/login', user)
   }
 
   deleteUser(userId: string): Observable<void> {
@@ -32,5 +33,14 @@ export class UserService {
 
   getUserByLogin(login: string): Observable<User> {
     return this.http.get<User>("api/u/?login=" + login);
+  }
+
+  banUser(userId: string): Observable<void> {
+    return this.http.get<void>("api/u/ban?id" + userId);
+  }
+
+  checkUser(userId: string): Observable<void> {
+
+    return this.http.get<void>("api/u/check?id" + userId);
   }
 }

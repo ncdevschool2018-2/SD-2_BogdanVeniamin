@@ -2,12 +2,14 @@ package com.netcracker.edu.fapi.service.impl;
 
 import com.netcracker.edu.fapi.models.UserViewModel;
 import com.netcracker.edu.fapi.service.UserDataService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,6 +20,9 @@ public class UserDataServiceImpl implements UserDataService, UserDetailsService 
 
     @Value("${backend.server.url}")
     private String backendServerUrl;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<UserViewModel> getAll() {
@@ -34,6 +39,8 @@ public class UserDataServiceImpl implements UserDataService, UserDetailsService 
 
     @Override
     public UserViewModel saveUser(UserViewModel product) {
+        product.setPassword(passwordEncoder.encode(product.getPassword()));
+
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.postForEntity(backendServerUrl + "/api/users/login", product, UserViewModel.class).getBody();
     }
@@ -63,6 +70,18 @@ public class UserDataServiceImpl implements UserDataService, UserDetailsService 
         Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
         authorities.add(new SimpleGrantedAuthority(user.getRole()));
         return authorities;
+    }
+
+    @Override
+    public void banUser(Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getForObject(backendServerUrl + "/api/users/ban?id=" + id, void.class);
+    }
+
+    @Override
+    public void checkUser(Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getForObject(backendServerUrl + "/api/users/check?id=" + id, void.class);
     }
 
 }

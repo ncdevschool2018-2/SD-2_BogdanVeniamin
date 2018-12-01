@@ -3,9 +3,12 @@ package com.netcracker.edu.backend.controller;
 import com.netcracker.edu.backend.entity.Post;
 import com.netcracker.edu.backend.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -46,5 +49,17 @@ public class PostController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public Iterable<Post> getPostsByLogin(@RequestParam("login") String login) {
         return postService.getPostsByLogin(login);
+    }
+
+    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    public Iterable<Post> getPostsByPage(@RequestParam("page") int page) {
+        Page pageContent = postService.getPostsByPage(page);
+        return pageContent.getContent();
+    }
+
+    @RequestMapping(value = "/total-pages", method = RequestMethod.GET)
+    public int getTotalPages() {
+        Page pageContent = postService.getPostsByPage(1);
+        return pageContent.getTotalPages();
     }
 }

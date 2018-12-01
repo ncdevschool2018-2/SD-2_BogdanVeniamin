@@ -5,6 +5,10 @@ import com.netcracker.edu.backend.service.PostService;
 import com.netcracker.edu.backend.repository.PostRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -49,6 +53,13 @@ public class PostServiceImpl implements PostService {
     @Override
     public Iterable<Post> getPostsByLogin(String login) {
         return repository.findAll(postsFindByLogin(login));
+    }
+
+    @Override
+    public Page<Post> getPostsByPage(int page) {
+        Sort sort = new Sort(new Sort.Order(Sort.Direction.ASC, "id"));
+        Pageable pageable = new PageRequest(page-1, 2, sort);
+        return repository.findAll(pageable);
     }
 
 }

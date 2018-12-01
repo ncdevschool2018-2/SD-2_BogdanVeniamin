@@ -9,7 +9,6 @@ export class User {
   language: string;
   lastDateLogin: string;
   wallet: Wallet;
-  ban: boolean;
 
   static cloneBase(user: User): User {
     let clonedUser: User = new User();

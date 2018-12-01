@@ -63,6 +63,17 @@ public class JwtTokenUtil implements Serializable {
 
     }
 
+    public String generateTokenForSignUp(String login) {
+        return Jwts.builder().
+                setSubject(login)
+                .claim("scopes", "USER")
+                .signWith(SignatureAlgorithm.HS256, Constants.SIGNING_KEY)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis()
+                        + Constants.ACCESS_TOKEN_VALIDITY_SECONDS))
+                .compact();
+    }
+
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String login = getUsernameFromToken(token);
         return( login.equals(userDetails.getUsername()) && !isTokenExpired(token));

@@ -44,4 +44,14 @@ public class PostDataController {
         return ResponseEntity.ok(postDataService.getPostsByLogin(login));
     }
 
+    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    public ResponseEntity<List<PostViewModel>> getPostsByPage(@RequestParam("page") int page) {
+        return ResponseEntity.ok(postDataService.getPostsByPage(page));
+    }
+
+    @RequestMapping(value = "/total-pages", method = RequestMethod.GET)
+    public int getTotalPages() {
+        return postDataService.getTotalPages();
+    }
+
 }

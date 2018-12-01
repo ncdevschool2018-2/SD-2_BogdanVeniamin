@@ -29,4 +29,12 @@ export class PostService {
   getPostsByLogin(login: string): Observable<Post[]> {
     return this.http.get<Post[]>('/api/p/?login=' + login);
   }
+
+  getPostsByPage(page: number): Observable<Post[]> {
+    return this.http.get<Post[]>('/api/p/page/?page=' + page);
+  }
+
+  getTotalPages(): Observable<number> {
+    return this.http.get<number>('api/p/total-pages');
+  }
 }

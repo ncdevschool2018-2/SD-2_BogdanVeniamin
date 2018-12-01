@@ -35,7 +35,6 @@ public class User {
     @Size(max = 255)
     private String password;
 
-    @NotNull
     @Size(max = 45)
     private String role;
 
@@ -46,15 +45,14 @@ public class User {
 
     private String language;
     private String lastDateLogin;
-    private boolean ban;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Subscription> subscriptions = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Set<Comment> comments = new HashSet<>();
 
-    public User(String login, String password, String role, String email, String language, String lastDateLogin, Wallet wallet, boolean ban) {
+    public User(String login, String password, String role, String email, String language, String lastDateLogin, Wallet wallet) {
         this.login = login;
         this.password = password;
         this.role = role;
@@ -62,7 +60,6 @@ public class User {
         this.language = language;
         this.lastDateLogin = lastDateLogin;
         this.wallet = wallet;
-        this.ban = ban;
     }
 
     public User() {
@@ -130,14 +127,6 @@ public class User {
 
     public void setWallet(Wallet wallet) {
         this.wallet = wallet;
-    }
-
-    public boolean isBan() {
-        return ban;
-    }
-
-    public void setBan(boolean ban) {
-        this.ban = ban;
     }
 
     @Override

@@ -54,4 +54,14 @@ public class UserController {
             return ResponseEntity.notFound().build();
     }
 
+    @RequestMapping(value = "/ban", method = RequestMethod.GET)
+    public void banUser(@RequestParam("id") Long id) {
+        userService.banUser(id);
+    }
+
+    @RequestMapping(value = "/check", method = RequestMethod.GET)
+    public void checkUser(@RequestParam("id") Long id) {
+        userService.checkUser(id);
+    }
+
 }
