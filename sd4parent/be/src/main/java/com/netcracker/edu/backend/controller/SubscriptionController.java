@@ -2,6 +2,7 @@ package com.netcracker.edu.backend.controller;
 
 import com.netcracker.edu.backend.entity.SubscribeCondition;
 import com.netcracker.edu.backend.entity.Subscription;
+import com.netcracker.edu.backend.entity.SubscriptionRenewal;
 import com.netcracker.edu.backend.service.SubscriptionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +53,10 @@ public class SubscriptionController {
     @RequestMapping(value = "/compute", method = RequestMethod.POST)
     public SubscribeCondition computePrice(@RequestBody SubscribeCondition condition) {
         return subscriptionService.computePrice(condition);
+    }
+
+    @RequestMapping(value = "/extend", method = RequestMethod.POST)
+    public void extendSubscription(@RequestBody SubscriptionRenewal sub) {
+        subscriptionService.extendSubscription(sub);
     }
 }

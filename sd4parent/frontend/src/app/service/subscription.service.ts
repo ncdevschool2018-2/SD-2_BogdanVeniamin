@@ -4,6 +4,7 @@ import { Observable } from "rxjs"
 import { SubscriptionPost } from "../model/subscription"
 import { SubscribeCondition } from "../model/subscribeCondition"
 import {SubscriptionDate} from "../model/subscriptionDate";
+import {SubscriptionRenewal} from "../model/subscriptionRenewal";
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,9 @@ export class SubscriptionService {
 
   computePrice(condition: SubscribeCondition): Observable<SubscribeCondition> {
     return this.http.post<SubscribeCondition>("api/s/compute", condition);
+  }
+
+  extendSubscription(sub: SubscriptionRenewal): Observable<void> {
+    return this.http.post<void>("api/s/extend", sub);
   }
 }

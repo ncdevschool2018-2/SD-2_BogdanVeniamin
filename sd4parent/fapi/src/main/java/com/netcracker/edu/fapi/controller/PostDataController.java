@@ -39,14 +39,14 @@ public class PostDataController {
         postDataService.deletePost(Long.valueOf(id));
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/find", method = RequestMethod.GET)
     public ResponseEntity<List<PostViewModel>> getPostsByLogin(@RequestParam("login") String login) {
         return ResponseEntity.ok(postDataService.getPostsByLogin(login));
     }
 
-    @RequestMapping(value = "/page", method = RequestMethod.GET)
-    public ResponseEntity<List<PostViewModel>> getPostsByPage(@RequestParam("page") int page) {
-        return ResponseEntity.ok(postDataService.getPostsByPage(page));
+    @RequestMapping(value = "/page/{num}", method = RequestMethod.GET)
+    public ResponseEntity<List<PostViewModel>> getPostsByPage(@PathVariable(name = "num") int num) {
+        return ResponseEntity.ok(postDataService.getPostsByPage(num));
     }
 
     @RequestMapping(value = "/total-pages", method = RequestMethod.GET)

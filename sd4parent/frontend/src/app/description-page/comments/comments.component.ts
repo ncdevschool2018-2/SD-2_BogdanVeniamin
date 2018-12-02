@@ -30,8 +30,10 @@ export class CommentsComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.post_id = params.get('id');
       this.loadComments(this.post_id);
-      this.getUser();
-      this.getPost();
+      if(this.authService.getUsername() != null) {
+        this.getUser();
+        this.getPost();
+      }
     });
   }
 

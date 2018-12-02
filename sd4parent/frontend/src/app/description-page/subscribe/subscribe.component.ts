@@ -43,7 +43,8 @@ export class SubscribeComponent implements OnInit {
       this.post_id = params.get('id');
     });
     this.loadPost(this.post_id);
-    this.getUser();
+    if(this.authService.getUsername() != null)
+      this.getUser();
   }
 
   private loadPost(postId: string): void {

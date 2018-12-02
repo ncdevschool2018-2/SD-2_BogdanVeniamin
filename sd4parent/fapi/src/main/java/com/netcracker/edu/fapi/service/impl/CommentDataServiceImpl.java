@@ -37,7 +37,7 @@ public class CommentDataServiceImpl implements CommentDataService {
     @Override
     public  List<CommentViewModel> getCommentsByPostId(Long postId) {
         RestTemplate restTemplate = new RestTemplate();
-        CommentViewModel[] commentViewModelResponse = restTemplate.getForObject(backendServerUrl + "/api/comments/?post=" + postId, CommentViewModel[].class);
+        CommentViewModel[] commentViewModelResponse = restTemplate.getForObject(backendServerUrl + "/api/comments/find?post=" + postId, CommentViewModel[].class);
         return commentViewModelResponse == null ? Collections.emptyList() : Arrays.asList(commentViewModelResponse);
     }
 

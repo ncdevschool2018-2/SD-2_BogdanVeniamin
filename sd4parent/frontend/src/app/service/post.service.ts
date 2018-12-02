@@ -27,11 +27,11 @@ export class PostService {
   }
 
   getPostsByLogin(login: string): Observable<Post[]> {
-    return this.http.get<Post[]>('/api/p/?login=' + login);
+    return this.http.get<Post[]>('/api/p/find?login=' + login);
   }
 
   getPostsByPage(page: number): Observable<Post[]> {
-    return this.http.get<Post[]>('/api/p/page/?page=' + page);
+    return this.http.get<Post[]>('/api/p/page/' + page);
   }
 
   getTotalPages(): Observable<number> {

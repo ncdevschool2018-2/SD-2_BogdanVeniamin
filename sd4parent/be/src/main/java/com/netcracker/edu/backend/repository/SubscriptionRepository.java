@@ -35,4 +35,14 @@ public interface SubscriptionRepository extends CrudRepository<Subscription, Lon
     @Query("update Subscription sub set sub.status = 1 where sub.id = :id")
     void trueStatus(@Param("id") Long id);
 
+    @Modifying
+    @Transactional
+    @Query("update Subscription sub set sub.duration = sub.duration + :duration where sub.id = :id")
+    void extendSubscription(@Param("id") Long id, @Param("duration") int duration);
+
+    @Modifying
+    @Transactional
+    @Query("update Subscription sub set sub.cost = :cost where sub.id = :id")
+    void changeCost(@Param("id") Long id, @Param("cost") float cost);
+
 }

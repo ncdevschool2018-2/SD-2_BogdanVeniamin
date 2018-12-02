@@ -1,6 +1,7 @@
 package com.netcracker.edu.fapi.service;
 
 import com.netcracker.edu.fapi.models.SubscribeConditionViewModel;
+import com.netcracker.edu.fapi.models.SubscriptionRenewalViewModel;
 import com.netcracker.edu.fapi.models.SubscriptionViewModel;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface SubscriptionDataService {
     void deleteSubscription(Long id);
     List<SubscriptionViewModel> getSubscriptionsByLogin(String login);
     SubscribeConditionViewModel computePrice(SubscribeConditionViewModel condition);
+    void extendSubscription(SubscriptionRenewalViewModel sub);
 }

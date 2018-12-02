@@ -1,6 +1,7 @@
 package com.netcracker.edu.fapi.controller;
 
 import com.netcracker.edu.fapi.models.SubscribeConditionViewModel;
+import com.netcracker.edu.fapi.models.SubscriptionRenewalViewModel;
 import com.netcracker.edu.fapi.models.SubscriptionViewModel;
 import com.netcracker.edu.fapi.service.SubscriptionDataService;
 
@@ -50,6 +51,13 @@ public class SubscriptionDataController {
             return ResponseEntity.ok(subscriptionDataService.computePrice(condition));
         }
         return null;
+    }
+
+    @RequestMapping(value = "/extend", method = RequestMethod.POST)
+    public void extendSubscription(@RequestBody SubscriptionRenewalViewModel sub) {
+        if(sub != null) {
+            subscriptionDataService.extendSubscription(sub);
+        }
     }
 
 }

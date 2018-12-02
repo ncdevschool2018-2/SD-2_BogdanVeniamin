@@ -34,7 +34,7 @@ public class CommentDataController {
         commentDataService.deleteComment(Long.valueOf(id));
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/find", method = RequestMethod.GET)
     public ResponseEntity<List<CommentViewModel>> getCommentsByPostId(@RequestParam("post") String postId) {
         return ResponseEntity.ok(commentDataService.getCommentsByPostId(Long.valueOf(postId)));
     }

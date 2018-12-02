@@ -38,7 +38,7 @@ public class CommentController {
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/find", method = RequestMethod.GET)
     public Iterable<Comment> getCommentsByPostId(@RequestParam("post") Long postId) {
         return commentService.getCommentsByPostId(postId);
     }

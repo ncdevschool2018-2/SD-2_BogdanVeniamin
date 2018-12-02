@@ -44,14 +44,14 @@ public class PostDataServiceImpl implements PostDataService {
     @Override
     public List<PostViewModel> getPostsByLogin(String login) {
         RestTemplate restTemplate = new RestTemplate();
-        PostViewModel[] postViewModelResponse = restTemplate.getForObject(backendServerUrl + "/api/posts/?login=" + login, PostViewModel[].class);
+        PostViewModel[] postViewModelResponse = restTemplate.getForObject(backendServerUrl + "/api/posts/find?login=" + login, PostViewModel[].class);
         return postViewModelResponse == null ? Collections.emptyList() : Arrays.asList(postViewModelResponse);
     }
 
     @Override
     public List<PostViewModel> getPostsByPage(int page) {
         RestTemplate restTemplate = new RestTemplate();
-        PostViewModel[] postViewModelResponse = restTemplate.getForObject(backendServerUrl + "api/posts/page>page=" + page, PostViewModel[].class);
+        PostViewModel[] postViewModelResponse = restTemplate.getForObject(backendServerUrl + "api/posts/page/" + page, PostViewModel[].class);
         return postViewModelResponse == null ? Collections.emptyList() : Arrays.asList(postViewModelResponse);
     }
 

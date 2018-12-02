@@ -2,6 +2,7 @@ package com.netcracker.edu.backend.service.impl;
 
 import com.netcracker.edu.backend.entity.SubscribeCondition;
 import com.netcracker.edu.backend.entity.Subscription;
+import com.netcracker.edu.backend.entity.SubscriptionRenewal;
 import com.netcracker.edu.backend.service.SubscriptionService;
 import com.netcracker.edu.backend.repository.SubscriptionRepository;
 
@@ -26,18 +27,18 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     @Override
     public Subscription saveSubscription(Subscription sub) {
 
-        sub.setDuration(convertDuration(sub));
+        sub.setDuration(convertDuration(sub.getDuration()));
         sub.setCost(sub.getCost()/sub.getDuration());
 
         return this.repository.save(sub);
     }
 
-    private int convertDuration(Subscription sub) {
+    private int convertDuration(int duration) {
         int[] monthDays = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         int currentMonth = Integer.parseInt(LocalDateTime.now().toString().split("-")[1]);
         int days = 0;
 
-        int finalMonth = currentMonth + sub.getDuration();
+        int finalMonth = currentMonth + duration;
 
         if(finalMonth > 12) {
             finalMonth -= 12;
@@ -96,5 +97,17 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         condition.setDiscount(currentDiscount);
 
         return condition;
+    }
+
+    @Override
+    public void extendSubscription(SubscriptionRenewal sub) {
+        int oldDuration = repository.findById(sub.getId()).get().getDuration();
+
+        int newDuration = this.convertDuration(sub.getDuration());
+
+        float newCost = sub.getCost()/(oldDuration + newDuration);
+
+        repository.changeCost(sub.getId(), newCost);
+        repository.extendSubscription(sub.getId(), newDuration);
     }
 }

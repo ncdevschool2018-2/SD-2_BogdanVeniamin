@@ -21,7 +21,8 @@ export class SubscriptionsComponent implements OnInit {
               private authService: AuthService) { }
 
   ngOnInit() {
-    this.loadPosts(this.authService.getUsername());
+    if(this.authService.getUsername() != null)
+      this.loadPosts(this.authService.getUsername());
   }
 
   private loadPosts(login: string): void {

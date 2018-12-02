@@ -19,14 +19,22 @@ export class AuthService {
   }
 
   decodeJwt(token: string): any {
-    let encodedJwt = token.split('.')[1];
-    let decodedJwt = window.atob(encodedJwt);
-    return JSON.parse(decodedJwt);
+    if(token) {
+      let encodedJwt = token.split('.')[1];
+      let decodedJwt = window.atob(encodedJwt);
+      return JSON.parse(decodedJwt);
+    } else {
+      return null;
+    }
+
   }
 
   getUsername(): string {
     let decodeObj: Decode = this.decodeJwt(this.token.getToken());
-    return decodeObj.sub;
+    if(decodeObj != null)
+      return decodeObj.sub;
+    else
+      return null;
   }
 
   getRole(): string {

@@ -46,14 +46,14 @@ public class PostController {
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/find", method = RequestMethod.GET)
     public Iterable<Post> getPostsByLogin(@RequestParam("login") String login) {
         return postService.getPostsByLogin(login);
     }
 
-    @RequestMapping(value = "/page", method = RequestMethod.GET)
-    public Iterable<Post> getPostsByPage(@RequestParam("page") int page) {
-        Page pageContent = postService.getPostsByPage(page);
+    @RequestMapping(value = "/page/{num}", method = RequestMethod.GET)
+    public Iterable<Post> getPostsByPage(@PathVariable(name = "num") int num) {
+        Page pageContent = postService.getPostsByPage(num);
         return pageContent.getContent();
     }
 

@@ -13,11 +13,15 @@ export class PostsComponent implements OnInit {
 
   public posts: Post[];
   private subscriptions: Subscription[] = [];
+  public pages: number[] = [];
+  public total: number;
+  public currentPage: number = 1;
 
   constructor(private postService: PostService, private loadingService: NgxSpinnerService) { }
 
   ngOnInit() {
-    this.loadPosts();
+    this.getPostsByPage(1);
+    this.getTotalPages();
   }
 
   private loadPosts(): void {
@@ -26,6 +30,22 @@ export class PostsComponent implements OnInit {
       this.posts = products as Post[];
       console.log(this.posts);
       this.loadingService.hide();
+    }))
+  }
+
+  private getTotalPages(): void {
+    this.subscriptions.push(this.postService.getTotalPages().subscribe(totalPages => {
+      this.total = totalPages;
+      console.log(this.total);
+      for(let i=1; i<=totalPages; i++) {
+        this.pages.push(i);
+      }
+    }))
+  }
+
+  public getPostsByPage(page: number): void {
+    this.subscriptions.push(this.postService.getPostsByPage(page).subscribe(products => {
+      this.posts = products as Post[];
     }))
   }
 
