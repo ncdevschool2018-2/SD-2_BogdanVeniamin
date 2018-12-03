@@ -59,7 +59,8 @@ export class CommentsComponent implements OnInit {
     console.log("Comment: " + this.newComment.user + " " + this.newComment.post + " " + this.newComment.text);
     this.subscriptions.push(this.commentService.saveComment(this.newComment).subscribe(() => {
       this.loadComments(this.post_id);
-    }))
+    }));
+    this.newComment.text = null;
   }
 
   public deleteComment(commentId: string): void {
@@ -70,10 +71,18 @@ export class CommentsComponent implements OnInit {
 
   public checkUser(comment: Comment): boolean {
 
-    if(comment.user.login == this.authService.getUsername() || this.authService.getRole() == "ADMIN")
+    if (this.authService.getUsername() != null && (comment.user.login == this.authService.getUsername() || this.authService.getRole() == "ADMIN")) {
       return true;
-    else
+    } else {
       return false;
+    }
+  }
+
+  public hasUser(): boolean {
+    if(this.authService.getUsername() == null)
+      return false;
+    else
+      return true;
   }
 
 }

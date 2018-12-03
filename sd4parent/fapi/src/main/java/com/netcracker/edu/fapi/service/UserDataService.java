@@ -13,5 +13,5 @@ public interface UserDataService {
     void deleteUser(Long id);
     UserViewModel getUserByLogin(String login);
     void banUser(Long id);
-    void checkUser(Long id);
+    void checkUser(String login);
 }

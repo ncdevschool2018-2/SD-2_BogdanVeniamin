@@ -36,11 +36,11 @@ export class UserService {
   }
 
   banUser(userId: string): Observable<void> {
-    return this.http.get<void>("api/u/ban?id" + userId);
+    return this.http.get<void>("api/u/ban?id=" + userId);
   }
 
-  checkUser(userId: string): Observable<void> {
+  checkUser(login: string): Observable<void> {
 
-    return this.http.get<void>("api/u/check?id" + userId);
+    return this.http.get<void>("api/u/check?login=" + login);
   }
 }

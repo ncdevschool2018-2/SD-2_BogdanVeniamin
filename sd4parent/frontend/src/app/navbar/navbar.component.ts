@@ -43,6 +43,11 @@ export class NavbarComponent implements OnInit {
   }
 
   public _closeModal(): void {
+    this.loginUser.login = null;
+    this.loginUser.password = null;
+    this.newUser.login = null;
+    this.newUser.password = null;
+    this.newUser.email = null;
     this.modalRef.hide();
   }
 
@@ -63,10 +68,8 @@ export class NavbarComponent implements OnInit {
       this.role = this.user.scopes;
     }));
 
-    this.userService.getUserByLogin(this.loginUser.login).subscribe(account => {
-      this.userService.checkUser(account.id).subscribe(() => {
+    this.userService.checkUser(this.loginUser.login).subscribe(() => {
 
-      })
     });
 
     this.loadingService.hide();

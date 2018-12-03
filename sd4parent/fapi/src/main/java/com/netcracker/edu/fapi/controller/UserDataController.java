@@ -60,7 +60,7 @@ public class UserDataController {
     }
 
     @RequestMapping(value = "/check", method = RequestMethod.GET)
-    public void checkUser(@RequestParam("id") String id) {
-        userDataService.checkUser(Long.valueOf(id));
+    public void checkUser(@RequestParam("login") String login) {
+        userDataService.checkUser(login);
     }
 }

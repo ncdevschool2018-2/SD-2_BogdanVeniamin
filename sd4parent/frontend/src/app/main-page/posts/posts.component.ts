@@ -24,15 +24,6 @@ export class PostsComponent implements OnInit {
     this.getTotalPages();
   }
 
-  private loadPosts(): void {
-    this.loadingService.show();
-    this.subscriptions.push(this.postService.getPosts().subscribe(products => {
-      this.posts = products as Post[];
-      console.log(this.posts);
-      this.loadingService.hide();
-    }))
-  }
-
   private getTotalPages(): void {
     this.subscriptions.push(this.postService.getTotalPages().subscribe(totalPages => {
       this.total = totalPages;
@@ -44,8 +35,10 @@ export class PostsComponent implements OnInit {
   }
 
   public getPostsByPage(page: number): void {
+    this.loadingService.show();
     this.subscriptions.push(this.postService.getPostsByPage(page).subscribe(products => {
       this.posts = products as Post[];
+      this.loadingService.hide();
     }))
   }
 

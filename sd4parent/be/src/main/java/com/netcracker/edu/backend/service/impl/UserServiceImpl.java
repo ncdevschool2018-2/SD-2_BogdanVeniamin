@@ -69,9 +69,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void checkUser(Long id) {
+    public void checkUser(String login) {
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        repository.checkUser(id, date);
+        repository.checkUser(login, date);
     }
 
 }

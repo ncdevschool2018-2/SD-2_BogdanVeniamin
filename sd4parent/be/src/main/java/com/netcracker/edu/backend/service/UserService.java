@@ -15,5 +15,5 @@ public interface UserService {
     void deleteUser(Long id);
     Optional<User> getUserByLogin(String login);
     void banUser(Long id);
-    void checkUser(Long id);
+    void checkUser(String login);
 }

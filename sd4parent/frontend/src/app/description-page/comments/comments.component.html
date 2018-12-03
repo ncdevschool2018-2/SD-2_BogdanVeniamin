@@ -14,8 +14,11 @@
       </div>
     </div>
   </div>
-  <div class="field">
+  <div class="field" *ngIf="hasUser()">
     <textarea class="form-control" name="description" id="inputTitle" placeholder="Write your comment here" [(ngModel)]="newComment.text"></textarea>
     <button class="btn btn-info" (click)="saveComment()">Send</button>
+  </div>
+  <div class="filed" *ngIf="!hasUser()">
+    <h5>Login to comment</h5>
   </div>
 </div>

@@ -3,6 +3,8 @@ import { Post } from "../../model/post"
 import { PostService } from "../../service/post.service"
 import { Subscription } from "rxjs/internal/Subscription"
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AuthService } from "../../service/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-new-post',
@@ -15,9 +17,14 @@ export class NewPostComponent implements OnInit {
   private subscriptions: Subscription[] = [];
   public newPost: Post = new Post();
 
-  constructor(private postService: PostService, private loadingService: NgxSpinnerService) { }
+  constructor(private postService: PostService, private loadingService: NgxSpinnerService,
+              private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
+    if(this.authService.getUsername() == null)
+      this.router.navigate(['']);
+    else if(this.authService.getRole() != "ADMIN")
+      this.router.navigate(['']);
   }
 
   public _addPost(): void {

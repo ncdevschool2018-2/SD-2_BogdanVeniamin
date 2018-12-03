@@ -4,7 +4,7 @@ import { SubscriptionService } from "../../service/subscription.service";
 import { Subscription } from "rxjs/internal/Subscription"
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from "../../service/auth.service";
-import {SubscriptionDate} from "../../model/subscriptionDate";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-subscriptions',
@@ -18,11 +18,14 @@ export class SubscriptionsComponent implements OnInit {
   public left: number[] = [];
 
   constructor(private subscriptionService: SubscriptionService, private loadingService: NgxSpinnerService,
-              private authService: AuthService) { }
+              private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-    if(this.authService.getUsername() != null)
+    if(this.authService.getUsername() != null) {
       this.loadPosts(this.authService.getUsername());
+    } else {
+      this.router.navigate(['']);
+    }
   }
 
   private loadPosts(login: string): void {
@@ -30,7 +33,6 @@ export class SubscriptionsComponent implements OnInit {
     this.subscriptions.push(this.subscriptionService.getSubscriptionsByLogin(login).subscribe(subs => {
       this.subscriptionPosts = subs as SubscriptionPost[];
       console.log("Sub: " + this.subscriptionPosts);
-      console.log("Sub: " + this.subscriptionPosts[0].duration)
       this.loadingService.hide();
     }))
   }

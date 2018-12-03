@@ -1,5 +1,6 @@
 package com.netcracker.edu.backend.controller;
 
+import com.netcracker.edu.backend.entity.Addition;
 import com.netcracker.edu.backend.entity.Post;
 import com.netcracker.edu.backend.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -61,5 +64,10 @@ public class PostController {
     public int getTotalPages() {
         Page pageContent = postService.getPostsByPage(1);
         return pageContent.getTotalPages();
+    }
+
+    @RequestMapping(value = "/add/{id}", method = RequestMethod.POST)
+    public void getPost(@PathVariable(name = "id") Long id, @RequestBody Set<Addition> additions) {
+        postService.getPost(id, additions);
     }
 }

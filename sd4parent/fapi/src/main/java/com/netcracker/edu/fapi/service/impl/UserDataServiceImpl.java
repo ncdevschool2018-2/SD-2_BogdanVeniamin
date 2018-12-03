@@ -79,9 +79,9 @@ public class UserDataServiceImpl implements UserDataService, UserDetailsService 
     }
 
     @Override
-    public void checkUser(Long id) {
+    public void checkUser(String login) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getForObject(backendServerUrl + "/api/users/check?id=" + id, void.class);
+        restTemplate.getForObject(backendServerUrl + "/api/users/check?login=" + login, void.class);
     }
 
 }

@@ -9,6 +9,7 @@ import com.netcracker.edu.backend.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -96,7 +97,24 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         condition.setPrice(wholePrice - discountPrice);
         condition.setDiscount(currentDiscount);
 
+        condition.setPrice(fixedNum(condition.getPrice()));
+        condition.setDiscount(fixedNum(condition.getDiscount()));
+
         return condition;
+    }
+
+    private Double fixedNum(Double num) {
+        int fix = num.toString().split("\\.")[1].length();
+        String fixFormat;
+
+        if(fix >= 2)
+            fixFormat = ".##";
+        else
+            fixFormat = ".#";
+
+        DecimalFormat df2 = new DecimalFormat(fixFormat);
+
+        return Double.valueOf(df2.format(num));
     }
 
     @Override

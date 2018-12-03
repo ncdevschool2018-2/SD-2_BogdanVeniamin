@@ -31,6 +31,8 @@ export class SubscribeComponent implements OnInit {
   private post_id: string;
   public numbers: number[] = [1,2,3,4,5,6,7,8,9,10,11,12];
   public resultCondition: SubscribeCondition;
+  public auth: boolean = true;
+  public currentDuration: number = 6;
 
   constructor(private userService: UserService,private modalService: BsModalService,
               private route: ActivatedRoute, private postService: PostService,
@@ -45,6 +47,8 @@ export class SubscribeComponent implements OnInit {
     this.loadPost(this.post_id);
     if(this.authService.getUsername() != null)
       this.getUser();
+    else
+      this.auth = false;
   }
 
   private loadPost(postId: string): void {
@@ -73,16 +77,6 @@ export class SubscribeComponent implements OnInit {
     this.subscriptions.push(this.subscriptionService.computePrice(currentCondition).subscribe( result => {
       this.resultCondition = result as SubscribeCondition;
     } ))
-  }
-
-  public fixedNum(num: number): string {
-    if(!num.toString().includes('.'))
-      return num.toString();
-    let fractionLength: number = num.toString().split('.')[1].length;
-    if(fractionLength >= 2)
-      return num.toFixed(2);
-    return num.toFixed(fractionLength);
-
   }
 
   private getUser(): void {
