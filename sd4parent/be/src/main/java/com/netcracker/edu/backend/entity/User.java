@@ -46,6 +46,9 @@ public class User {
     private String language;
     private String lastDateLogin;
 
+    @Column(name = "reset_token")
+    private String resetToken;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Subscription> subscriptions = new HashSet<>();
 
@@ -127,6 +130,14 @@ public class User {
 
     public void setWallet(Wallet wallet) {
         this.wallet = wallet;
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
     }
 
     @Override

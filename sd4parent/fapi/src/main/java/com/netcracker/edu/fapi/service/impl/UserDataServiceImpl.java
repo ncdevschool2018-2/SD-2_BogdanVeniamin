@@ -1,5 +1,6 @@
 package com.netcracker.edu.fapi.service.impl;
 
+import com.netcracker.edu.fapi.models.LoginStringViewModel;
 import com.netcracker.edu.fapi.models.UserViewModel;
 import com.netcracker.edu.fapi.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,32 @@ public class UserDataServiceImpl implements UserDataService, UserDetailsService 
     public void checkUser(String login) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getForObject(backendServerUrl + "/api/users/check?login=" + login, void.class);
+    }
+
+    @Override
+    public UserViewModel getUserByEmail(String email) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(backendServerUrl + "/api/users/email?email=" + email, UserViewModel.class);
+    }
+
+    @Override
+    public UserViewModel getUserByResetToken(String resetToken) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(backendServerUrl + "/api/users/reset?token=" + resetToken, UserViewModel.class);
+    }
+
+    @Override
+    public void updateToken(LoginStringViewModel resetToken) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForEntity(backendServerUrl + "/api/users/update-token", resetToken, LoginStringViewModel.class).getBody();
+    }
+
+    @Override
+    public void updatePassword(LoginStringViewModel password) {
+        password.setStringVariable(passwordEncoder.encode(password.getStringVariable()));
+
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForEntity(backendServerUrl + "/api/users/update-password", password, LoginStringViewModel.class).getBody();
     }
 
 }

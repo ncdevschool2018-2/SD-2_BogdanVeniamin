@@ -14,6 +14,7 @@ public class UserViewModel {
     private String language;
     private String lastDateLogin;
     private WalletViewModel wallet;
+    private String resetToken;
 
     public UserViewModel(String login, WalletViewModel wallet, String password, String role, String email, String language, String lastDateLogin) {
         this.login = login;
@@ -99,4 +100,11 @@ public class UserViewModel {
         this.lastDateLogin = lastDateLogin;
     }
 
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
+    }
 }

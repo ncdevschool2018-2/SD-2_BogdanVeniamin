@@ -10,6 +10,7 @@ import { LoginUser } from "../model/loginUser";
 import {Router} from "@angular/router";
 import { Decode } from "../model/decode";
 import {User} from "../model/user";
+import { PasswordService } from "../service/password.service";
 
 @Component({
   selector: 'navbar',
@@ -19,6 +20,7 @@ import {User} from "../model/user";
 export class NavbarComponent implements OnInit {
 
   public user: Decode;
+  public resetEmail: string;
   public role: string;
   public loginUser: LoginUser = new LoginUser();
   private subscriptions: Subscription[] = [];
@@ -27,7 +29,8 @@ export class NavbarComponent implements OnInit {
 
   constructor(private userService: UserService, private modalService: BsModalService,
               private router: Router, private loadingService: NgxSpinnerService,
-              private authService: AuthService, private tokenStorage: TokenStorage) { }
+              private authService: AuthService, private tokenStorage: TokenStorage,
+              private passwordService: PasswordService) { }
 
   ngOnInit() {
 
@@ -99,5 +102,13 @@ export class NavbarComponent implements OnInit {
   public signOut(): void {
     this.tokenStorage.signOut();
     this.user = undefined;
+  }
+
+  public sentEmail(): void {
+    this.loadingService.show();
+    this.subscriptions.push(this.passwordService.forgotPassword(this.resetEmail).subscribe(() => {
+      this.loadingService.hide();
+      this._closeModal();
+    }))
   }
 }

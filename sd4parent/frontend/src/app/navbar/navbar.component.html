@@ -117,13 +117,10 @@
   </div>
   <div class="modal-body">
     <div class="form-group">
-      <input type="text" class="form-control ng-pristine ng-invalid ng-touched" name="email" placeholder="email" [(ngModel)]="newUser.email" #emailForgot="ngModel" required
-             pattern='/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/"'/>
+      <input type="text" class="form-control ng-pristine ng-invalid ng-touched" name="email" placeholder="email" [(ngModel)]="resetEmail" #emailForgot="ngModel" required
+             />
     </div>
-    <div [hidden]="emailForgot.valid || emailForgot.untouched" class="alert alert-danger text-center">
-      Email must end with a letter
-    </div>
-    <input type="button" value="Sent pass" (click)="_closeModal()" [disabled]="emailForgot.invalid">
+    <input type="button" value="Sent pass" (click)="sentEmail()">
   </div>
   <div class="modal-footer">
     <div class="links">

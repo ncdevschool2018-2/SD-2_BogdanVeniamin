@@ -42,7 +42,7 @@ public class UserDataController {
             if(login == null)
                 login = account.getEmail();
 
-            final String token = jwtTokenUtil.generateTokenForSignUp(login);
+            final String token = jwtTokenUtil.generateTokenForSignUp(login, "USER");
             return ResponseEntity.ok(new AuthToken(token));
         }
         else

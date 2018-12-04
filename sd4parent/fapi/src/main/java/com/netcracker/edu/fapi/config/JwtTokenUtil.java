@@ -63,10 +63,10 @@ public class JwtTokenUtil implements Serializable {
 
     }
 
-    public String generateTokenForSignUp(String login) {
+    public String generateTokenForSignUp(String login, String role) {
         return Jwts.builder().
                 setSubject(login)
-                .claim("scopes", "USER")
+                .claim("scopes", role)
                 .signWith(SignatureAlgorithm.HS256, Constants.SIGNING_KEY)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()

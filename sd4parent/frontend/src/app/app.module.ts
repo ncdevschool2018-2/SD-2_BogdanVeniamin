@@ -16,6 +16,7 @@ import { WalletPageModule } from "./wallet-page/wallet-page.module"
 import {Ng2Webstorage} from 'ngx-webstorage';
 import { NewPackagePageModule } from "./new-package-page/new-package-page.module";
 import { NewAdditionPageModule } from "./new-addition-page/new-addition-page.module";
+import { NewPasswordPageModule } from "./new-password-page/new-password-page.module";
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -40,6 +41,7 @@ import { TokenStorage } from "./storage/token.storage";
     WalletPageModule,
     NewPackagePageModule,
     NewAdditionPageModule,
+    NewPasswordPageModule,
     SubscriptionsPageModule,
     TooltipModule.forRoot(),
     ModalModule.forRoot(),

@@ -1,6 +1,6 @@
 package com.netcracker.edu.backend.service.impl;
 
-import com.netcracker.edu.backend.entity.MoneyOperation;
+import com.netcracker.edu.backend.entity.LoginStringModel;
 import com.netcracker.edu.backend.entity.User;
 import com.netcracker.edu.backend.repository.WalletRepository;
 import com.netcracker.edu.backend.service.UserService;
@@ -72,6 +72,26 @@ public class UserServiceImpl implements UserService {
     public void checkUser(String login) {
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         repository.checkUser(login, date);
+    }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) {
+        return repository.findByEmail(email);
+    }
+
+    @Override
+    public Optional<User> findUserByResetToken(String resetToken) {
+        return repository.findByResetToken(resetToken);
+    }
+
+    @Override
+    public void updateToken(LoginStringModel resetToken) {
+        repository.updateToken(resetToken.getLogin(), resetToken.getStringVariable());
+    }
+
+    @Override
+    public void updatePassword(LoginStringModel password) {
+        repository.updatePassword(password.getLogin(), password.getStringVariable());
     }
 
 }

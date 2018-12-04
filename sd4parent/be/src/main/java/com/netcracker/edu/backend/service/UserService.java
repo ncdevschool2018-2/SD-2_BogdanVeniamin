@@ -1,9 +1,7 @@
 package com.netcracker.edu.backend.service;
 
-import com.netcracker.edu.backend.entity.MoneyOperation;
+import com.netcracker.edu.backend.entity.LoginStringModel;
 import com.netcracker.edu.backend.entity.User;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
@@ -16,4 +14,8 @@ public interface UserService {
     Optional<User> getUserByLogin(String login);
     void banUser(Long id);
     void checkUser(String login);
+    Optional<User> findUserByEmail(String email);
+    Optional<User> findUserByResetToken(String resetToken);
+    void updateToken(LoginStringModel resetToken);
+    void updatePassword(LoginStringModel password);
 }

@@ -24,4 +24,17 @@ public interface UserRepository extends CrudRepository<User, Long>, JpaSpecifica
     @Transactional
     @Query("update User account set account.lastDateLogin = :date where account.login = :login")
     void checkUser(@Param("login") String login, @Param("date") String date);
+
+    Optional<User> findByEmail(String email);
+    Optional<User> findByResetToken(String resetToken);
+
+    @Modifying
+    @Transactional
+    @Query("update User account set account.resetToken = :resetToken where account.login = :login")
+    void updateToken(@Param("login") String login, @Param("resetToken") String resetToken);
+
+    @Modifying
+    @Transactional
+    @Query("update User account set account.password = :password where account.login = :login")
+    void updatePassword(@Param("login") String login, @Param("password") String password);
 }
