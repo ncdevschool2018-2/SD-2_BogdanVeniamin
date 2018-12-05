@@ -1,5 +1,6 @@
 package com.netcracker.edu.fapi.controller;
 
+import com.netcracker.edu.fapi.models.PostViewModel;
 import com.netcracker.edu.fapi.models.SubscribeConditionViewModel;
 import com.netcracker.edu.fapi.models.SubscriptionRenewalViewModel;
 import com.netcracker.edu.fapi.models.SubscriptionViewModel;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -30,7 +32,17 @@ public class SubscriptionDataController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<SubscriptionViewModel> saveSubscription(@RequestBody SubscriptionViewModel sub) {
         if(sub != null) {
-            return ResponseEntity.ok(subscriptionDataService.saveSubscription(sub));
+            List<SubscriptionViewModel> subscriptions = subscriptionDataService.getSubscriptionsByLogin(sub.getUser().getLogin());
+            List<String> posts = new ArrayList<>();
+
+            for(SubscriptionViewModel subscription: subscriptions) {
+                posts.add(subscription.getPost().getTitle());
+            }
+
+            if(!posts.contains(sub.getPost().getTitle()))
+                return ResponseEntity.ok(subscriptionDataService.saveSubscription(sub));
+            else
+                return null;
         }
         return null;
     }

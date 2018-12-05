@@ -11,6 +11,9 @@ import {Router} from "@angular/router";
 import { Decode } from "../model/decode";
 import {User} from "../model/user";
 import { PasswordService } from "../service/password.service";
+import { SocialService } from "../service/social.service";
+import {URLModel} from "../model/urlModel";
+import { LoginEventService } from "../service/login-event.service";
 
 @Component({
   selector: 'navbar',
@@ -26,11 +29,13 @@ export class NavbarComponent implements OnInit {
   private subscriptions: Subscription[] = [];
   public modalRef: BsModalRef;
   public newUser: User = new User();
+  private address: URLModel;
 
   constructor(private userService: UserService, private modalService: BsModalService,
               private router: Router, private loadingService: NgxSpinnerService,
               private authService: AuthService, private tokenStorage: TokenStorage,
-              private passwordService: PasswordService) { }
+              private passwordService: PasswordService, private socialService: SocialService,
+              private loginEventService: LoginEventService) { }
 
   ngOnInit() {
 
@@ -102,6 +107,7 @@ export class NavbarComponent implements OnInit {
   public signOut(): void {
     this.tokenStorage.signOut();
     this.user = undefined;
+    this.loginEventService.setClicked();
   }
 
   public sentEmail(): void {
@@ -109,6 +115,14 @@ export class NavbarComponent implements OnInit {
     this.subscriptions.push(this.passwordService.forgotPassword(this.resetEmail).subscribe(() => {
       this.loadingService.hide();
       this._closeModal();
+    }))
+  }
+
+  public facebookAuth(): void {
+    this.subscriptions.push(this.socialService.createFacebookAuthorization().subscribe(addr => {
+      this.address = addr as URLModel;
+      console.log(this.address.url);
+      window.open(this.address.url, "_self");
     }))
   }
 }

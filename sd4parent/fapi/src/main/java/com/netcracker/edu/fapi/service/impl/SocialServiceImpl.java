@@ -35,7 +35,7 @@ public class SocialServiceImpl implements SocialService {
         FacebookConnectionFactory connectionFactory = new FacebookConnectionFactory(facebookAppId, facebookSecret);
         OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
         OAuth2Parameters params = new OAuth2Parameters();
-        params.setRedirectUri("http://localhost:" + serverPort + "/facebook");
+        params.setRedirectUri("http://localhost:" + serverPort + "/social/facebook");
         params.setScope("email");
 //        return sendURL(oauthOperations.buildAuthorizeUrl(params));
         System.out.println(oauthOperations.buildAuthorizeUrl(params));
@@ -47,7 +47,7 @@ public class SocialServiceImpl implements SocialService {
         GoogleConnectionFactory connectionFactory = new GoogleConnectionFactory(googleAppId, googleSecret);
         OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
         OAuth2Parameters params = new OAuth2Parameters();
-        params.setRedirectUri("http://localhost:" + serverPort + "/google");
+        params.setRedirectUri("http://localhost:" + serverPort + "/social/google");
         params.setScope("email");
         System.out.println(oauthOperations.buildAuthorizeUrl(params));
         return oauthOperations.buildAuthorizeUrl(params);
@@ -56,20 +56,20 @@ public class SocialServiceImpl implements SocialService {
     @Override
     public String createFacebookAccessToken(String code) {
         FacebookConnectionFactory connectionFactory = new FacebookConnectionFactory(facebookAppId, facebookSecret);
-        AccessGrant accessGrant = connectionFactory.getOAuthOperations().exchangeForAccess(code, "http://localhost:" + serverPort + "/facebook", null);
+        AccessGrant accessGrant = connectionFactory.getOAuthOperations().exchangeForAccess(code, "http://localhost:" + serverPort + "/social/facebook", null);
         return getFacebookInfo(accessGrant.getAccessToken());
     }
 
     @Override
     public String createGoogleAccessToken(String code) {
         GoogleConnectionFactory connectionFactory = new GoogleConnectionFactory(googleAppId, googleSecret);
-        AccessGrant accessGrant = connectionFactory.getOAuthOperations().exchangeForAccess(code, "http://localhost:" + serverPort + "/google", null);
+        AccessGrant accessGrant = connectionFactory.getOAuthOperations().exchangeForAccess(code, "http://localhost:" + serverPort + "/social/google", null);
         return getGoogleInfo(accessGrant.getAccessToken());
     }
 
     private String getFacebookInfo(String accessToken) {
         Facebook facebook = new FacebookTemplate(accessToken);
-        String[] fields = {"first_name", "last_name", "email"};
+        String[] fields = {"email"};
         return facebook.fetchObject("me", String.class, fields);
     }
 

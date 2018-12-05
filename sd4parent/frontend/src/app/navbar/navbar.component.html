@@ -58,7 +58,7 @@
           </div>
           <input type="button" value="Log In" (click)="authorizate()" [disabled]="login.invalid || password.invalid">
           <div class="social">
-            <a href="#"><span class="fa fa-facebook"></span></a>
+            <a (click)="facebookAuth()"><span class="fa fa-facebook"></span></a>
             <a href="#"><span class="fa fa-google-plus"></span></a>
           </div>
         </div>

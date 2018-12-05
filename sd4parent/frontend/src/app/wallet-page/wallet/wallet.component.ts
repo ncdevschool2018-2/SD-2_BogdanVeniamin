@@ -10,6 +10,8 @@ import { WalletService } from "../../service/wallet.service";
 import { MoneyOperation } from "../../model/moneyOperation";
 import { AuthService } from "../../service/auth.service";
 import {Wallet} from "../../model/wallet";
+import { WalletDataService } from "../../service/wallet-data.service";
+import { LoginEventService } from "../../service/login-event.service";
 
 @Component({
   selector: 'app-wallet',
@@ -26,10 +28,16 @@ export class WalletComponent implements OnInit {
 
   constructor(private transactionService: TransactionService, private userService: UserService,
               private loadingService: NgxSpinnerService, private modalService: BsModalService,
-              private authService: AuthService, private walletService: WalletService) { }
+              private authService: AuthService, private walletService: WalletService,
+              private walletDataService: WalletDataService, private loginEventService: LoginEventService) { }
 
   ngOnInit() {
     this.loadWallet(this.authService.getUsername());
+    this.loginEventService.skipClicked.subscribe( value => {
+      if(value == true) {
+        this.loadWallet(this.authService.getUsername());
+      }
+    })
   }
 
   private loadWallet(login: string) {
@@ -38,7 +46,7 @@ export class WalletComponent implements OnInit {
       this.wallet = account.wallet as Wallet;
       console.log("Wallet: " + this.wallet.money);
       this.loadingService.hide();
-    }))
+    }));
   }
 
   public _openModal(template: TemplateRef<any>) {
@@ -73,11 +81,13 @@ export class WalletComponent implements OnInit {
     }));
 
     this.subscriptions.push(this.transactionService.saveTransaction(this.createTransaction()).subscribe(() => {
-
+      this.walletDataService.setClicked();
+      this.updateWallet();
+      this.closeModal();
     }));
 
-    this.updateWallet();
-    this.closeModal();
   }
+
+
 
 }

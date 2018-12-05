@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginEventService } from "../../service/login-event.service";
 import { AuthService } from "../../service/auth.service";
 import {Router} from "@angular/router";
 
@@ -9,10 +10,22 @@ import {Router} from "@angular/router";
 })
 export class NewPackageComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router,
+              private loginEventService: LoginEventService) { }
 
   ngOnInit() {
-    if(this.authService.getUsername() == null && this.authService.getRole() != "ADMIN")
+    this.checkUsername();
+    this.loginEventService.skipClicked.subscribe( value => {
+      if(value == true) {
+        this.checkUsername();
+      }
+    })
+  }
+
+  private checkUsername(): void {
+    if(this.authService.getUsername() == null)
+      this.router.navigate(['']);
+    else if(this.authService.getRole() != "ADMIN")
       this.router.navigate(['']);
   }
 

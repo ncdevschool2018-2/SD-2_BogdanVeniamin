@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/internal/Subscription'
 import { Transaction } from '../../model/transaction'
 import { TransactionService } from "../../service/transaction.service";
 import { AuthService } from "../../service/auth.service";
+import { WalletDataService } from "../../service/wallet-data.service";
 
 @Component({
   selector: 'app-transactions',
@@ -15,10 +16,16 @@ export class TransactionsComponent implements OnInit {
   public transactions: Transaction[];
   private subscriptions: Subscription[] = [];
 
-  constructor(private transactionService: TransactionService, private authService: AuthService) { }
+  constructor(private transactionService: TransactionService, private authService: AuthService,
+              private walletDataService: WalletDataService) { }
 
   ngOnInit() {
      this.loadTransactions(this.authService.getUsername());
+     this.walletDataService.skipClicked.subscribe( value => {
+       if(value == true) {
+         this.loadTransactions(this.authService.getUsername());
+       }
+     })
   }
 
   loadTransactions(login: string) {
@@ -31,7 +38,5 @@ export class TransactionsComponent implements OnInit {
   public _subDate(date: string): string {
     return date.substring(0, 10);
   }
-
-
 
 }

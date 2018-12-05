@@ -13,7 +13,7 @@ import { SubscriptionService } from "../../service/subscription.service";
 import { UserService } from "../../service/user.service";
 import { User } from "../../model/user";
 import { AuthService } from "../../service/auth.service";
-
+import { LoginEventService } from "../../service/login-event.service";
 
 @Component({
   selector: 'app-subscribe',
@@ -37,7 +37,8 @@ export class SubscribeComponent implements OnInit {
   constructor(private userService: UserService,private modalService: BsModalService,
               private route: ActivatedRoute, private postService: PostService,
               private loadingService: NgxSpinnerService, private transactionService: TransactionService,
-              private subscriptionService: SubscriptionService, private authService: AuthService) {
+              private subscriptionService: SubscriptionService, private authService: AuthService,
+              private loginEventService: LoginEventService) {
   }
 
   ngOnInit() {
@@ -49,6 +50,11 @@ export class SubscribeComponent implements OnInit {
       this.getUser();
     else
       this.auth = false;
+    this.loginEventService.skipClicked.subscribe( value => {
+      if(value == true) {
+        this.auth = true;
+      }
+    })
   }
 
   private loadPost(postId: string): void {
@@ -96,7 +102,9 @@ export class SubscribeComponent implements OnInit {
 
   public _subscribe(): void {
 
-    this.subscriptions.push(this.subscriptionService.saveSubscription(this.createSubscription()).subscribe(() => {
+    this.subscriptions.push(this.subscriptionService.saveSubscription(this.createSubscription()).subscribe(sub => {
+      if(sub == null)
+        console.log("No subscription");
       console.log("Subscription: " + this.subscriptionPost);
       this.closeModal();
     }));
