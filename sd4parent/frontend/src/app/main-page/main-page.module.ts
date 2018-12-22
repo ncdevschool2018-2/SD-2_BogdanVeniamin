@@ -6,6 +6,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { MainPageComponent } from './main-page.component';
 import { PostsComponent } from "./posts/posts.component";
+import { PackagesComponent } from './packages/packages.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { PostsComponent } from "./posts/posts.component";
   ],
   declarations: [
     MainPageComponent,
-    PostsComponent
+    PostsComponent,
+    PackagesComponent
   ]
 })
 export class MainPageModule { }

@@ -11,7 +11,7 @@ public interface PostDataService {
     PostViewModel savePost(PostViewModel product);
     void deletePost(Long id);
     List<PostViewModel> getPostsByLogin(String login);
-    List<PostViewModel> getPostsByPage(int page);
-    int getTotalPages();
+    List<PostViewModel> getPostsByPage(int page, int quantity);
+    int getTotalPages(int quantity);
 
 }

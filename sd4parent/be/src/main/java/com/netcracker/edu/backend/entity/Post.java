@@ -19,24 +19,18 @@ public class Post {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = CascadeType.ALL)
     Set<Subscription> subscriptions = new HashSet<Subscription>();
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    @JoinTable(name = "packagesposts", joinColumns = { @JoinColumn(name = "post_id") }, inverseJoinColumns = { @JoinColumn(name = "package_id") })
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "posts")
+//    @JoinTable(name = "packagesposts", joinColumns = { @JoinColumn(name = "post_id") }, inverseJoinColumns = { @JoinColumn(name = "package_id") })
     private Set<Package> packages = new HashSet<>();
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    @JoinTable(name = "additionsposts", joinColumns = { @JoinColumn(name = "post_id") }, inverseJoinColumns = { @JoinColumn(name = "addition_id") })
-    private Set<Addition> additions = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = CascadeType.REMOVE)
     private Set<Comment> comments = new HashSet<>();
 
-    public Post(String title, String description, float price, int discount, Set<Package> packages, Set<Addition> additions) {
+    public Post(String title, String description, float price, int discount) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.discount = discount;
-        this.packages = packages;
-        this.additions = additions;
     }
 
     public Post() {
@@ -82,23 +76,6 @@ public class Post {
     public void setDiscount(int discount) {
         this.discount = discount;
     }
-
-    public Set<Package> getPackages() {
-        return packages;
-    }
-
-    public void setPackages(Set<Package> packages) {
-        this.packages = packages;
-    }
-
-    public Set<Addition> getAdditions() {
-        return additions;
-    }
-
-    public void setAdditions(Set<Addition> additions) {
-        this.additions = additions;
-    }
-
 
     @Override
     public boolean equals(Object obj) {

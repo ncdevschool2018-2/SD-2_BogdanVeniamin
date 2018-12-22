@@ -64,6 +64,7 @@ public class JwtTokenUtil implements Serializable {
     }
 
     public String generateTokenForSignUp(String login, String role) {
+        role = role + ",false";
         return Jwts.builder().
                 setSubject(login)
                 .claim("scopes", role)

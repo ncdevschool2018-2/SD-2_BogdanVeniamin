@@ -1,18 +1,13 @@
 package com.netcracker.edu.backend.controller;
 
-import com.netcracker.edu.backend.entity.Addition;
 import com.netcracker.edu.backend.entity.Post;
 import com.netcracker.edu.backend.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -55,19 +50,14 @@ public class PostController {
     }
 
     @RequestMapping(value = "/page/{num}", method = RequestMethod.GET)
-    public Iterable<Post> getPostsByPage(@PathVariable(name = "num") int num) {
-        Page pageContent = postService.getPostsByPage(num);
+    public Iterable<Post> getPostsByPage(@PathVariable(name = "num") int num, @RequestParam("qt") int quantity) {
+        Page pageContent = postService.getPostsByPage(num, quantity);
         return pageContent.getContent();
     }
 
     @RequestMapping(value = "/total-pages", method = RequestMethod.GET)
-    public int getTotalPages() {
-        Page pageContent = postService.getPostsByPage(1);
+    public int getTotalPages(@RequestParam("qt") int quantity) {
+        Page pageContent = postService.getPostsByPage(1, quantity);
         return pageContent.getTotalPages();
-    }
-
-    @RequestMapping(value = "/add/{id}", method = RequestMethod.POST)
-    public void getPost(@PathVariable(name = "id") Long id, @RequestBody Set<Addition> additions) {
-        postService.getPost(id, additions);
     }
 }

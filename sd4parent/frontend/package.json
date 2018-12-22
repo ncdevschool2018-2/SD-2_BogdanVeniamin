@@ -25,6 +25,7 @@
     "@angular/router": "^6.1.0",
     "angular-font-awesome": "^3.1.2",
     "angular2-cookie": "^1.2.6",
+    "canvasjs": "^1.8.1",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
     "jwt-decode": "^2.2.0",

@@ -1,7 +1,6 @@
 package com.netcracker.edu.fapi.service;
 
-import com.netcracker.edu.fapi.models.LoginStringViewModel;
-import com.netcracker.edu.fapi.models.UserViewModel;
+import com.netcracker.edu.fapi.models.*;
 
 import java.util.List;
 
@@ -9,7 +8,7 @@ public interface UserDataService {
 
     List<UserViewModel> getAll();
     UserViewModel getUserById(Long id);
-    UserViewModel saveUser(UserViewModel account);
+    StringResponseViewModel saveUser(UserViewModel account);
     void deleteUser(Long id);
     UserViewModel getUserByLogin(String login);
     void banUser(Long id);
@@ -18,4 +17,6 @@ public interface UserDataService {
     UserViewModel getUserByResetToken(String resetToken);
     void updateToken(LoginStringViewModel resetToken);
     void updatePassword(LoginStringViewModel password);
+    void updateDebt(DebtViewModel debt);
+    boolean verifyUser(LoginUser user);
 }

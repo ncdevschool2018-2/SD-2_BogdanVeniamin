@@ -1,9 +1,11 @@
+import {Post} from "./post";
+
 export class Package {
 
   id: string;
   title: string;
   description: string;
-  price: number;
   discount: number;
+  posts: Post[];
 
 }

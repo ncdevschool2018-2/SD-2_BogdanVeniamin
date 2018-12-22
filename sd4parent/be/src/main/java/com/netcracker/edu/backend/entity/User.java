@@ -13,16 +13,11 @@ import java.util.Set;
 
 
 @Entity
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-//    @PrimaryKeyJoinColumn(name = "id", referencedColumnName = "owner_id")
-//    @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-//    private Wallet wallet;
 
     @JsonManagedReference
     @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
@@ -43,11 +38,13 @@ public class User {
     @Size(max = 45)
     private String email;
 
-    private String language;
     private String lastDateLogin;
 
     @Column(name = "reset_token")
     private String resetToken;
+
+    private float debt;
+    private boolean ban;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Subscription> subscriptions = new HashSet<>();
@@ -55,13 +52,14 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Set<Comment> comments = new HashSet<>();
 
-    public User(String login, String password, String role, String email, String language, String lastDateLogin, Wallet wallet) {
+    public User(String login, String password, String role, String email, String lastDateLogin, float debt, boolean ban, Wallet wallet) {
         this.login = login;
         this.password = password;
         this.role = role;
         this.email = email;
-        this.language = language;
         this.lastDateLogin = lastDateLogin;
+        this.debt = debt;
+        this.ban = ban;
         this.wallet = wallet;
     }
 
@@ -108,14 +106,6 @@ public class User {
         this.email = email;
     }
 
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
     public String getLastDateLogin() {
         return lastDateLogin;
     }
@@ -140,6 +130,22 @@ public class User {
         this.resetToken = resetToken;
     }
 
+    public float getDebt() {
+        return debt;
+    }
+
+    public void setDebt(float debt) {
+        this.debt = debt;
+    }
+
+    public boolean isBan() {
+        return ban;
+    }
+
+    public void setBan(boolean ban) {
+        this.ban = ban;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if(this == obj) return true;
@@ -150,13 +156,12 @@ public class User {
                 Objects.equals(password, that.password) &&
                 Objects.equals(role, that.role) &&
                 Objects.equals(email, that.email) &&
-                Objects.equals(language, that.language) &&
                 Objects.equals(lastDateLogin, that.lastDateLogin);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, wallet, password, role, email, language, lastDateLogin);
+        return Objects.hash(id, login, wallet, password, role, email, lastDateLogin);
     }
 
     @Override
@@ -167,7 +172,6 @@ public class User {
                 ", password: " + password +
                 ", role: " + role +
                 ", email: " + email +
-                ", language: " + language +
                 ", lastDateLogin: " + lastDateLogin + " }";
     }
 }

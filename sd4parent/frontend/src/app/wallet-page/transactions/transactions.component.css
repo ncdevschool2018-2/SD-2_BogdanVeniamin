@@ -26,14 +26,16 @@ a {
 }
 
 a:hover {
-  color: #7F2C6C;
+  color: #378C80;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .current {
-  color: #7F2C6C;
+  color: #4ABDAC;
 }
 
 strong {
   text-transform: uppercase;
 }
+

@@ -13,20 +13,16 @@ public class PostViewModel {
     private String description;
     private float price;
     private int discount;
-    private Set<PackageViewModel> packages;
-    private Set<AdditionViewModel> additions;
 
     public PostViewModel() {
 
     }
 
-    public PostViewModel(String title, String description, float price, int discount, Set<PackageViewModel> packages, Set<AdditionViewModel> additions) {
+    public PostViewModel(String title, String description, float price, int discount) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.discount = discount;
-        this.packages = packages;
-        this.additions = additions;
     }
 
     public long getId() {
@@ -67,22 +63,6 @@ public class PostViewModel {
 
     public void setDiscount(int discount) {
         this.discount = discount;
-    }
-
-    public Set<PackageViewModel> getPackages() {
-        return packages;
-    }
-
-    public void setPackages(Set<PackageViewModel> packages) {
-        this.packages = packages;
-    }
-
-    public Set<AdditionViewModel> getAdditions() {
-        return additions;
-    }
-
-    public void setAdditions(Set<AdditionViewModel> additions) {
-        this.additions = additions;
     }
 }
 

@@ -7,6 +7,7 @@ public interface ChargeService {
     void decreaseAmount();
     void decreaseDays();
     void checkSubscription();
-    void saveTransaction();
+    void saveDecreaseTransaction();
+    void saveIncreaseTransaction(float cost, String title);
 
 }

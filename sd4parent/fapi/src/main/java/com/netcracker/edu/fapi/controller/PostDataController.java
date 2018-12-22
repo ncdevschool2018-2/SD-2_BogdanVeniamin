@@ -45,13 +45,13 @@ public class PostDataController {
     }
 
     @RequestMapping(value = "/page/{num}", method = RequestMethod.GET)
-    public ResponseEntity<List<PostViewModel>> getPostsByPage(@PathVariable(name = "num") int num) {
-        return ResponseEntity.ok(postDataService.getPostsByPage(num));
+    public ResponseEntity<List<PostViewModel>> getPostsByPage(@PathVariable(name = "num") int num, @RequestParam("qt") int quantity) {
+        return ResponseEntity.ok(postDataService.getPostsByPage(num, quantity));
     }
 
     @RequestMapping(value = "/total-pages", method = RequestMethod.GET)
-    public int getTotalPages() {
-        return postDataService.getTotalPages();
+    public int getTotalPages(@RequestParam("qt") int quantity) {
+        return postDataService.getTotalPages(quantity);
     }
 
 }

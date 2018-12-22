@@ -49,16 +49,16 @@ public class PostDataServiceImpl implements PostDataService {
     }
 
     @Override
-    public List<PostViewModel> getPostsByPage(int page) {
+    public List<PostViewModel> getPostsByPage(int page, int quantity) {
         RestTemplate restTemplate = new RestTemplate();
-        PostViewModel[] postViewModelResponse = restTemplate.getForObject(backendServerUrl + "api/posts/page/" + page, PostViewModel[].class);
+        PostViewModel[] postViewModelResponse = restTemplate.getForObject(backendServerUrl + "api/posts/page/" + page + "?qt=" + quantity, PostViewModel[].class);
         return postViewModelResponse == null ? Collections.emptyList() : Arrays.asList(postViewModelResponse);
     }
 
     @Override
-    public int getTotalPages() {
+    public int getTotalPages(int quantity) {
         RestTemplate restTemplate = new RestTemplate();
-        int response = restTemplate.getForObject(backendServerUrl + "api/posts/total-pages", Integer.class);
+        int response = restTemplate.getForObject(backendServerUrl + "api/posts/total-pages?qt=" + quantity, Integer.class);
         return response;
     }
 }

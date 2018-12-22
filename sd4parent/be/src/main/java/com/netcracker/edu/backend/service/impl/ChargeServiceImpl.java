@@ -2,14 +2,17 @@ package com.netcracker.edu.backend.service.impl;
 
 import com.netcracker.edu.backend.entity.Subscription;
 import com.netcracker.edu.backend.entity.Transaction;
+import com.netcracker.edu.backend.entity.Wallet;
 import com.netcracker.edu.backend.repository.SubscriptionRepository;
 import com.netcracker.edu.backend.repository.TransactionRepository;
 import com.netcracker.edu.backend.service.ChargeService;
+import com.netcracker.edu.backend.service.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import com.netcracker.edu.backend.repository.WalletRepository;
 import org.springframework.stereotype.Component;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 @Component
@@ -38,8 +41,8 @@ public class ChargeServiceImpl implements ChargeService {
 
     private boolean checkMoney(Subscription sub) {
         boolean status;
-
-        if(sub.getUser().getWallet().getMoney() < sub.getCost()) {
+        System.out.println("Current money: " + sub.getUser().getWallet().getMoney());
+        if((sub.getUser().getWallet().getMoney() - sub.getCost()) <= (sub.getUser().getDebt() * (-1))) {
             status = false;
             subscriptionRepository.falseStatus(sub.getId());
         } else {
@@ -55,8 +58,12 @@ public class ChargeServiceImpl implements ChargeService {
 
         for(Subscription sub: subscriptions) {
             if(checkMoney(sub)) {
-                subscriptionRepository.trueStatus(sub.getId());
-                walletRepository.chargeMoney(sub.getCost(), sub.getUser().getWallet().getId());
+                walletRepository.chargeMoney(fixedNum(sub.getCost()), sub.getUser().getWallet().getId());
+                sub.getUser().getWallet().setMoney(sub.getUser().getWallet().getMoney() - fixedNum(sub.getCost()));
+                walletRepository.fillUp(fixedNum(sub.getCost()), Long.valueOf(1));
+                subscriptionRepository.decreaseDuration(sub.getId());
+                sub.setDuration(sub.getDuration() - 1);
+                saveIncreaseTransaction(fixedNum(sub.getCost()), sub.getPost().getTitle());
                 System.out.println("Cost: " + sub.getCost());
                 System.out.println("Money[" + sub.getUser().getWallet().getId() + "]: " + sub.getUser().getWallet().getMoney());
             }
@@ -67,10 +74,10 @@ public class ChargeServiceImpl implements ChargeService {
     @Scheduled(cron = "0 0 9 * * *")
     public void scheduledCharge() {
         loadSubscriptions();
-        decreaseDays();
+//        decreaseDays();
         checkSubscription();
         decreaseAmount();
-        saveTransaction();
+        saveDecreaseTransaction();
     }
 
     @Override
@@ -103,12 +110,33 @@ public class ChargeServiceImpl implements ChargeService {
     }
 
     @Override
-    public void saveTransaction() {
+    public void saveDecreaseTransaction() {
         Transaction action;
 
         for(Subscription sub: subscriptions) {
-            action = new Transaction(sub.getUser().getWallet(), "MINUS", sub.getCost(), sub.getPost().getTitle());
+            action = new Transaction(sub.getUser().getWallet(), "MINUS", fixedNum(sub.getCost()), sub.getPost().getTitle());
             transactionRepository.save(action);
         }
+    }
+
+    @Override
+    public void saveIncreaseTransaction(float cost, String title) {
+        Transaction action;
+        action = new Transaction(walletRepository.findById(Long.valueOf(1)).get(), "PLUS", cost, title);
+        transactionRepository.save(action);
+    }
+
+    private Float fixedNum(Float num) {
+        int fix = num.toString().split("\\.")[1].length();
+        String fixFormat;
+
+        if(fix >= 2)
+            fixFormat = ".##";
+        else
+            fixFormat = ".#";
+
+        DecimalFormat df2 = new DecimalFormat(fixFormat);
+
+        return Float.valueOf(df2.format(num));
     }
 }

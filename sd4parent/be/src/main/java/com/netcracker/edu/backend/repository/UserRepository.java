@@ -17,7 +17,7 @@ public interface UserRepository extends CrudRepository<User, Long>, JpaSpecifica
 
     @Modifying
     @Transactional
-    @Query("update User account set account.role = case when account.role = 'USER' then 'BAN' else 'USER' end where account.id = :id")
+    @Query("update User account set account.ban = 1 - account.ban where account.id = :id")
     void banUser(@Param("id") Long id);
 
     @Modifying
@@ -37,4 +37,9 @@ public interface UserRepository extends CrudRepository<User, Long>, JpaSpecifica
     @Transactional
     @Query("update User account set account.password = :password where account.login = :login")
     void updatePassword(@Param("login") String login, @Param("password") String password);
+
+    @Modifying
+    @Transactional
+    @Query("update User account set account.debt = :debt where account.id = :id")
+    void updateDebt(@Param("debt") float debt, @Param("id") Long id);
 }

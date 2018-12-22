@@ -12,19 +12,23 @@
 }
 
 .navbar {
-  background-color: white;
+  background-color: #DFDCE3;
 }
 
 #btn-nav {
   margin-top: 5px;
   color: white;
-  background-color: #F96D06;
-  border-color: #F96D06;
+  /*background-color: #F96D06;*/
+  background-color: #F7B733;
+  border-color: #F7B733;
+  border-width: 1px;
+  border-radius: 0px;
 }
 
-.btn-nav:hover {
-  background-color: #519B8C;
-  border-color: #519B8C;
+#btn-nav:hover {
+  background-color: #DFA52D;
+  color: white;
+  border-color: #DFA52D;
 }
 
 html {
@@ -37,22 +41,22 @@ html {
 }
 
 .nav-item {
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid #DFDCE3;
 }
 
 .nav-item:hover {
-  border-bottom: 2px solid #FC6602;
+  border-bottom: 2px solid #F7B733;
   color: black;
 }
 
 .active {
-  border-bottom: 2px solid #FC6602;
+  border-bottom: 2px solid #F7B733;
 }
 
 /* FORM TYPOGRAPHY*/
 
 input[type=button], input[type=submit], input[type=reset]  {
-  background-color: #FC6602;
+  background-color: #F7B733;
   border: none;
   color: white;
   padding: 15px 80px;
@@ -61,10 +65,8 @@ input[type=button], input[type=submit], input[type=reset]  {
   display: inline-block;
   text-transform: uppercase;
   font-size: 13px;
-  -webkit-box-shadow: 0 10px 30px 0 rgb(253, 146, 75);
-  box-shadow: 0 10px 30px 0 rgb(253, 146, 75);
-  -webkit-border-radius: 5px 5px 5px 5px;
-  border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 0;
+  border-radius: 0;
   margin: 5px 20px 40px 120px;
 }
 
@@ -73,7 +75,8 @@ input[type=button].forgot {
 }
 
 input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
-  background-color: #DA5700;
+  background-color: #DFA52D;
+  cursor: pointer;
 }
 
 input[type=text], input[type=password] {
@@ -94,7 +97,7 @@ input[type=text], input[type=password] {
 
 input[type=text]:focus, input[type=password]:focus {
   background-color: #fff;
-  border: 2px solid #FC6602;
+  border: 2px solid #F7B733;
 }
 
 input[type=text]::placeholder {
@@ -102,7 +105,7 @@ input[type=text]::placeholder {
 }
 
 h1{
-  color: #FC6602;
+  color: #F7B733;
   margin-left: 130px;
 }
 
@@ -147,12 +150,12 @@ h1{
   text-align: center;
 }
 
-.addition {
+.post {
   margin-top: 10px;
-  margin-left: 275px;
+  margin-left: 215px;
 }
 
-.post {
+.pack {
   margin-top: 10px;
   margin-left: 10px;
 }
@@ -167,22 +170,26 @@ h1{
   border-radius: 10px;
 }
 
-#lang {
-  margin-top: 5px;
-  margin-right: 30px;
-  background-color: white;
-  color: black;
-  border-color: #FC6602;
-}
-
-#lang:hover {
-  color: white;
-  background-color: #FC6602;
-  border-color: #FC6602;
-}
-
 .alert-danger {
   width: 398px;
   margin-left: 34px;
   height: 40px;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+.incorrect-form {
+  border-color: red;
+  background-color: pink;
+}
+
+span {
+  font-size: 14px;
+  color: red;
+}
+
+#email {
+  margin-right: 120px;
 }

@@ -1,5 +1,6 @@
 package com.netcracker.edu.backend.controller;
 
+import com.netcracker.edu.backend.entity.DebtModel;
 import com.netcracker.edu.backend.entity.LoginStringModel;
 import com.netcracker.edu.backend.entity.User;
 import com.netcracker.edu.backend.service.UserService;
@@ -49,8 +50,7 @@ public class UserController {
         Optional<User> user = userService.getUserByLogin(login);
         if(user.isPresent())
             return ResponseEntity.ok(user.get());
-        else
-            return ResponseEntity.notFound().build();
+        return null;
     }
 
     @RequestMapping(value = "/ban", method = RequestMethod.GET)
@@ -68,8 +68,8 @@ public class UserController {
         Optional<User> user = userService.findUserByEmail(email);
         if(user.isPresent())
             return ResponseEntity.ok(user.get());
-        else
-            return ResponseEntity.notFound().build();
+
+        return null;
     }
 
     @RequestMapping(value = "/reset", method = RequestMethod.GET)
@@ -89,6 +89,11 @@ public class UserController {
     @RequestMapping(value = "/update-password", method = RequestMethod.POST)
     public void updatePassword(@RequestBody LoginStringModel password) {
         userService.updatePassword(password);
+    }
+
+    @RequestMapping(value = "/update-debt", method = RequestMethod.POST)
+    public void updateDebt(@RequestBody DebtModel debt) {
+        userService.updateDebt(debt);
     }
 
 }

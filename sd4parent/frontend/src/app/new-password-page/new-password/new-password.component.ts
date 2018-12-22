@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Password } from "../../model/password";
 import { PasswordService } from "../../service/password.service";
 import { Token } from "../../model/token";
@@ -14,7 +14,7 @@ import {Router} from "@angular/router";
   templateUrl: './new-password.component.html',
   styleUrls: ['./new-password.component.css']
 })
-export class NewPasswordComponent implements OnInit {
+export class NewPasswordComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
   public newPassword: Password = new Password();
@@ -25,6 +25,10 @@ export class NewPasswordComponent implements OnInit {
 
   ngOnInit() {
      this.getUser();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   private getUser(): void {

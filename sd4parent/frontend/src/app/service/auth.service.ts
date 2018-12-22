@@ -39,7 +39,18 @@ export class AuthService {
 
   getRole(): string {
     let decodeObj: Decode = this.decodeJwt(this.token.getToken());
-    return decodeObj.scopes;
+    if(decodeObj != null)
+      return decodeObj.scopes.split(",")[0];
+    else
+      return null;
+  }
+
+  getBan(): boolean {
+    let decodeObj: Decode = this.decodeJwt(this.token.getToken());
+    if(decodeObj != null)
+      return JSON.parse(decodeObj.scopes.split(",")[1]);
+    else
+      return null;
   }
 
 }

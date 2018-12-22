@@ -28,20 +28,28 @@ public class PasswordController {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    private UserViewModel resetUser;
+    private UserViewModel resetUser = null;
 
     @RequestMapping(value = "/forgot", method = RequestMethod.GET)
-    public void sendEmail(@RequestParam("email") String email) {
+    public boolean sendEmail(@RequestParam("email") String email) {
         UserViewModel user = userDataService.getUserByEmail(email);
-        user.setResetToken(UUID.randomUUID().toString());
-        System.out.println("Token: " + user.getResetToken());
+        if(user == null) {
+            System.out.println("There are no email");
+            return false;
+        }
+        else {
+            user.setResetToken(UUID.randomUUID().toString());
+            System.out.println("Token: " + user.getResetToken());
 
-        LoginStringViewModel resetToken = new LoginStringViewModel(user.getLogin(), user.getResetToken());
-        userDataService.updateToken(resetToken);
+            LoginStringViewModel resetToken = new LoginStringViewModel(user.getLogin(), user.getResetToken());
+            userDataService.updateToken(resetToken);
 
-        emailService.sendEmail(emailService.createEmail(user));
+            emailService.sendEmail(emailService.createEmail(user));
 
-        System.out.println("A password reset link has been sent to " + email);
+            System.out.println("A password reset link has been sent to " + email);
+            return true;
+        }
+
     }
 
     @RequestMapping(value = "/reset", method = RequestMethod.GET)

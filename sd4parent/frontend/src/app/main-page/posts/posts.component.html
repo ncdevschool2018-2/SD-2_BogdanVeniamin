@@ -2,13 +2,28 @@
 size = "medium" color="fff"
 type="ball-newton-cradle"></ngx-spinner>
 <div class="container-fluid">
+  <div class="row type">
+    <div class="col-6 text-right current">
+      <a>Posts</a>
+    </div>
+    <div class="col-4 text-left">
+      <a (click)="setType()">Packages</a>
+    </div>
+    <div class="col-2 text-center">
+      <div class="btn-group">
+        <button class="btn btn-custom" (click)="setQuantity(3);" [class.current-qt]="quantity == 3">3</button>
+        <button class="btn btn-custom" (click)="setQuantity(6); " [class.current-qt]="quantity == 6">6</button>
+        <button class="btn btn-custom" (click)="setQuantity(9);" [class.current-qt]="quantity == 9">9</button>
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12" *ngFor="let post of posts">
       <div class="our-services-wrapper mb-60">
-        <div class="services-inner">
-          <div class="our-services-img">
-            <a [routerLink]="['posts', post.id]"><img src="../../../assets/images/open.png" width="68px" alt=""></a>
-          </div>
+        <div class="services-inner" [routerLink]="['posts', post.id]">
+          <!--<div class="our-services-img">-->
+            <!--<a [routerLink]="['posts', post.id]"><img src="../../../assets/images/open.png" width="68px" alt=""></a>-->
+          <!--</div>-->
           <div class="our-services-text">
             <div class="row">
               <h4 class="col-8">{{ post.title }}</h4>

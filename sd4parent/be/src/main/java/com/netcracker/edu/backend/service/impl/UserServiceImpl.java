@@ -1,7 +1,9 @@
 package com.netcracker.edu.backend.service.impl;
 
+import com.netcracker.edu.backend.entity.DebtModel;
 import com.netcracker.edu.backend.entity.LoginStringModel;
 import com.netcracker.edu.backend.entity.User;
+import com.netcracker.edu.backend.repository.CommentRepository;
 import com.netcracker.edu.backend.repository.WalletRepository;
 import com.netcracker.edu.backend.service.UserService;
 import com.netcracker.edu.backend.repository.UserRepository;
@@ -21,6 +23,9 @@ public class UserServiceImpl implements UserService {
     private WalletRepository walletRepository;
 
     @Autowired
+    private CommentRepository commentRepository;
+
+    @Autowired
     public UserServiceImpl(UserRepository repository) {
         this.repository = repository;
     }
@@ -30,9 +35,6 @@ public class UserServiceImpl implements UserService {
     {
         if(account.getRole() == null)
             account.setRole("USER");
-
-        if(account.getLanguage() == null)
-            account.setLanguage("ENG");
 
         if(account.getLogin() == null)
             account.setLogin(account.getEmail());
@@ -55,6 +57,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id)
     {
+//        commentRepository.changeAuthor(id);
+
         repository.deleteById(id);
     }
 
@@ -92,6 +96,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updatePassword(LoginStringModel password) {
         repository.updatePassword(password.getLogin(), password.getStringVariable());
+    }
+
+    @Override
+    public void updateDebt(DebtModel debt) {
+        repository.updateDebt(debt.getDebt(), debt.getId());
     }
 
 }

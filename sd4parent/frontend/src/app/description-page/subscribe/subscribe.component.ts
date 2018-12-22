@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef} from '@angular/core';
+import {Component, OnDestroy, OnInit, TemplateRef} from '@angular/core';
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {Subscription} from "rxjs";
 import {PostService} from "../../service/post.service";
@@ -14,6 +14,7 @@ import { UserService } from "../../service/user.service";
 import { User } from "../../model/user";
 import { AuthService } from "../../service/auth.service";
 import { LoginEventService } from "../../service/login-event.service";
+import { PostDataService } from "../../service/post-data.service";
 
 @Component({
   selector: 'app-subscribe',
@@ -21,7 +22,7 @@ import { LoginEventService } from "../../service/login-event.service";
   styleUrls: ['./subscribe.component.css']
 })
 
-export class SubscribeComponent implements OnInit {
+export class SubscribeComponent implements OnInit, OnDestroy {
 
   public modalRef: BsModalRef;
   public post: Post;
@@ -33,28 +34,41 @@ export class SubscribeComponent implements OnInit {
   public resultCondition: SubscribeCondition;
   public auth: boolean = true;
   public currentDuration: number = 6;
+  public subscribeAccess: string = "Successful";
 
   constructor(private userService: UserService,private modalService: BsModalService,
               private route: ActivatedRoute, private postService: PostService,
               private loadingService: NgxSpinnerService, private transactionService: TransactionService,
               private subscriptionService: SubscriptionService, private authService: AuthService,
-              private loginEventService: LoginEventService) {
+              private loginEventService: LoginEventService, private postDataService: PostDataService) {
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.post_id = params.get('id');
     });
-    this.loadPost(this.post_id);
+    if(this.post_id != null)
+      this.loadPost(this.post_id);
+    else
+      this.postDataService.getPost().subscribe(post => {
+        this.post = post;
+      });
     if(this.authService.getUsername() != null)
       this.getUser();
     else
       this.auth = false;
     this.loginEventService.skipClicked.subscribe( value => {
       if(value == true) {
-        this.auth = true;
+        if(this.authService.getUsername() != null)
+          this.getUser();
+        else
+          this.auth = false;
       }
-    })
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   private loadPost(postId: string): void {
@@ -101,12 +115,11 @@ export class SubscribeComponent implements OnInit {
   }
 
   public _subscribe(): void {
-
     this.subscriptions.push(this.subscriptionService.saveSubscription(this.createSubscription()).subscribe(sub => {
-      if(sub == null)
-        console.log("No subscription");
-      console.log("Subscription: " + this.subscriptionPost);
-      this.closeModal();
+        this.subscribeAccess = sub.stringResponse;
+        console.log("Status:" + sub.stringResponse);
+        if(sub.stringResponse == "Successful")
+          this.closeModal();
     }));
 
   }

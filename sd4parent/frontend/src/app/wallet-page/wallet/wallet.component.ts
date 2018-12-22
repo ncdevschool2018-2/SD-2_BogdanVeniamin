@@ -1,7 +1,8 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import {Component, OnDestroy, OnInit, TemplateRef} from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription'
 import { NgxSpinnerService } from 'ngx-spinner';
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
+import {Router} from "@angular/router";
 
 import { UserService } from "../../service/user.service";
 import { Transaction } from "../../model/transaction";
@@ -12,32 +13,53 @@ import { AuthService } from "../../service/auth.service";
 import {Wallet} from "../../model/wallet";
 import { WalletDataService } from "../../service/wallet-data.service";
 import { LoginEventService } from "../../service/login-event.service";
+import { ChargeEventService} from "../../service/charge-event.service";
 
 @Component({
   selector: 'app-wallet',
   templateUrl: './wallet.component.html',
   styleUrls: ['./wallet.component.css']
 })
-export class WalletComponent implements OnInit {
+export class WalletComponent implements OnInit, OnDestroy {
 
   public wallet: Wallet;
   public  amount: number;
   private subscriptions: Subscription[] = [];
   public modalRef: BsModalRef;
   private transaction: Transaction = new Transaction();
+  private username: string;
+  public handler: boolean = true;
 
   constructor(private transactionService: TransactionService, private userService: UserService,
               private loadingService: NgxSpinnerService, private modalService: BsModalService,
               private authService: AuthService, private walletService: WalletService,
-              private walletDataService: WalletDataService, private loginEventService: LoginEventService) { }
+              private walletDataService: WalletDataService, private loginEventService: LoginEventService,
+              private router: Router, private chargeEventService: ChargeEventService) { }
 
   ngOnInit() {
+
+    if(this.authService.getUsername() != null) {
+      if(this.authService.getRole() == "ADMIN") {
+        this.handler = false;
+      }
+    }
+    else
+      this.router.navigate(['']);
+
     this.loadWallet(this.authService.getUsername());
     this.loginEventService.skipClicked.subscribe( value => {
       if(value == true) {
-        this.loadWallet(this.authService.getUsername());
+        this.router.navigate(['']);
       }
+    });
+    this.chargeEventService.skipClicked.subscribe(value => {
+      if(value == true)
+        this.loadWallet(this.authService.getUsername());
     })
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe())
   }
 
   private loadWallet(login: string) {
@@ -82,6 +104,7 @@ export class WalletComponent implements OnInit {
 
     this.subscriptions.push(this.transactionService.saveTransaction(this.createTransaction()).subscribe(() => {
       this.walletDataService.setClicked();
+      console.log("Fill up")
       this.updateWallet();
       this.closeModal();
     }));

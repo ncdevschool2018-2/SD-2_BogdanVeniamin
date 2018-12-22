@@ -5,12 +5,14 @@ import { SubscriptionsComponent } from "./subscriptions/subscriptions.component"
 import { RouterModule } from "@angular/router";
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {Ng2Webstorage} from 'ngx-webstorage';
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
   imports: [
     CommonModule,
     NgxSpinnerModule,
     Ng2Webstorage,
+    SharedModule,
     RouterModule.forRoot([
       {
         path: 'subscriptions',
@@ -21,6 +23,7 @@ import {Ng2Webstorage} from 'ngx-webstorage';
   declarations: [
     SubscriptionsPageComponent,
     SubscriptionsComponent
-  ]
+  ],
+  bootstrap: [SubscriptionsPageComponent]
 })
 export class SubscriptionsPageModule { }

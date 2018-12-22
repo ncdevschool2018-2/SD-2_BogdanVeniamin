@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router"
 
@@ -15,7 +15,7 @@ import {Post} from "../../model/post";
   templateUrl: './comments.component.html',
   styleUrls: ['./comments.component.css']
 })
-export class CommentsComponent implements OnInit {
+export class CommentsComponent implements OnInit, OnDestroy {
 
   public comments: Comment[];
   private post_id: string;
@@ -37,6 +37,10 @@ export class CommentsComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
   private loadComments(postId: string): void {
     this.subscriptions.push(this.commentService.getCommentsByPostId(postId).subscribe(reviews => {
       this.comments = reviews as Comment[];
@@ -46,18 +50,20 @@ export class CommentsComponent implements OnInit {
   private getUser(): void {
     this.subscriptions.push(this.userService.getUserByLogin(this.authService.getUsername()).subscribe(account => {
       this.newComment.user = account as User;
+      console.log("User: " + this.newComment.user.login);
     }))
   }
 
   private getPost(): void {
     this.subscriptions.push(this.postService.getPost(this.post_id).subscribe(product => {
       this.newComment.post = product as Post;
+      console.log("Post: " + this.newComment.post.title);
     }))
   }
 
-  public saveComment(): void {
-    console.log("Comment: " + this.newComment.user + " " + this.newComment.post + " " + this.newComment.text);
-    this.subscriptions.push(this.commentService.saveComment(this.newComment).subscribe(() => {
+  public saveComment(comment: Comment): void {
+    comment.text = this.newComment.text;
+    this.subscriptions.push(this.commentService.saveComment(comment).subscribe(() => {
       this.loadComments(this.post_id);
     }));
     this.newComment.text = null;

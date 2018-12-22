@@ -2,6 +2,8 @@ package com.netcracker.edu.fapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Set;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 public class PackageViewModel {
@@ -9,18 +11,18 @@ public class PackageViewModel {
     private long id;
     private String title;
     private String description;
-    private float price;
     private int discount;
+    private Set<PostViewModel> posts;
 
     public PackageViewModel() {
     }
 
-    public PackageViewModel(long id, String title, String description, float price, int discount) {
+    public PackageViewModel(long id, String title, String description, int discount, Set<PostViewModel> posts) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.price = price;
         this.discount = discount;
+        this.posts = posts;
     }
 
     public long getId() {
@@ -47,19 +49,19 @@ public class PackageViewModel {
         this.description = description;
     }
 
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
     public int getDiscount() {
         return discount;
     }
 
     public void setDiscount(int discount) {
         this.discount = discount;
+    }
+
+    public Set<PostViewModel> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Set<PostViewModel> posts) {
+        this.posts = posts;
     }
 }

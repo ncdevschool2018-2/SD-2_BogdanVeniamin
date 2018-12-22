@@ -3,8 +3,9 @@ import {HttpClient} from "@angular/common/http"
 import { Observable } from "rxjs"
 import { SubscriptionPost } from "../model/subscription"
 import { SubscribeCondition } from "../model/subscribeCondition"
-import {SubscriptionDate} from "../model/subscriptionDate";
 import {SubscriptionRenewal} from "../model/subscriptionRenewal";
+import {StringResponse} from "../model/stringResponse";
+import {PackageSubscription} from "../model/packageSubscription";
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,12 @@ export class SubscriptionService {
     return this.http.get<SubscriptionPost[]>("api/s");
   }
 
-  saveSubscription(sub: SubscriptionPost ): Observable<SubscriptionPost> {
-    return this.http.post<SubscriptionPost>("api/s", sub);
+  saveSubscription(sub: SubscriptionPost ): Observable<StringResponse> {
+    return this.http.post<StringResponse>("api/s", sub);
+  }
+
+  savePackageSubscription(subs: PackageSubscription): Observable<StringResponse> {
+    return this.http.post<StringResponse>("api/s/package", subs);
   }
 
   deleteSubscription(subscriptionId: string): Observable<void> {
@@ -39,5 +44,13 @@ export class SubscriptionService {
 
   extendSubscription(sub: SubscriptionRenewal): Observable<void> {
     return this.http.post<void>("api/s/extend", sub);
+  }
+
+  chargeMoney(): Observable<void> {
+    return this.http.post<void>("api/s/charge", null);
+  }
+
+  getCount(login: string): Observable<number> {
+    return this.http.get<number>("api/s/get-count?login=" + login);
   }
 }

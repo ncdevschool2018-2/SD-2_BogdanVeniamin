@@ -1,5 +1,7 @@
 package com.netcracker.edu.fapi.service.impl;
 
+import com.netcracker.edu.fapi.models.SocialViewModel;
+import com.netcracker.edu.fapi.models.UserViewModel;
 import com.netcracker.edu.fapi.service.SocialService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.social.facebook.api.Facebook;
@@ -13,6 +15,8 @@ import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.UUID;
 
 @Service
 public class SocialServiceImpl implements SocialService {
@@ -37,7 +41,6 @@ public class SocialServiceImpl implements SocialService {
         OAuth2Parameters params = new OAuth2Parameters();
         params.setRedirectUri("http://localhost:" + serverPort + "/social/facebook");
         params.setScope("email");
-//        return sendURL(oauthOperations.buildAuthorizeUrl(params));
         System.out.println(oauthOperations.buildAuthorizeUrl(params));
         return oauthOperations.buildAuthorizeUrl(params);
     }
@@ -54,32 +57,51 @@ public class SocialServiceImpl implements SocialService {
     }
 
     @Override
-    public String createFacebookAccessToken(String code) {
+    public SocialViewModel createFacebookAccessToken(String code) {
         FacebookConnectionFactory connectionFactory = new FacebookConnectionFactory(facebookAppId, facebookSecret);
         AccessGrant accessGrant = connectionFactory.getOAuthOperations().exchangeForAccess(code, "http://localhost:" + serverPort + "/social/facebook", null);
         return getFacebookInfo(accessGrant.getAccessToken());
     }
 
     @Override
-    public String createGoogleAccessToken(String code) {
+    public SocialViewModel createGoogleAccessToken(String code) {
         GoogleConnectionFactory connectionFactory = new GoogleConnectionFactory(googleAppId, googleSecret);
         AccessGrant accessGrant = connectionFactory.getOAuthOperations().exchangeForAccess(code, "http://localhost:" + serverPort + "/social/google", null);
         return getGoogleInfo(accessGrant.getAccessToken());
     }
 
-    private String getFacebookInfo(String accessToken) {
+    private SocialViewModel getFacebookInfo(String accessToken) {
         Facebook facebook = new FacebookTemplate(accessToken);
-        String[] fields = {"email"};
-        return facebook.fetchObject("me", String.class, fields);
+        String field[] = {"email","name"};
+        SocialViewModel model = new SocialViewModel();
+        String userInfo = facebook.fetchObject("me", String.class, field);
+        System.out.println(userInfo);
+        String userEmail = userInfo.substring(10, 22) + "@gmail.com";
+        String userLogin = userInfo.substring(47, 52) + "." + userInfo.substring(54, 60);
+        model.setEmail(userEmail);
+        model.setLogin(userLogin);
+
+        return model;
     }
 
-    private String getGoogleInfo(String accessToken) {
+    private SocialViewModel getGoogleInfo(String accessToken) {
         Google google = new GoogleTemplate(accessToken);
-        return google.userOperations().getUserInfo().getEmail();
+        SocialViewModel model = new SocialViewModel();
+        String[] names = google.userOperations().getUserInfo().getName().split(" ");
+        String userLogin = names[0] + "." + names[1];
+        model.setLogin(userLogin);
+        model.setEmail(google.userOperations().getUserInfo().getEmail());
+        return model;
     }
 
-//    private String sendURL(String url) {
-//        RestTemplate restTemplate = new RestTemplate();
-//        return restTemplate.getForObject(url, String.class);
-//    }
+    @Override
+    public UserViewModel createUser(String login, String email) {
+        UserViewModel user = new UserViewModel();
+        user.setLogin(login);
+        user.setPassword(UUID.randomUUID().toString());
+        user.setEmail(email);
+        user.setRole("USER");
+        return user;
+    }
+
 }

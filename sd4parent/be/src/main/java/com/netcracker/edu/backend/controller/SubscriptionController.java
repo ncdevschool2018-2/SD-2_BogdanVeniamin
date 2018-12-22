@@ -1,8 +1,10 @@
 package com.netcracker.edu.backend.controller;
 
+import com.netcracker.edu.backend.entity.PackageSubscription;
 import com.netcracker.edu.backend.entity.SubscribeCondition;
 import com.netcracker.edu.backend.entity.Subscription;
 import com.netcracker.edu.backend.entity.SubscriptionRenewal;
+import com.netcracker.edu.backend.service.ChargeService;
 import com.netcracker.edu.backend.service.SubscriptionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ import java.util.Optional;
 public class SubscriptionController {
 
     private SubscriptionService subscriptionService;
+
+    @Autowired
+    ChargeService chargeService;
 
     @Autowired
     SubscriptionController(SubscriptionService subscriptionService) { this.subscriptionService = subscriptionService; }
@@ -39,6 +44,11 @@ public class SubscriptionController {
         return subscriptionService.saveSubscription(action);
     }
 
+    @RequestMapping(value = "/package", method = RequestMethod.POST)
+    public PackageSubscription savePackageSubscription(@RequestBody PackageSubscription action) {
+        return subscriptionService.savePackageSubscription(action);
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Subscription> deleteSubscription(@PathVariable(name = "id") Long id) {
         subscriptionService.deleteSubscription(id);
@@ -58,5 +68,10 @@ public class SubscriptionController {
     @RequestMapping(value = "/extend", method = RequestMethod.POST)
     public void extendSubscription(@RequestBody SubscriptionRenewal sub) {
         subscriptionService.extendSubscription(sub);
+    }
+
+    @RequestMapping(value = "/charge", method = RequestMethod.POST)
+    public void chargeMoney() {
+        chargeService.scheduledCharge();
     }
 }

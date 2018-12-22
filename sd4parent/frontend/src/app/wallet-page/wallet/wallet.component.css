@@ -4,12 +4,13 @@
 }
 
 .btn-custom {
-  background-color: #7F2C6C;
+  background-color: #4ABDAC;
+  border-radius: 0;
   color: white;
 }
 
 .btn-custom:hover {
-  background-color: #A73C8F;
+  background-color: #378C80;
 }
 
 .col-10 {
@@ -27,7 +28,7 @@ h2 {
   height: 25px;
   margin: 15px;
   margin-left: 10px;
-  background-color: #7F2C6C;
+  background-color: #4ABDAC;
   color: white;
 }
 
@@ -38,12 +39,12 @@ h2 {
 }
 
 h1{
-  color: #7F2C6C;
+  color: #4ABDAC;
   margin-left: 130px;
 }
 
 input[type=button], input[type=submit], input[type=reset]  {
-  background-color: #7F2C6C;
+  background-color: #4ABDAC;
   border: none;
   color: white;
   padding: 15px 80px;
@@ -52,8 +53,8 @@ input[type=button], input[type=submit], input[type=reset]  {
   display: inline-block;
   text-transform: uppercase;
   font-size: 13px;
-  -webkit-border-radius: 5px 5px 5px 5px;
-  border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 0;
+  border-radius: 0;
   margin: 5px 20px 40px 120px;
 }
 
@@ -62,7 +63,7 @@ input[type=button].forgot {
 }
 
 input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
-  background-color: #A73C8F;
+  background-color: #378C80;
 }
 
 input[type=text], input[type=password] {
@@ -83,9 +84,14 @@ input[type=text], input[type=password] {
 
 input[type=text]:focus, input[type=password]:focus {
   background-color: #fff;
-  border: 2px solid #FC6602;
+  border: 2px solid #4ABDAC;
 }
 
 input[type=text]::placeholder {
   color: #cccccc;
+}
+
+span {
+  font-size: 14px;
+  color: red;
 }

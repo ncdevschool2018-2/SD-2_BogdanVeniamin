@@ -1,5 +1,6 @@
 package com.netcracker.edu.backend.service;
 
+import com.netcracker.edu.backend.entity.DebtModel;
 import com.netcracker.edu.backend.entity.LoginStringModel;
 import com.netcracker.edu.backend.entity.User;
 
@@ -18,4 +19,5 @@ public interface UserService {
     Optional<User> findUserByResetToken(String resetToken);
     void updateToken(LoginStringModel resetToken);
     void updatePassword(LoginStringModel password);
+    void updateDebt(DebtModel debt);
 }

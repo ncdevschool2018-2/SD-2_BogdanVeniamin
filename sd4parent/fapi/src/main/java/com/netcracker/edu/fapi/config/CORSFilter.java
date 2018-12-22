@@ -1,3 +1,5 @@
+package com.netcracker.edu.fapi.config;
+
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;

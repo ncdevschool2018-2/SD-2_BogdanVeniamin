@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http"
 import { Observable } from "rxjs"
 import { User } from "../model/user"
 import {Token} from "../model/token";
+import { Debt } from "../model/debt";
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -40,7 +41,10 @@ export class UserService {
   }
 
   checkUser(login: string): Observable<void> {
-
     return this.http.get<void>("api/u/check?login=" + login);
+  }
+
+  updateDebt(debt: Debt): Observable<void> {
+    return this.http.post<void>("api/u/update-debt", debt);
   }
 }

@@ -6,6 +6,7 @@ import { FormsModule }   from '@angular/forms';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { RouterModule } from "@angular/router";
+import { PostsComponent } from './posts/posts.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,6 @@ import { RouterModule } from "@angular/router";
       }
     ])
   ],
-  declarations: [NewPackagePageComponent, NewPackageComponent]
+  declarations: [NewPackagePageComponent, NewPackageComponent, PostsComponent]
 })
 export class NewPackagePageModule { }

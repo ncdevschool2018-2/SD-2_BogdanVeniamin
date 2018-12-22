@@ -11,8 +11,8 @@ export class PasswordService {
 
   constructor(private http: HttpClient) {}
 
-  forgotPassword(email: string): Observable<void> {
-    return this.http.get<void>("/api/forgot?email=" + email);
+  forgotPassword(email: string): Observable<boolean> {
+    return this.http.get<boolean>("/api/forgot?email=" + email);
   }
 
   getResetUser(): Observable<Token> {

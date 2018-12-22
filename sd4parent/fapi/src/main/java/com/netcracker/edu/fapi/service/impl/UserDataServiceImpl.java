@@ -1,7 +1,7 @@
 package com.netcracker.edu.fapi.service.impl;
 
-import com.netcracker.edu.fapi.models.LoginStringViewModel;
-import com.netcracker.edu.fapi.models.UserViewModel;
+import com.netcracker.edu.fapi.models.*;
+import com.netcracker.edu.fapi.service.SubscriptionDataService;
 import com.netcracker.edu.fapi.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
@@ -25,10 +26,20 @@ public class UserDataServiceImpl implements UserDataService, UserDetailsService 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private SubscriptionDataService subscriptionService;
+
+    private static final String loginValidation = "^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
+    private static final String passwordValidation = "^(?=.{8,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9._]+$";
+    private static final String emailValidation = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$";
+
     @Override
     public List<UserViewModel> getAll() {
         RestTemplate restTemplate = new RestTemplate();
         UserViewModel[] userViewModelResponse = restTemplate.getForObject(backendServerUrl + "/api/users", UserViewModel[].class);
+        for(UserViewModel userViewModel: userViewModelResponse) {
+            userViewModel.setCount(this.subscriptionService.getCount(userViewModel.getLogin()));
+        }
         return userViewModelResponse == null ? Collections.emptyList() : Arrays.asList(userViewModelResponse);
     }
 
@@ -39,11 +50,29 @@ public class UserDataServiceImpl implements UserDataService, UserDetailsService 
     }
 
     @Override
-    public UserViewModel saveUser(UserViewModel product) {
+    public StringResponseViewModel saveUser(UserViewModel product) {
+
+        if(product.getEmail() == null || product.getPassword() == null)
+            return null;
+
+        if(!product.getLogin().matches(loginValidation) || !product.getPassword().matches(passwordValidation) || !product.getEmail().matches(emailValidation)) {
+            System.out.println("Validation false");
+            return null;
+        }
+
         product.setPassword(passwordEncoder.encode(product.getPassword()));
 
+        UserViewModel loginModel = getUserByLogin(product.getLogin());
+        UserViewModel emailModel = getUserByEmail(product.getEmail());
+
+        if(loginModel != null)
+            return new StringResponseViewModel("This login already exists");
+        if(emailModel != null)
+            return new StringResponseViewModel("This email already exists");
+
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForEntity(backendServerUrl + "/api/users/login", product, UserViewModel.class).getBody();
+        restTemplate.postForEntity(backendServerUrl + "/api/users/login", product, UserViewModel.class).getBody();
+        return new StringResponseViewModel("Successful registration");
     }
 
     @Override
@@ -56,7 +85,8 @@ public class UserDataServiceImpl implements UserDataService, UserDetailsService 
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         UserViewModel user = getUserByLogin(name);
         if (user == null) {
-            throw new UsernameNotFoundException("Invalid username or password.");
+            return null;
+//            throw new UsernameNotFoundException("Invalid username or password.");
         }
         return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), getAuthority(user));
     }
@@ -70,6 +100,7 @@ public class UserDataServiceImpl implements UserDataService, UserDetailsService 
     private Set<GrantedAuthority> getAuthority(UserViewModel user) {
         Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
         authorities.add(new SimpleGrantedAuthority(user.getRole()));
+        authorities.add(new SimpleGrantedAuthority(user.isBan().toString()));
         return authorities;
     }
 
@@ -109,6 +140,37 @@ public class UserDataServiceImpl implements UserDataService, UserDetailsService 
 
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForEntity(backendServerUrl + "/api/users/update-password", password, LoginStringViewModel.class).getBody();
+    }
+
+    @Override
+    public void updateDebt(DebtViewModel debt) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForEntity(backendServerUrl + "/api/users/update-debt", debt, DebtViewModel.class).getBody();
+    }
+
+    @Override
+    public boolean verifyUser(LoginUser user) {
+
+        if(user.getLogin() == null || user.getPassword() == null)
+            return false;
+
+        if(!user.getLogin().matches(loginValidation) || !user.getPassword().matches(passwordValidation)) {
+            System.out.println("Validation false");
+            return false;
+        }
+        else {
+            UserViewModel currentUser = getUserByLogin(user.getLogin());
+            if(currentUser != null) {
+                if(passwordEncoder.matches(user.getPassword(), currentUser.getPassword())) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
     }
 
 }

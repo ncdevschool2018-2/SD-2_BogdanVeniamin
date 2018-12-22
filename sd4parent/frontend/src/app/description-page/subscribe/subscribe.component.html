@@ -9,7 +9,7 @@
             <button type="button" class="btn btn-custom" [class.current]="currentDuration == num" (click)="_computePrice(num, post.discount, post.price); currentDuration = num">{{ num }}</button>
           </div>
         </div>
-        <button type="button" id="myBtn" class="btn btn-lg btn-primary" [class.disabled]="!auth" (click)="_openModal(template)" >Subscribe</button>
+        <button type="button" id="myBtn" class="btn btn-lg btn-primary" [disabled]="!auth" (click)="_openModal(template)" >Subscribe</button>
       </div>
     </div>
   </div>
@@ -22,6 +22,9 @@
     <h4>Subscription term: {{ resultCondition.duration }} months</h4>
     <h4>All price: {{ resultCondition.price }}$</h4>
     <h4>Discount: {{ resultCondition.discount }}%</h4>
+  </div>
+  <div [hidden]="subscribeAccess == 'Successful'" class="text-center">
+    <span>{{ subscribeAccess }}</span>
   </div>
   <input type="button" class="end" value="Subscribe" (click)="_subscribe()">
 </ng-template>

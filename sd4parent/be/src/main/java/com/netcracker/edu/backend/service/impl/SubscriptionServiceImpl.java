@@ -1,8 +1,8 @@
 package com.netcracker.edu.backend.service.impl;
 
-import com.netcracker.edu.backend.entity.SubscribeCondition;
-import com.netcracker.edu.backend.entity.Subscription;
-import com.netcracker.edu.backend.entity.SubscriptionRenewal;
+import com.netcracker.edu.backend.entity.*;
+import com.netcracker.edu.backend.repository.TransactionRepository;
+import com.netcracker.edu.backend.repository.WalletRepository;
 import com.netcracker.edu.backend.service.SubscriptionService;
 import com.netcracker.edu.backend.repository.SubscriptionRepository;
 
@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static com.netcracker.edu.backend.repository.specification.SubscriptionSpecification.subscriptionsFindByLogin;
@@ -19,6 +21,12 @@ import static com.netcracker.edu.backend.repository.specification.SubscriptionSp
 public class SubscriptionServiceImpl implements SubscriptionService {
 
     private SubscriptionRepository repository;
+
+    @Autowired
+    private TransactionRepository transactionRepository;
+
+    @Autowired
+    private WalletRepository walletRepository;
 
     @Autowired
     public SubscriptionServiceImpl(SubscriptionRepository repository) {
@@ -31,7 +39,49 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         sub.setDuration(convertDuration(sub.getDuration()));
         sub.setCost(sub.getCost()/sub.getDuration());
 
+        if((sub.getUser().getWallet().getMoney() - sub.getCost()) < sub.getUser().getDebt() * (-1)) {
+            System.out.println("Sub: null");
+            return null;
+        }
+
+        this.transactionRepository.save(createTransaction(sub));
+        this.transactionRepository.save(createAdminTransaction(sub));
+
+        double tempCost = fixedNum(Double.valueOf(sub.getCost()));
+        float cost = (float)tempCost;
+        this.walletRepository.chargeMoney(cost, sub.getUser().getWallet().getId());
+        this.walletRepository.fillUp(cost, Long.valueOf(1));
+        System.out.println("Sub: true");
+        sub.setStatus(true);
         return this.repository.save(sub);
+    }
+
+    @Override
+    public PackageSubscription savePackageSubscription(PackageSubscription sub) {
+
+        List<Subscription> subscripts = new ArrayList<>();
+
+        float totalCost = 0;
+        for(Subscription subscription: sub.getSubscriptions()) {
+            subscription.setDuration(convertDuration(subscription.getDuration()));
+            subscription.setCost(subscription.getCost()/subscription.getDuration());
+            totalCost += subscription.getCost();
+        }
+        if(sub.getSubscriptions().get(0).getUser().getWallet().getMoney() - totalCost < sub.getSubscriptions().get(0).getUser().getDebt() * (-1))
+            return null;
+
+        for(Subscription subscription: sub.getSubscriptions()) {
+            this.transactionRepository.save(createTransaction(subscription));
+            this.transactionRepository.save(createAdminTransaction(subscription));
+
+            double tempCost = fixedNum(Double.valueOf(subscription.getCost()));
+            float cost = (float)tempCost;
+            this.walletRepository.chargeMoney(cost, subscription.getUser().getWallet().getId());
+            this.walletRepository.fillUp(cost, Long.valueOf(1));
+            subscripts.add(this.repository.save(subscription));
+        }
+
+        return new PackageSubscription(subscripts);
     }
 
     private int convertDuration(int duration) {
@@ -127,5 +177,31 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
         repository.changeCost(sub.getId(), newCost);
         repository.extendSubscription(sub.getId(), newDuration);
+    }
+
+    private Transaction createTransaction(Subscription sub) {
+        double tempCost = fixedNum(Double.valueOf(sub.getCost()));
+        float cost = (float)tempCost;
+
+        Transaction action = new Transaction();
+        action.setAction("MINUS");
+        action.setAmount(cost);
+        action.setTitle(sub.getPost().getTitle());
+        action.setWallet(sub.getUser().getWallet());
+
+        return action;
+    }
+
+    private Transaction createAdminTransaction(Subscription sub) {
+        double tempCost = fixedNum(Double.valueOf(sub.getCost()));
+        float cost = (float)tempCost;
+
+        Transaction action = new Transaction();
+        action.setAction("PLUS");
+        action.setAmount(cost);
+        action.setTitle(sub.getPost().getTitle());
+        action.setWallet(walletRepository.findById(Long.valueOf(1)).get());
+
+        return action;
     }
 }

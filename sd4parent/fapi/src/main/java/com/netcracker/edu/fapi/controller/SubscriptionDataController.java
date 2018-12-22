@@ -1,9 +1,6 @@
 package com.netcracker.edu.fapi.controller;
 
-import com.netcracker.edu.fapi.models.PostViewModel;
-import com.netcracker.edu.fapi.models.SubscribeConditionViewModel;
-import com.netcracker.edu.fapi.models.SubscriptionRenewalViewModel;
-import com.netcracker.edu.fapi.models.SubscriptionViewModel;
+import com.netcracker.edu.fapi.models.*;
 import com.netcracker.edu.fapi.service.SubscriptionDataService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +14,8 @@ import java.util.List;
 @RequestMapping("api/s")
 public class SubscriptionDataController {
 
-    @Autowired SubscriptionDataService subscriptionDataService;
+    @Autowired
+    SubscriptionDataService subscriptionDataService;
 
     @RequestMapping
     public  ResponseEntity<List<SubscriptionViewModel>> getAllSubscriptions() {
@@ -30,21 +28,13 @@ public class SubscriptionDataController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<SubscriptionViewModel> saveSubscription(@RequestBody SubscriptionViewModel sub) {
-        if(sub != null) {
-            List<SubscriptionViewModel> subscriptions = subscriptionDataService.getSubscriptionsByLogin(sub.getUser().getLogin());
-            List<String> posts = new ArrayList<>();
+    public StringResponseViewModel saveSubscription(@RequestBody SubscriptionViewModel sub) {
+        return subscriptionDataService.saveSubscription(sub);
+    }
 
-            for(SubscriptionViewModel subscription: subscriptions) {
-                posts.add(subscription.getPost().getTitle());
-            }
-
-            if(!posts.contains(sub.getPost().getTitle()))
-                return ResponseEntity.ok(subscriptionDataService.saveSubscription(sub));
-            else
-                return null;
-        }
-        return null;
+    @RequestMapping(value = "/package", method = RequestMethod.POST)
+    public StringResponseViewModel savePackageSubscription(@RequestBody PackageSubscriptionViewModel sub) {
+        return subscriptionDataService.savePackageSubscription(sub);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -70,6 +60,16 @@ public class SubscriptionDataController {
         if(sub != null) {
             subscriptionDataService.extendSubscription(sub);
         }
+    }
+
+    @RequestMapping(value = "/charge", method = RequestMethod.POST)
+    public void chargeMoney() {
+        subscriptionDataService.chargeMoney();
+    }
+
+    @RequestMapping(value = "/get-count", method = RequestMethod.GET)
+    public int getCount(@RequestParam("login") String login) {
+        return subscriptionDataService.getCount(login);
     }
 
 }

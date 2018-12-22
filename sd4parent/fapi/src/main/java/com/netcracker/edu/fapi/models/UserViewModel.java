@@ -2,28 +2,41 @@ package com.netcracker.edu.fapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 public class UserViewModel {
 
     private long id;
+
     private String login;
+
+    @NotNull
     private String password;
     private String role;
+
+    @NotNull
+    @Email
     private String email;
-    private String language;
     private String lastDateLogin;
     private WalletViewModel wallet;
     private String resetToken;
+    private float debt;
+    private Boolean ban;
+    private Integer count;
 
-    public UserViewModel(String login, WalletViewModel wallet, String password, String role, String email, String language, String lastDateLogin) {
+    public UserViewModel(String login, WalletViewModel wallet, String password, String role, String email, float debt, String lastDateLogin, Boolean ban, Integer count) {
         this.login = login;
         this.password = password;
         this.role = role;
         this.email = email;
-        this.language = language;
         this.lastDateLogin = lastDateLogin;
         this.wallet = wallet;
+        this.debt = debt;
+        this.ban = ban;
+        this.count = count;
     }
 
     public UserViewModel(String login, String password, String role) {
@@ -84,14 +97,6 @@ public class UserViewModel {
         this.email = email;
     }
 
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
     public String getLastDateLogin() {
         return lastDateLogin;
     }
@@ -106,5 +111,29 @@ public class UserViewModel {
 
     public void setResetToken(String resetToken) {
         this.resetToken = resetToken;
+    }
+
+    public float getDebt() {
+        return debt;
+    }
+
+    public void setDebt(float debt) {
+        this.debt = debt;
+    }
+
+    public Boolean isBan() {
+        return ban;
+    }
+
+    public void setBan(Boolean ban) {
+        this.ban = ban;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }

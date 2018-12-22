@@ -39,4 +39,14 @@ public class PackageDataController {
         packageDataService.deletePackage(Long.valueOf(id));
     }
 
+    @RequestMapping(value = "/page/{num}", method = RequestMethod.GET)
+    public ResponseEntity<List<PackageViewModel>> getPackagesByPage(@PathVariable(name = "num") int num, @RequestParam("qt") int quantity) {
+        return ResponseEntity.ok(packageDataService.getPackagesByPage(num, quantity));
+    }
+
+    @RequestMapping(value = "/total-pages", method = RequestMethod.GET)
+    public int getTotalPages(@RequestParam("qt") int quantity) {
+        return packageDataService.getTotalPages(quantity);
+    }
+
 }

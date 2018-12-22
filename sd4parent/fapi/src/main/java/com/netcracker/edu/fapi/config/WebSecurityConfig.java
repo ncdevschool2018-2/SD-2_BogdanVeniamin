@@ -61,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
                 .antMatchers("/social/*", "/token/generate-token", "/api/p/page/*", "/api/u/login", "/api/p/*", "/api/c",
                         "/api/s/compute", "/api/c/find", "/api/u/check", "/api/forgot", "/api/reset", "/api/reset-user",
-                        "/api/update-password").permitAll()
+                        "/api/update-password", "/api/u/email", "/favicon.ico", "/api/pa/page/*", "/api/pa/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()

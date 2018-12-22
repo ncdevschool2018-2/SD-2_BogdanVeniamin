@@ -30,11 +30,11 @@ export class PostService {
     return this.http.get<Post[]>('/api/p/find?login=' + login);
   }
 
-  getPostsByPage(page: number): Observable<Post[]> {
-    return this.http.get<Post[]>('/api/p/page/' + page);
+  getPostsByPage(page: number, quantity: number): Observable<Post[]> {
+    return this.http.get<Post[]>('/api/p/page/' + page + "?qt=" + quantity);
   }
 
-  getTotalPages(): Observable<number> {
-    return this.http.get<number>('api/p/total-pages');
+  getTotalPages(quantity: number): Observable<number> {
+    return this.http.get<number>('api/p/total-pages?qt=' + quantity);
   }
 }

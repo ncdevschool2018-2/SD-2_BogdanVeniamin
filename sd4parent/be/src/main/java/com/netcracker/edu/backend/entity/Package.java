@@ -13,20 +13,20 @@ public class Package {
 
     private String title;
     private String description;
-    private float price;
     private int discount;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "packages")
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinTable(name = "packagesposts", joinColumns = { @JoinColumn(name = "package_id") }, inverseJoinColumns = { @JoinColumn(name = "post_id") })
     private Set<Post> posts = new HashSet<>();
 
     public Package() {
     }
 
-    public Package(String title, String description, float price, int discount) {
+    public Package(String title, String description, int discount, Set<Post> posts) {
         this.title = title;
         this.description = description;
-        this.price = price;
         this.discount = discount;
+        this.posts = posts;
     }
 
     public Long getId() {
@@ -53,14 +53,6 @@ public class Package {
         this.description = description;
     }
 
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
     public int getDiscount() {
         return discount;
     }
@@ -69,13 +61,20 @@ public class Package {
         this.discount = discount;
     }
 
+    public Set<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Set<Post> posts) {
+        this.posts = posts;
+    }
+
     @Override
     public String toString() {
         return "Package{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", price=" + price +
                 ", discount=" + discount +
                 '}';
     }

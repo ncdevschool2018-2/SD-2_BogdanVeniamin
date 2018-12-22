@@ -1,10 +1,14 @@
 package com.netcracker.edu.fapi.service;
 
+import com.netcracker.edu.fapi.models.SocialViewModel;
+import com.netcracker.edu.fapi.models.UserViewModel;
+
 public interface SocialService {
 
     String createFacebookAuthorizationURL();
-    String createFacebookAccessToken(String code);
+    SocialViewModel createFacebookAccessToken(String code);
     String createGoogleAuthorizationURL();
-    String createGoogleAccessToken(String code);
+    SocialViewModel createGoogleAccessToken(String code);
+    UserViewModel createUser(String login, String email);
 
 }

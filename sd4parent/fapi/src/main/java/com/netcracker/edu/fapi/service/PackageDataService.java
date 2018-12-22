@@ -10,5 +10,7 @@ public interface PackageDataService {
     PackageViewModel getPackageById(Long id);
     PackageViewModel savePackage(PackageViewModel bundle);
     void deletePackage(Long id);
+    List<PackageViewModel> getPackagesByPage(int page, int quantity);
+    int getTotalPages(int quantity);
 
 }

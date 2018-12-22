@@ -42,4 +42,17 @@ public class PackageDataServiceImpl implements PackageDataService {
         restTemplate.delete(backendServerUrl + "/api/packages/" + id);
     }
 
+    @Override
+    public List<PackageViewModel> getPackagesByPage(int page, int quantity) {
+        RestTemplate restTemplate = new RestTemplate();
+        PackageViewModel[] packageViewModelResponse = restTemplate.getForObject(backendServerUrl + "api/packages/page/" + page + "?qt=" + quantity, PackageViewModel[].class);
+        return packageViewModelResponse == null ? Collections.emptyList() : Arrays.asList(packageViewModelResponse);
+    }
+
+    @Override
+    public int getTotalPages(int quantity) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(backendServerUrl + "api/packages/total-pages?qt=" + quantity, Integer.class);
+    }
+
 }
